@@ -157,7 +157,60 @@
                 </article>
             </div>
         </section>
+
     </main>
+
+    <!-- FEATURE 5: Movie Detail Modal -->
+    <dialog id="movieModal" class="movie-dialog">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">
+                <i data-lucide="x"></i>
+            </button>
+      
+            <div class="modal-hero" id="modalHeroBg">
+                <div class="modal-hero-overlay"></div>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-poster-wrapper">
+                    <img class="modal-poster" id="modalPoster" src="" alt="Movie Poster">
+                </div>
+                <div class="modal-info">
+                    <h2 class="modal-title" id="modalTitle">Movie Title</h2>
+                
+                    <div class="modal-meta-row">
+                        <span>
+                            <i data-lucide="star" class="rating-star"></i> 
+                            <strong id="modalRating">0.0</strong> / 10
+                        </span>
+                        <span id="modalRuntime">
+                            <i data-lucide="clock"></i> -- min
+                        </span>
+                        <span id="modalReleaseDate">
+                            <i data-lucide="calendar"></i> Release Date
+                        </span>
+                    </div>
+
+                    <div class="modal-genres" id="modalGenres">
+                        <!-- Badges will inject here -->
+                    </div>
+
+                    <h3 class="modal-overview-title">Overview</h3>
+                    <p class="modal-overview-text" id="modalOverview">
+                        Plot overview placeholder text...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Footer block -->
+    <footer>
+        <div class="container">
+            <p>CineScope © 2026 </p>
+        </div>
+    </footer>
+
 
     <!-- Main JavaScript -->
     <script src="app.js"></script>
