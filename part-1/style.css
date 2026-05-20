@@ -2,7 +2,8 @@
     /* Default Dark Theme */
     --bg-primary: #0f172a;       
     --bg-secondary: #1e293b;    
-    --bg-card: #1e293b;          
+    --bg-card: #1e293b;
+    --bg-navbar: rgba(15, 23, 42, 0.9);          
 
     --text-primary: #f8fafc;        /* High Contrast Heading */
     --text-secondary: #94a3b8;       /* Low Contrast Metadata */
@@ -22,7 +23,7 @@
     --border-radius:12px;
 
     /* Transitions */
-    --transition-smooth: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    --transition-smooth: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 /* Light Theme Mode Override */
@@ -30,6 +31,7 @@
     --bg-primary: #f8fafc;       
     --bg-secondary: #ffffff;     
     --bg-card: #ffffff;
+    --bg-navbar: rgba(248, 250, 252, 0.9);  
 
     --text-primary: #0f172a;        
     --text-secondary: #64748b;       
@@ -70,3 +72,64 @@ body{
     margin: 0 auto;
     padding: 0 1.5rem;
 }
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg-navbar);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.35rem;
+}
+.logo-icon {
+    color: var(--accent-color);
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-color);
+}
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    transition: var(--transition-smooth);
+}
+.theme-toggle-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+.nav-link:focus-visible,
+.theme-toggle-btn:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}   
