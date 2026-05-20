@@ -219,3 +219,67 @@ body{
     background-color: var(--accent-hover);
     transform: translateY(2px);
 }
+/*================================
+       Discover Section  
+=================================*/
+.discover-section {
+    margin-bottom: 2.5rem;
+}
+/*Search Bar */
+.search-container {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+/* Search Icon */
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+/* Search Input */
+#searchInput {
+    width: 100%;
+    background-color: var(--bg-secondary);
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+}
+#searchInput:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+/* Genre Filters */
+.genre-filters {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+/* Genre Button */
+.genre-btn {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition-smooth);
+}
+/* Hover State */
+.genre-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+/* Active Genre Button */
+.genre-btn.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+}
