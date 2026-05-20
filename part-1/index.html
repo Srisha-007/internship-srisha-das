@@ -51,7 +51,7 @@
                     Search
                 </a>
                 <!-- Theme Toggle Button -->
-                <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
+                <button type="button" id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
                     <i data-lucide="sun" id="themeIcon"></i>
                 </button>
 
@@ -74,10 +74,11 @@
                     </h1>
                     <p class="hero-meta">
                         Release Year | Genre | Rating
+                    </p>    
                     <p class="hero-description">
                         A brief description of the movie goes here. This is a captivating summary that entices users to explore more about the film.
                     </p>
-                    <button class="hero-button">
+                    <button type="button" class="hero-button">
                         <i data-lucide="info"></i>
                         View Details
                     </button>
@@ -86,7 +87,7 @@
         </section>
 
         <!-- FEATURE 3: Discover Section (Search + Genre Filters)-->
-        <section class="discover-section">
+        <section class="discover-section" id="search">
             <!-- Search -->
             <div class="search-container">
                 <i data-lucide="search" class="search-icon"></i>
@@ -99,17 +100,17 @@
 
             <!-- Genre Filters -->
             <div class="genre-filters">
-                <button class="genre-btn active"> All </button>
+                <button type="button" class="genre-btn active"> All </button>
 
-                <button class="genre-btn"> Action </button>
+                <button type="button" class="genre-btn"> Action </button>
 
-                <button class="genre-btn"> Comedy </button>
+                <button type="button" class="genre-btn"> Comedy </button>
 
-                <button class="genre-btn"> Sci-Fi </button>
+                <button type="button" class="genre-btn"> Sci-Fi </button>
                 
-                <button class="genre-btn"> Drama </button>
+                <button type="button" class="genre-btn"> Drama </button>
 
-                <button class="genre-btn"> Thriller </button>
+                <button type="button" class="genre-btn"> Thriller </button>
             </div>
         </section>
 
@@ -123,7 +124,7 @@
                 <!-- Movie Card 1 Template -->
                 <article class="movie-card" data-movie-id="1">
                     <div class="card-poster-container">
-                        <img class="card-poster" src="" alt="Placeholder Poster">
+                        <img class="card-poster" src="https://via.placeholder.com/300x450" alt="Placeholder Poster">
                         <div class="card-rating-badge">
                             <i data-lucide="star" style="width:12px; height:12px;"></i> Rating
                         </div>
@@ -131,7 +132,7 @@
                     
                     <div class="card-info">
                         <h3 class="card-title">Movie Title</h3>
-                        <div class="mcard-metadata">
+                        <div class="card-metadata">
                             <span> YEAR </span>
                             <span> GENRE </span>
                         </div>
@@ -141,7 +142,7 @@
                 <!-- Movie Card 2 Template -->
                 <article class="movie-card" data-movie-id="2">
                     <div class="card-poster-container">
-                        <img class="card-poster" src="" alt="Placeholder Poster">
+                        <img class="card-poster" src="https://via.placeholder.com/300x450" alt="Placeholder Poster">
                         <div class="card-rating-badge">
                             <i data-lucide="star" style="width:12px; height:12px;"></i> Rating
                         </div>
@@ -149,7 +150,7 @@
                     
                     <div class="card-info">
                         <h3 class="card-title">Movie Title</h3>
-                        <div class="mcard-metadata">
+                        <div class="card-metadata">
                             <span> YEAR </span>
                             <span> GENRE </span>
                         </div>
@@ -163,7 +164,7 @@
     <!-- FEATURE 5: Movie Detail Modal -->
     <dialog id="movieModal" class="movie-dialog">
         <div class="modal-content">
-            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">
+            <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">
                 <i data-lucide="x"></i>
             </button>
       
@@ -173,7 +174,7 @@
 
             <div class="modal-body">
                 <div class="modal-poster-wrapper">
-                    <img class="modal-poster" id="modalPoster" src="" alt="Movie Poster">
+                    <img class="modal-poster" id="modalPoster" src="https://via.placeholder.com/300x450" alt="Movie Poster">
                 </div>
                 <div class="modal-info">
                     <h2 class="modal-title" id="modalTitle">Movie Title</h2>
