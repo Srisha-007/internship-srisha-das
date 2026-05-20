@@ -81,7 +81,10 @@ body{
     border-bottom: 1px solid var(--border-color);
     transition: var(--transition-smooth);
 }
-/* Navigation Bar */
+
+/*=====================
+     Navigation Bar 
+=======================*/
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -133,3 +136,86 @@ body{
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }   
+
+/*================================
+       Hero / Banner Section  
+=================================*/
+.hero-section{
+    position: relative;
+    background: 
+        linear-gradient(
+            to right,
+            rgba(15,23,42,0.95) 40%,
+            rgba(15,23,42,0.6)
+    ),
+    url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW92aWUlMjBiYW5uZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"); 
+    background-size: cover;
+    background-position: center;    
+    background-repeat: no-repeat;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    padding: 5rem 0;
+    margin-bottom: 2rem;
+}
+.hero-overlay {
+    width: 100%;
+}
+.hero-content {
+    max-width: 600px;
+}
+/* Trending Label */
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin:1rem;
+    background-color: var(--accent-color);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+/* Main Movie Title */
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 1rem;
+}
+/* Movie Metadata (Release Year, Runtime, Rating) */
+.hero-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1rem;
+    color: var(--text-secondary);
+}
+/* Movie Description */
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: 1rem;
+    max-width: 550px;
+}
+/* CTA Button */
+.hero-button {
+    display: inline-flex;
+    align-items: center;
+    gap:0.5rem;
+    margin:1rem;
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+.hero-button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(2px);
+}
