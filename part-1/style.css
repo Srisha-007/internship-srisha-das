@@ -281,5 +281,110 @@ body{
 .genre-btn.active {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
-    color: #fff;
+    color: #ffffff;
+}
+/*================================
+       Movie Grid Section  
+=================================*/
+.movies-section{
+    margin-bottom: 3rem;
+}
+/*Section Heading */
+.section-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+/* Movie Grid */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+/*================================
+            Movie Card   
+=================================*/
+.movie-card{
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+}
+.movie-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+}
+.card-poster-container{
+    position: relative;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+}
+/* Movie Poster */
+.card-poster {
+    width: 100%;
+    display: block;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.movie-card:hover .card-poster {
+    transform: scale(1.1);
+}
+/* Movie Rating Badge */
+.card-rating-badge{
+    position: absolute;
+    top: 0.75rem;
+    right: 0.5rem;
+    background-color: var(--accent-color);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: var(--border-radius);
+}
+/* Movie Info */
+.card-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+/* Movie Title */
+.card-title {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+/* Movie Metadata */
+.card-metadata {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/*================================
+            Footer   
+=================================*/
+footer {
+    margin-top: auto;
+    background-color: var(--bg-secondary);
+    color:var(--text-secondary);
+    text-align: center;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-color);
 }
