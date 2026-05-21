@@ -412,12 +412,14 @@ body{
 .movie-dialog{
     border: none;
     background: none;
-    width: calc(100%-2rem);
+    width: calc(100% - 2rem);
     max-width: 760px;
     padding: 0;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    margin:0;
     z-index: 1000;
 }
 .movie-dialog::backdrop {
@@ -455,7 +457,7 @@ body{
     position: relative;
     background-size: cover;
     background-position: center;
-    height: 100px;
+    height: 240px;
 }
 .modal-hero-overlay {
     position: absolute;
@@ -483,6 +485,9 @@ body{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.modal-info {
+    padding-top: 80px;
 }
 /* Modal - Main Movie Title */
 .modal-title {
