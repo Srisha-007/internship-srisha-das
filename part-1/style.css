@@ -281,6 +281,13 @@ body{
     overflow-x: auto;
     padding-bottom: 0.5rem;
 }
+.genre-filters::-webkit-scrollbar {
+    display: none;
+}
+.genre-filters {
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
 /* Genre Button */
 .genre-btn {
     background-color: var(--bg-secondary);
@@ -297,6 +304,7 @@ body{
 .genre-btn:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
+    transform: translateY(-3px) ;
 }
 /* Active Genre Button */
 .genre-btn.active {
