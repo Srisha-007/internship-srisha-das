@@ -470,7 +470,7 @@ body{
     display: grid;
     grid-template-columns: 180px 1fr;
     gap: 2rem;
-    margin-top: -100px;
+    margin-top: -10px;
     position: relative;
 }
 .modal-poster-wrapper {
@@ -485,9 +485,6 @@ body{
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-.modal-info {
-    padding-top: 80px;
 }
 /* Modal - Main Movie Title */
 .modal-title {
@@ -528,6 +525,117 @@ body{
 /*=======================================
           Responsive Breakpoints   
 ========================================*/
+/* Tablet Devices */
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+    }
+    /* Hero Section */
+    .hero-section {
+        padding: 3rem 0;
+        min-height: 420 px;
+    }
+    .hero-title {
+        font-size: 2.4rem;
+    }
+    .hero-meta {            
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    .hero-description {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+    /* Movies Grid */
+    .movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    /* Movie Detail Modal */
+    .modal-body {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: -70px;
+        padding: 1.25rem;
+    }
+    .modal-poster-wrapper{
+        width: 150px;
+        margin: 0 auto;
+    }
+    .modal-info {
+        text-align: center;
+    }
+    .modal-meta-row {
+        justify-content: center;
+        flex-wrap:wrap;
+    }
+    .modal-genres {
+        justify-content: center;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    /* Container */
+    .container {
+        width: 95%;
+        padding: 0 0.75rem;
+    }
+    /* Navbar */
+    .navbar-links {
+        gap: 0.75rem;
+    }
+    /* Hero Section */
+    .hero-section {
+        padding: 2rem 0;
+        min-height: 350px;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .hero-meta {
+        gap: 0.5rem;
+    }
+    .hero-description {
+        font-size: 0.9rem;
+    }
+    .hero-button {
+        width: 100%;
+        justify-content: center;
+    }
+    /* Search Bar */
+    #searchInput {
+        font-size: 0.95rem;
+    }
+    /* Movies Grid */
+    .movies-grid {
+        grid-template-columns: 1fr;
+    }
+     /* Movie Detail Modal */
+     .movie-dialog {
+        width: calc(100% - 1 rem);
+     }
+     .modal-hero {
+         height: 180px;
+     }
+     .modal-title{
+        font-size: 1.5rem;
+     }
+     .modal-meta-row {
+        flex-direction: column;
+        gap: 0.5rem;
+     }
+     .modal-overview-title{
+        font-size: 1rem;
+     }
+     .modal-overview-text{
+        font-size: 0.95rem;
+     }  
+}
 
 /*======================================
                  Footer   
