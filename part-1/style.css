@@ -238,6 +238,26 @@ body{
     transform: translateY(-50%);
     color: var(--text-secondary);
 }
+/* Seach Loading Spinner */
+.spinner-container{
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+.spinner{
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--text-secondary);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+/* Spinner Animation */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 /* Search Input */
 #searchInput {
     width: 100%;
@@ -252,6 +272,7 @@ body{
 #searchInput:focus {
     border-color: var(--accent-color);
     outline: none;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
 }
 /* Genre Filters */
 .genre-filters {
@@ -288,6 +309,7 @@ body{
 =================================*/
 .movies-section{
     margin-bottom: 3rem;
+    margin: 1rem;
 }
 /*Section Heading */
 .section-title {
@@ -376,6 +398,9 @@ body{
     font-weight: 500;
     color: var(--text-secondary);
 }
+/*=======================================
+          Responsive Breakpoints   
+========================================*/
 
 /*================================
             Footer   
