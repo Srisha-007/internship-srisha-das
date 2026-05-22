@@ -2,11 +2,13 @@ const BASE_URL="https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const moviesGrid = document.getElementById("moviesGrid");
+const spinner = document.getElementById("searchSpinner");
 // =====================================
 // Fetch Popular Movies from TMDB API
 // =====================================
 async function fetchPopularMovies() {       
     try{
+        spinner.style.display = "block";
         const response = await fetch(
             `${BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`
         );
@@ -20,6 +22,9 @@ async function fetchPopularMovies() {
     }
     catch (error){
         console.error("Error fetching movies:", error);
+    }
+    finally{
+        spinner.style.display = "none";
     }
 }
 
