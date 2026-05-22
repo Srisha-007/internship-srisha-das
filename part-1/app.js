@@ -37,7 +37,7 @@ function renderMovies(movies) {
 
     if(movies.length === 0){
         moviesGrid.innerHTML = `
-            "<p class="empty-state">
+            <p class="empty-state">
                 No movies found.
             </p>
         `;
@@ -46,7 +46,7 @@ function renderMovies(movies) {
     movies.forEach((movie) => {
         const movieCard = document.createElement("article");
         movieCard.classList.add("movie-card");
-        moviesGrid.innerHTML = `
+        movieCard.innerHTML = `
             <div class="card-poster-container">
                 <img
                     class="card-poster"
@@ -76,6 +76,7 @@ function renderMovies(movies) {
             `;
             moviesGrid.appendChild(movieCard);
     });
+    lucide.createIcons();
 }
 // =====================================
 //           Set Hero Banner 

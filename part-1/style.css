@@ -545,7 +545,7 @@ body{
     /* Hero Section */
     .hero-section {
         padding: 3rem 0;
-        min-height: 420 px;
+        min-height: 420px;
     }
     .hero-title {
         font-size: 2.4rem;
@@ -593,7 +593,7 @@ body{
         padding: 0 0.75rem;
     }
     /* Navbar */
-    .navbar-links {
+    .nav-links {
         gap: 0.75rem;
     }
     /* Hero Section */
@@ -624,7 +624,7 @@ body{
     }
      /* Movie Detail Modal */
      .movie-dialog {
-        width: calc(100% - 1 rem);
+        width: calc(100% - 1rem);
      }
      .modal-hero {
          height: 180px;
