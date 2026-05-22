@@ -1,3 +1,4 @@
 node_modules
 .env
 dist
+part-1/config.js
