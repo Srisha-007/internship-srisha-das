@@ -522,7 +522,13 @@ body{
     line-height: 1.5;
     color: var(--text-secondary);
 }
-
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
 /*=======================================
           Responsive Breakpoints   
 ========================================*/

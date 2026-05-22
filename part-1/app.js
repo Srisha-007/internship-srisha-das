@@ -3,6 +3,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const moviesGrid = document.getElementById("moviesGrid");
 const spinner = document.getElementById("searchSpinner");
+const searchInput = document.getElementById("searchInput");
 // =====================================
 // Fetch Popular Movies from TMDB API
 // =====================================
@@ -34,6 +35,14 @@ async function fetchPopularMovies() {
 function renderMovies(movies) {
     moviesGrid.innerHTML = "";
 
+    if(movies.length === 0){
+        moviesGrid.innerHTML = `
+            "<p class="empty-state">
+                No movies found.
+            </p>
+        `;
+        return;
+    }
     movies.forEach((movie) => {
         const movieCard = document.createElement("article");
         movieCard.classList.add("movie-card");
@@ -92,6 +101,33 @@ function setHeroBanner(movie) {
         ),
         url(https://image.tmdb.org/t/p/original${movie.backdrop_path})
     `;
+}
+// =====================================
+//           Search Movies
+// =====================================
+searchInput.addEventListener("input", handleSearch);
+
+async function handleSearch(event) {
+    const query = event.target.value.trim();
+
+    if (query === "") {
+        fetchPopularMovies();
+        return;
+    }
+
+    try {
+        spinner.style.display = "block";
+        const response = await fetch(
+            `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
+        );
+        const data = await response.json();
+        renderMovies(data.results);
+
+    } catch (error) {
+        console.error("Search error:", error);
+    } finally {
+        spinner.style.display = "none";
+    }
 }
 // Initial fetch of popular movies when the page loads          
 fetchPopularMovies();
