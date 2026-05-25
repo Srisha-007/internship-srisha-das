@@ -5,6 +5,7 @@ const moviesGrid = document.getElementById("moviesGrid");
 const spinner = document.getElementById("searchSpinner");
 const searchInput = document.getElementById("searchInput");
 const errorMessage = document.getElementById("errorMessage");
+
 // =====================================
 // Fetch Popular Movies from TMDB API
 // =====================================
@@ -109,9 +110,22 @@ function setHeroBanner(movie) {
     `;
 }
 // =====================================
+//    Search Input Debounce Function
+// =====================================
+function debounce(func, delay) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}
+// =====================================
 //           Search Movies
 // =====================================
-searchInput.addEventListener("input", handleSearch);
+const debouncedSearch = debounce(handleSearch, 500);
+searchInput.addEventListener("input", debouncedSearch);
 
 async function handleSearch(event) {
     const query = event.target.value.trim();
