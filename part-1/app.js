@@ -4,6 +4,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const moviesGrid = document.getElementById("moviesGrid");
 const spinner = document.getElementById("searchSpinner");
 const searchInput = document.getElementById("searchInput");
+const genreFilters = document.querySelector(".genre-filters");
 const errorMessage = document.getElementById("errorMessage");
 
 // =====================================
@@ -34,6 +35,23 @@ async function fetchPopularMovies() {
         spinner.style.display = "none";
     }
 }
+// =====================================
+//      Fetch Genres from TMDB API
+// =====================================
+async function fetchGenres() {
+    try{
+        const response = await fetch(
+            `${BASE_URL}/genre/movie/list?api_key=${TMDB_API_KEY}`
+        );
+        if (!response.ok) {
+            throw new Error("Failed to fetch genres.");
+        }
+        const data = await response.json();
+        renderGenres(data.genres);
+    } catch (error){
+        console.error("Genre fetch error:", error);
+    }
+}
 
 // =====================================
 //           Render Movies
@@ -44,7 +62,7 @@ function renderMovies(movies) {
     if(movies.length === 0){
         moviesGrid.innerHTML = `
             <p class="empty-state">
-                No movies found.
+                No movies found for you search.
             </p>
         `;
         return;
@@ -56,7 +74,11 @@ function renderMovies(movies) {
             <div class="card-poster-container">
                 <img
                     class="card-poster"
-                    src="${IMAGE_BASE_URL + movie.poster_path}"
+                    src="${
+                        movie.poster_path 
+                            ? IMAGE_BASE_URL + movie.poster_path 
+                            : "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW92aWUlMjBiYW5uZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+                    }"
                     alt="${movie.title}"
                 >
 
@@ -84,9 +106,30 @@ function renderMovies(movies) {
     });
     lucide.createIcons();
 }
+
+// ===================================
+//           Render Genres 
+// ===================================
+function renderGenres(genres) {
+    genreFilters.innerHTML = ""
+    // Create "All" button
+    const allButton = document.createElement("button");
+    allButton.classList.add("genre-btn", "active");
+    allButton.textContent = "All";
+
+    genreFilters.appendChild(allButton);
+        
+    // Loop through API genres array
+    genres.forEach((genre) => {
+        const genreButton = document.createElement("button");
+        genreButton.classList.add("genre-btn");
+        genreButton.textContent = genre.name;
+        genreFilters.appendChild(genreButton);
+    });
+}
 // ===================================
 //           Set Hero Banner 
-// =====================================
+// ===================================
 function setHeroBanner(movie) {
     const heroTitle = document.getElementById("heroTitle");
     const heroMeta = document.getElementById("heroMeta");
@@ -159,3 +202,4 @@ async function handleSearch(event) {
 }
 // Initial fetch of popular movies when the page loads          
 fetchPopularMovies();
+fetchGenres();
