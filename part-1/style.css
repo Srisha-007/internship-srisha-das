@@ -530,6 +530,12 @@ body{
     color: var(--text-secondary);
     font-size: 1.1rem;
 }
+.error-message {
+    color: #ef4444;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
 /*=======================================
           Responsive Breakpoints   
 ========================================*/

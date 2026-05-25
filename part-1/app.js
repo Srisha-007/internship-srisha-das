@@ -4,6 +4,7 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 const moviesGrid = document.getElementById("moviesGrid");
 const spinner = document.getElementById("searchSpinner");
 const searchInput = document.getElementById("searchInput");
+const errorMessage = document.getElementById("errorMessage");
 // =====================================
 // Fetch Popular Movies from TMDB API
 // =====================================
@@ -13,16 +14,20 @@ async function fetchPopularMovies() {
         const response = await fetch(
             `${BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`
         );
-
+        if (response.status === 429) {
+            throw new Error("Too many requests. Please wait a moment and try again.");
+        }   
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
         const data = await response.json();
+        errorMessage.textContent = "";
         renderMovies(data.results);
         setHeroBanner(data.results[0]);
     }
     catch (error){
         console.error("Error fetching movies:", error);
+        errorMessage.textContent = error.message;
     }
     finally{
         spinner.style.display = "none";
@@ -78,7 +83,7 @@ function renderMovies(movies) {
     });
     lucide.createIcons();
 }
-// =====================================
+// ===================================
 //           Set Hero Banner 
 // =====================================
 function setHeroBanner(movie) {
@@ -121,11 +126,19 @@ async function handleSearch(event) {
         const response = await fetch(
             `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
         );
+        if (response.status === 429) {
+            throw new Error("Too many requests. Please wait a moment and try again.");
+        }   
+        if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status}`);
+        }
         const data = await response.json();
+        errorMessage.textContent = "";
         renderMovies(data.results);
 
     } catch (error) {
         console.error("Search error:", error);
+        errorMessage.textContent = error.message || "An error occurred while searching. Please try again.";
     } finally {
         spinner.style.display = "none";
     }
