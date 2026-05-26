@@ -17,14 +17,14 @@ let searchController;
 //    Show Loading State with Spinner and Skeleton Cards
 // =========================================================
 function showLoadingState() {
-    spinner.style.display = "block";
+    showSearchSpinner();
     renderSkeletonCards();
 }
 // =====================================
 //          Hide Loading State 
 // =====================================
 function hideLoadingState() {
-    spinner.style.display = "none";
+    hideSearchSpinner();
 }
 
 // =====================================
@@ -45,8 +45,17 @@ function renderSkeletonCards() {
         moviesGrid.appendChild(skeletonCard);
     }
 }
+// =====================================
+//          Show Search Spinner 
+// =====================================
 function showSearchSpinner(query) {
     spinner.style.display = "block";
+}
+// =====================================
+//          Hide Search Spinner 
+// =====================================
+function hideSearchSpinner() {
+    spinner.style.display = "none";
 }
 
 // =====================================
@@ -266,7 +275,7 @@ async function handleSearch(event) {
     searchController = new AbortController();
 
     try {
-        spinner.style.display = "block";
+        showSearchSpinner();
         // Show searching status
         searchStatus.textContent = `Searching for "${query}"...`;
         const response = await fetch(
@@ -299,7 +308,7 @@ async function handleSearch(event) {
         errorMessage.textContent = error.message || "An error occurred while searching. Please try again.";
         searchStatus.textContent = "";
     } finally {
-        spinner.style.display = "none";
+        hideSearchSpinner();
     }
 }
 
