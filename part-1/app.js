@@ -45,6 +45,9 @@ function renderSkeletonCards() {
         moviesGrid.appendChild(skeletonCard);
     }
 }
+function showSearchSpinner(query) {
+    spinner.style.display = "block";
+}
 
 // =====================================
 // Fetch Popular Movies from TMDB API
@@ -209,7 +212,18 @@ function debounce(func, delay) {
 //           Search Movies
 // =====================================
 const debouncedSearch = debounce(handleSearch, 500);
+
+// Listen for input events on the search box
 searchInput.addEventListener("input", debouncedSearch);
+
+// Allow immediate search on Enter key press
+searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        debouncedSearch.cancel(); // Cancel any pending debounce calls
+        handleSearch(event); // Execute search immediately
+    }
+});
+// Clear search and show popular movies when clear button is clicked
 clearSearchButton.addEventListener("click", () => {
     searchInput.value = "";
     clearSearchButton.style.display = "none";
