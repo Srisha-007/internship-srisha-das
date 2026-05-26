@@ -90,6 +90,7 @@ function renderMovies(movies) {
     movies.forEach((movie) => {
         const movieCard = document.createElement("article");
         movieCard.classList.add("movie-card");
+        movieCard.setAttribute("tabindex", "0");
         movieCard.innerHTML = `
             <div class="card-poster-container">
                 <img
