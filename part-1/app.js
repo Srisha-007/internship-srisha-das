@@ -79,10 +79,12 @@ function renderMovies(movies) {
 
     if(movies.length === 0){
         moviesGrid.innerHTML = `
-            <p class="empty-state">
-                No movies found for you search.
-            </p>
+            <div class="empty-state">
+                <i data-lucide="film"></i>
+                <p>No movies found. Try searching for another title.</p>
+            </div>
         `;
+        lucide.createIcons();
         return;
     }
     movies.forEach((movie) => {
