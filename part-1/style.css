@@ -410,6 +410,61 @@ body{
     font-weight: 500;
     color: var(--text-secondary);
 }
+/*================================
+            Skeleton Loader   
+=================================*/
+.skeleton-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+.skeleton-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background-color: #334155;
+}
+.skeleton-info {
+    padding: 1rem;
+}
+.skeleton-title {
+    width: 80%;
+    height: 20px;
+    margin-bottom: 0.75rem;
+    background-color: #334155;
+    border-radius: 4px;
+}
+.skeleton-meta {    
+    width: 50%;
+    height: 14px;
+    background-color: #334155;
+    border-radius: 4px;
+    margin-top: auto;
+}
+/* Shimmer Effect */
+.shimmer{
+    position: relative;
+    overflow: hidden;
+}
+.shimmer::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255,255,255,0.12), 
+        transparent
+    );
+    animation: shimmer 15s infinite;
+}
+@keyframes shimmer {
+    100% { left: 150%; }
+}
+
 /*=====================================
            Movie Detail Modal   
 ======================================*/

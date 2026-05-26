@@ -8,11 +8,30 @@ const genreFilters = document.querySelector(".genre-filters");
 const errorMessage = document.getElementById("errorMessage");
 
 // =====================================
+//    Skeleton Loader for Movie Cards
+// =====================================
+function renderSkeletonCards() {
+    moviesGrid.innerHTML = "";
+    for (let i = 0; i < 8; i++) {
+        const skeletonCard = document.createElement("div");
+        skeletonCard.classList.add("skeleton-card");
+        skeletonCard.innerHTML = `
+            <div class="skeleton-poster shimmer"></div>
+            <div class="skeleton-info">
+                <div class="skeleton-title shimmer"></div>
+                <div class="skeleton-meta shimmer"></div>
+            </div>
+        `;
+        moviesGrid.appendChild(skeletonCard);
+    }
+}
+
+// =====================================
 // Fetch Popular Movies from TMDB API
 // =====================================
 async function fetchPopularMovies() {       
     try{
-        spinner.style.display = "block";
+        renderSkeletonCards();
         const response = await fetch(
             `${BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`
         );
@@ -30,9 +49,6 @@ async function fetchPopularMovies() {
     catch (error){
         console.error("Error fetching movies:", error);
         errorMessage.textContent = error.message;
-    }
-    finally{
-        spinner.style.display = "none";
     }
 }
 // =====================================
@@ -200,6 +216,8 @@ async function handleSearch(event) {
         spinner.style.display = "none";
     }
 }
+
+
 // Initial fetch of popular movies when the page loads          
 fetchPopularMovies();
 fetchGenres();
