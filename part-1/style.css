@@ -365,6 +365,10 @@ body{
     border-color: var(--accent-color);
     box-shadow: 0 8px 12px rgba(0,0,0,0.2);
 }
+.movie-card:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+}
 .card-poster-container{
     position: relative;
     aspect-ratio: 2/3;
