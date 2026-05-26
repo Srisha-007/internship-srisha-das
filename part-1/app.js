@@ -8,6 +8,7 @@ const genreFilters = document.querySelector(".genre-filters");
 const errorMessage = document.getElementById("errorMessage");
 const searchStatus = document.getElementById("searchStatus");
 
+let lastSrearchQuery = "";
 // =====================================
 //    Skeleton Loader for Movie Cards
 // =====================================
@@ -189,7 +190,16 @@ searchInput.addEventListener("input", debouncedSearch);
 
 async function handleSearch(event) {
     const query = event.target.value.trim();
+
+    // Prevent duplicate searches for the same query
+    if (query === lastSrearchQuery) {
+        return;
+    }
+    lastSrearchQuery = query;
+
+    //Clear previous error messages
     errorMessage.textContent = "";
+    // If search box is empty, show popular movies again
     if (query === "") {
         searchStatus.textContent = "";
         fetchPopularMovies();
@@ -198,13 +208,16 @@ async function handleSearch(event) {
 
     try {
         spinner.style.display = "block";
+        // Show searching status
         searchStatus.textContent = `Searching for "${query}"...`;
         const response = await fetch(
             `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
         );
+        // Handle rate limiting (HTTP 429)
         if (response.status === 429) {
             throw new Error("Too many requests. Please wait a moment and try again.");
-        }   
+        }
+        // Handle other HTTP errors   
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
