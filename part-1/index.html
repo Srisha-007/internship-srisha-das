@@ -105,6 +105,9 @@
                     placeholder="Search movies..."
                     aria-label="Search movies"
                 >
+                <button type="button" class="clear-search-button" id="clearSearchButton" aria-label="Clear search">
+                    <i data-lucide="x"></i>
+                </button>
                 <div class="spinner-container" id="searchSpinner">
                     <div class="spinner"></div>
                 </div>
@@ -119,7 +122,9 @@
         <!-- FEATURE 4: Movie Cards Grid -->
         <section class="movies-section" id="popular">
             <div class="section-header">
-                <h2 class="section-title">Popular Movies</h2>
+                <h2 class="section-title" id="sectionTitle">
+                    Popular Movies
+                </h2>
             </div>
             
             <div class="movies-grid" id="moviesGrid"></div>
