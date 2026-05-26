@@ -1,6 +1,7 @@
 const BASE_URL="https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
+const sectionTitle = document.getElementById("sectionTitle");
 const moviesGrid = document.getElementById("moviesGrid");
 const spinner = document.getElementById("searchSpinner");
 const searchInput = document.getElementById("searchInput");
@@ -82,7 +83,9 @@ function renderMovies(movies) {
         moviesGrid.innerHTML = `
             <div class="empty-state">
                 <i data-lucide="film"></i>
-                <p>No movies found. Try searching for another title.</p>
+                <h3>No Movies Found</h3>
+                <p> We couldn't find any movies matching your search.</p>
+                <p>Try searching for another title.</p>
             </div>
         `;
         lucide.createIcons();
@@ -205,6 +208,7 @@ async function handleSearch(event) {
     errorMessage.textContent = "";
     // If search box is empty, show popular movies again
     if (query === "") {
+        sectionTitle.textContent = "Popular Movies";
         searchStatus.textContent = "";
         fetchPopularMovies();
         return;
@@ -235,6 +239,7 @@ async function handleSearch(event) {
         }
         const data = await response.json();
         renderMovies(data.results);
+        sectionTitle.textContent = `Search Results for "${query}"`;
         searchStatus.textContent = `${data.results.length} result(s) found`;
 
     } catch (error) {
