@@ -26,7 +26,6 @@ function showLoadingState() {
 function hideLoadingState() {
     hideSearchSpinner();
 }
-
 // =====================================
 //    Skeleton Loader for Movie Cards
 // =====================================
@@ -57,23 +56,32 @@ function showSearchSpinner(query) {
 function hideSearchSpinner() {
     spinner.style.display = "none";
 }
-
+// ============================================================
+//    Generic Fetch Function (from TMDB) with Error Handling
+// ============================================================
+async function fetchFromTMDB(endpoint, controller = null) {
+    const separator = endpoint.includes("?") ? "&" : "?";
+    const response = await fetch(
+        `${BASE_URL}${endpoint}${separator}api_key=${TMDB_API_KEY}`,
+        controller 
+            ? { signal: controller.signal } 
+            : {}
+    );
+    if (response.status === 429) {
+        throw new Error("Too many requests. Please wait a moment and try again.");
+    }
+    if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+    }
+    return response.json();
+}
 // =====================================
 // Fetch Popular Movies from TMDB API
 // =====================================
 async function fetchPopularMovies() {       
     try{
         renderSkeletonCards();
-        const response = await fetch(
-            `${BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}`
-        );
-        if (response.status === 429) {
-            throw new Error("Too many requests. Please wait a moment and try again.");
-        }   
-        if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await fetchFromTMDB("/movie/popular");
         errorMessage.textContent = "";
         renderMovies(data.results);
         setHeroBanner(data.results[0]);
@@ -88,13 +96,7 @@ async function fetchPopularMovies() {
 // =====================================
 async function fetchGenres() {
     try{
-        const response = await fetch(
-            `${BASE_URL}/genre/movie/list?api_key=${TMDB_API_KEY}`
-        );
-        if (!response.ok) {
-            throw new Error("Failed to fetch genres.");
-        }
-        const data = await response.json();
+        const data = await fetchFromTMDB("/genre/movie/list");
         renderGenres(data.genres);
     } catch (error){
         console.error("Genre fetch error:", error);
@@ -228,7 +230,6 @@ searchInput.addEventListener("input", debouncedSearch);
 // Allow immediate search on Enter key press
 searchInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        debouncedSearch.cancel(); // Cancel any pending debounce calls
         handleSearch(event); // Execute search immediately
     }
 });
@@ -278,20 +279,10 @@ async function handleSearch(event) {
         showSearchSpinner();
         // Show searching status
         searchStatus.textContent = `Searching for "${query}"...`;
-        const response = await fetch(
-            `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`,{
-                signal: searchController.signal
-            }
+        const data = await fetchFromTMDB(`/search/movie?query=${encodeURIComponent(query)}`, 
+            searchController
         );
-        // Handle rate limiting (HTTP 429)
-        if (response.status === 429) {
-            throw new Error("Too many requests. Please wait a moment and try again.");
-        }
-        // Handle other HTTP errors   
-        if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
-        const data = await response.json();
+
         if (currentQuery !== searchInput.value.trim().toLowerCase()) {
             return;
         }
