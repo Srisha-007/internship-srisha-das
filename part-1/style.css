@@ -278,6 +278,17 @@ body{
     outline: none;
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
 }
+.error-message {
+    color: #ef4444;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+.search-status {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
 /* Genre Filters */
 .genre-filters {
     display: flex;
@@ -459,7 +470,7 @@ body{
         rgba(255,255,255,0.12), 
         transparent
     );
-    animation: shimmer 15s infinite;
+    animation: shimmer 1.5s infinite;
 }
 @keyframes shimmer {
     100% { left: 150%; }
@@ -587,12 +598,7 @@ body{
     color: var(--text-secondary);
     font-size: 1.1rem;
 }
-.error-message {
-    color: #ef4444;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-}
+
 /*=======================================
           Responsive Breakpoints   
 ========================================*/
