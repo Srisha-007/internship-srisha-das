@@ -6,7 +6,9 @@ const spinner = document.getElementById("searchSpinner");
 const searchInput = document.getElementById("searchInput");
 const genreFilters = document.querySelector(".genre-filters");
 const errorMessage = document.getElementById("errorMessage");
+const searchStatus = document.getElementById("searchStatus");
 
+let lastSrearchQuery = "";
 // =====================================
 //    Skeleton Loader for Movie Cards
 // =====================================
@@ -77,15 +79,18 @@ function renderMovies(movies) {
 
     if(movies.length === 0){
         moviesGrid.innerHTML = `
-            <p class="empty-state">
-                No movies found for you search.
-            </p>
+            <div class="empty-state">
+                <i data-lucide="film"></i>
+                <p>No movies found. Try searching for another title.</p>
+            </div>
         `;
+        lucide.createIcons();
         return;
     }
     movies.forEach((movie) => {
         const movieCard = document.createElement("article");
         movieCard.classList.add("movie-card");
+        movieCard.setAttribute("tabindex", "0");
         movieCard.innerHTML = `
             <div class="card-poster-container">
                 <img
@@ -189,29 +194,44 @@ searchInput.addEventListener("input", debouncedSearch);
 async function handleSearch(event) {
     const query = event.target.value.trim();
 
+    // Prevent duplicate searches for the same query
+    if (query === lastSrearchQuery) {
+        return;
+    }
+    lastSrearchQuery = query;
+
+    //Clear previous error messages
+    errorMessage.textContent = "";
+    // If search box is empty, show popular movies again
     if (query === "") {
+        searchStatus.textContent = "";
         fetchPopularMovies();
         return;
     }
 
     try {
         spinner.style.display = "block";
+        // Show searching status
+        searchStatus.textContent = `Searching for "${query}"...`;
         const response = await fetch(
             `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
         );
+        // Handle rate limiting (HTTP 429)
         if (response.status === 429) {
             throw new Error("Too many requests. Please wait a moment and try again.");
-        }   
+        }
+        // Handle other HTTP errors   
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
         const data = await response.json();
-        errorMessage.textContent = "";
         renderMovies(data.results);
+        searchStatus.textContent = `${data.results.length} result(s) found`;
 
     } catch (error) {
         console.error("Search error:", error);
         errorMessage.textContent = error.message || "An error occurred while searching. Please try again.";
+        searchStatus.textContent = "";
     } finally {
         spinner.style.display = "none";
     }

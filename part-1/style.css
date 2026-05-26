@@ -278,6 +278,17 @@ body{
     outline: none;
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
 }
+.error-message {
+    color: #ef4444;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+.search-status {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
 /* Genre Filters */
 .genre-filters {
     display: flex;
@@ -353,6 +364,10 @@ body{
     transform: translateY(-5px);
     border-color: var(--accent-color);
     box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+}
+.movie-card:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
 }
 .card-poster-container{
     position: relative;
@@ -459,7 +474,7 @@ body{
         rgba(255,255,255,0.12), 
         transparent
     );
-    animation: shimmer 15s infinite;
+    animation: shimmer 1.5s infinite;
 }
 @keyframes shimmer {
     100% { left: 150%; }
@@ -586,13 +601,12 @@ body{
     padding: 3rem;
     color: var(--text-secondary);
     font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
-.error-message {
-    color: #ef4444;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    font-weight: 500;
-}
+
 /*=======================================
           Responsive Breakpoints   
 ========================================*/
