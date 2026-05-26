@@ -11,7 +11,7 @@ const errorMessage = document.getElementById("errorMessage");
 const searchStatus = document.getElementById("searchStatus");
 
 let lastSearchQuery = "";
-let seachController;
+let searchController;
 
 // =========================================================
 //    Show Loading State with Spinner and Skeleton Cards
@@ -240,6 +240,7 @@ clearSearchButton.addEventListener("click", () => {
 
 async function handleSearch(event) {
     const query = event.target.value.trim();
+    const currentQuery = query.toLowerCase();
     clearSearchButton.style.display = query ? "flex" : "none";
 
     // Prevent duplicate searches for the same query
@@ -258,11 +259,11 @@ async function handleSearch(event) {
         return;
     }
     // Cancel previous request if it's still pending
-    if (seachController) {
-        seachController.abort();
+    if (searchController) {
+        searchController.abort();
     }
     // Create new AbortController for the current search
-    seachController = new AbortController();
+    searchController = new AbortController();
 
     try {
         spinner.style.display = "block";
@@ -270,7 +271,7 @@ async function handleSearch(event) {
         searchStatus.textContent = `Searching for "${query}"...`;
         const response = await fetch(
             `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`,{
-                signal: seachController.signal
+                signal: searchController.signal
             }
         );
         // Handle rate limiting (HTTP 429)
@@ -282,6 +283,9 @@ async function handleSearch(event) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
         const data = await response.json();
+        if (currentQuery !== searchInput.value.trim().toLowerCase()) {
+            return;
+        }
         renderMovies(data.results);
         sectionTitle.textContent = `Search Results for "${query}"`;
         searchStatus.textContent = `${data.results.length} result(s) found`;
