@@ -241,6 +241,24 @@ body{
     transform: translateY(-50%);
     color: var(--text-secondary);
 }
+/* Clear Search Button */
+.clear-search-button {
+    position: absolute;
+    right: 3.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+.clear-search-button:hover {
+    color: var(--accent-color);
+}
 /* Seach Loading Spinner */
 .spinner-container{
     position: absolute;

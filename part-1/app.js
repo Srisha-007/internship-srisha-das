@@ -3,14 +3,30 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 const sectionTitle = document.getElementById("sectionTitle");
 const moviesGrid = document.getElementById("moviesGrid");
+const clearSearchButton = document.getElementById("clearSearchButton");
 const spinner = document.getElementById("searchSpinner");
 const searchInput = document.getElementById("searchInput");
 const genreFilters = document.querySelector(".genre-filters");
 const errorMessage = document.getElementById("errorMessage");
 const searchStatus = document.getElementById("searchStatus");
 
-let lastSrearchQuery = "";
+let lastSearchQuery = "";
 let seachController;
+
+// =========================================================
+//    Show Loading State with Spinner and Skeleton Cards
+// =========================================================
+function showLoadingState() {
+    spinner.style.display = "block";
+    renderSkeletonCards();
+}
+// =====================================
+//          Hide Loading State 
+// =====================================
+function hideLoadingState() {
+    spinner.style.display = "none";
+}
+
 // =====================================
 //    Skeleton Loader for Movie Cards
 // =====================================
@@ -194,15 +210,29 @@ function debounce(func, delay) {
 // =====================================
 const debouncedSearch = debounce(handleSearch, 500);
 searchInput.addEventListener("input", debouncedSearch);
+clearSearchButton.addEventListener("click", () => {
+    searchInput.value = "";
+    clearSearchButton.style.display = "none";
+    
+    lastSearchQuery = "";
+    
+    errorMessage.textContent = "";
+    searchStatus.textContent = "";
+    
+    sectionTitle.textContent = "Popular Movies";
+    fetchPopularMovies();
+    searchInput.focus();
+});
 
 async function handleSearch(event) {
     const query = event.target.value.trim();
+    clearSearchButton.style.display = query ? "flex" : "none";
 
     // Prevent duplicate searches for the same query
-    if (query === lastSrearchQuery) {
+    if (query === lastSearchQuery) {
         return;
     }
-    lastSrearchQuery = query;
+    lastSearchQuery = query;
 
     //Clear previous error messages
     errorMessage.textContent = "";
@@ -259,3 +289,4 @@ async function handleSearch(event) {
 // Initial fetch of popular movies when the page loads          
 fetchPopularMovies();
 fetchGenres();
+lucide.createIcons();
