@@ -9,6 +9,7 @@ const errorMessage = document.getElementById("errorMessage");
 const searchStatus = document.getElementById("searchStatus");
 
 let lastSrearchQuery = "";
+let seachController;
 // =====================================
 //    Skeleton Loader for Movie Cards
 // =====================================
@@ -208,13 +209,21 @@ async function handleSearch(event) {
         fetchPopularMovies();
         return;
     }
+    // Cancel previous request if it's still pending
+    if (seachController) {
+        seachController.abort();
+    }
+    // Create new AbortController for the current search
+    seachController = new AbortController();
 
     try {
         spinner.style.display = "block";
         // Show searching status
         searchStatus.textContent = `Searching for "${query}"...`;
         const response = await fetch(
-            `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
+            `${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${query}`,{
+                signal: seachController.signal
+            }
         );
         // Handle rate limiting (HTTP 429)
         if (response.status === 429) {
@@ -229,6 +238,10 @@ async function handleSearch(event) {
         searchStatus.textContent = `${data.results.length} result(s) found`;
 
     } catch (error) {
+        // Ignore aborted requests
+        if (error.name === "AbortError") {
+            return;
+        }
         console.error("Search error:", error);
         errorMessage.textContent = error.message || "An error occurred while searching. Please try again.";
         searchStatus.textContent = "";
