@@ -255,17 +255,21 @@ function populateMovieModal(movie) {
            : "https://placehold.co/500x750/111827/9ca3af?text=Poster+Unavailable";
       
     modalPoster.alt = movie.title;
-
+    
+    const backdropUrl = movie.backdrop_path
+        ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+        : "https://placehold.co/1200x675/0f172a/94a3b8?text=Backdrop+Unavailable"
     modalHeroBg.style.backgroundImage = `
         linear-gradient(
             to top,
             rgba(15,23,42,0.9),
             rgba(15,23,42,0.3)
         ),
-        url(https://image.tmdb.org/t/p/original${movie.backdrop_path})
+        url(${backdropUrl}})
     `;
-    modalRating.textContent = movie.vote_average.toFixed(1);
-      
+
+    modalRating.textContent = movie.vote_average.toFixed(1);  
+    
     modalRuntime.innerHTML = `
         <i data-lucide="clock"></i>
         ${movie.runtime || "--"} min
