@@ -160,6 +160,7 @@ function renderMovies(movies) {
                 >
 
                 <div class="card-rating-badge">
+                    <i data-lucide="star"></i>
                     ${movie.vote_average.toFixed(1)}
                 </div>
             </div>
@@ -231,9 +232,14 @@ function setHeroBanner(movie) {
 
     heroTitle.textContent = movie.title;
 
-    heroMeta.textContent =
-        `${formatDate(movie.release_date)} • ${movie.vote_average.toFixed(1)}`;
-
+    heroMeta.innerHTML = `
+        <span>${formatDate(movie.release_date)}</span>
+        <span class="hero-rating">
+            <i data-lucide="star"></i>
+            ${movie.vote_average.toFixed(1)}
+        </span>
+    `;
+    
     heroDescription.textContent = movie.overview;
 
     document.querySelector(".hero-section").style.backgroundImage = `
