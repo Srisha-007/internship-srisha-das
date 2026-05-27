@@ -205,6 +205,23 @@ function renderGenres(genres) {
     });
 }
 // ===================================
+//           Format Movie Date 
+// ===================================
+function formatDate(dateString) {
+    if (!dateString) {
+        return "Unknown";
+    }
+    const options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    };
+    return new Date(dateString).toLocaleDateString(
+        "en-US",
+        options
+    );
+}
+// ===================================
 //           Set Hero Banner 
 // ===================================
 function setHeroBanner(movie) {
@@ -215,7 +232,7 @@ function setHeroBanner(movie) {
     heroTitle.textContent = movie.title;
 
     heroMeta.textContent =
-        `${movie.release_date} • ${movie.vote_average.toFixed(1)}`;
+        `${formatDate(movie.release_date)} • ${movie.vote_average.toFixed(1)}`;
 
     heroDescription.textContent = movie.overview;
 
@@ -277,7 +294,7 @@ function populateMovieModal(movie) {
        
     modalReleaseDate.innerHTML = `
         <i data-lucide="calendar"></i>
-        ${movie.release_date || "N/A"}
+        ${formatDate(movie.release_date)}
     `;
 
     modalOverview.textContent = movie.overview || "No overview availabile";
