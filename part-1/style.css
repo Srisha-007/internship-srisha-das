@@ -120,7 +120,7 @@ body{
 .nav-link:hover, .nav-link.active {
     color: var(--accent-color);
 }
-.theme-toggle-btn {
+.theme-toggle-button {
     background: none;
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -130,12 +130,12 @@ body{
     display: inline-flex;
     transition: var(--transition-smooth);
 }
-.theme-toggle-btn:hover {
+.theme-toggle-button:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
 }
 .nav-link:focus-visible,
-.theme-toggle-btn:focus-visible {
+.theme-toggle-button:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }   
@@ -518,6 +518,19 @@ body{
     background-color: var(--overlay-bg);
     backdrop-filter: blur(8px);
 }
+ .movie-dialog[open] {
+        animation: modalFadeIn 0.3s ease;
+     }
+     @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -48%);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%,-50%);
+        }
+     }
 .modal-content {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -525,7 +538,7 @@ body{
     overflow: hidden;
     position: relative;
 }
-.modal-close-btn{
+.modal-close-button{
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -542,7 +555,7 @@ body{
     z-index:10;
     transition: var(--transition-smooth);
 }
-.modal-close-btn:hover{
+.modal-close-button:hover{
     background-color: var(--accent-color);
 }
 .modal-hero {
@@ -599,6 +612,16 @@ body{
     flex-wrap: wrap;
     color:var(--text-primary);
     margin-bottom: 1.5rem;
+}
+/* Modal - Genre Badge*/
+.modal-genre-badge{
+    background-color: rgba(59, 130, 246, 0.15);
+    border: 1px solid var (--accent-color);
+    border-radius: 999px;
+    color: var(--accent-color);
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 /* Modal - Movie Overview Title */
 .modal-overview-title {
