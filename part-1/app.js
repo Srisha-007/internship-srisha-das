@@ -96,12 +96,31 @@ async function fetchPopularMovies() {
         const data = await fetchFromTMDB("/movie/popular");
         errorMessage.textContent = "";
         renderMovies(data.results);
-        setHeroBanner(data.results[0]);
     }
     catch (error){
         console.error("Error fetching movies:", error);
         errorMessage.textContent = error.message;
     }
+}
+// =========================================================
+//      Fetch Trending Movie of the Day from TMDB API
+// =========================================================
+async function fetchTrendingMovies() {
+    try{
+        const data = await fetchFromTMDB("/trending/movie/day");
+        errorMessage.textContent = "";
+        // Pick the first movie that has both a backdrop image and overview
+        const featuredMovie = data.results.find(
+            movie => movie.backdrop_path && movie.overview
+        );
+        // Fall to firsm movie if none match
+        setHeroBanner(featuredMovie || data.results[0]);        
+    }
+    catch (error){
+        console.error("Error fetching trending movie:", error);
+        errorMessage.textContent = error.message;
+    }
+    lucide.createIcons();
 }
 // =====================================
 //      Fetch Genres from TMDB API
@@ -442,5 +461,6 @@ movieModal.addEventListener("click", (event) => {
 
 // Initial fetch of popular movies when the page loads          
 fetchPopularMovies();
+fetchTrendingMovies();
 fetchGenres();
 lucide.createIcons();
