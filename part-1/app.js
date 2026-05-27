@@ -10,6 +10,18 @@ const genreFilters = document.querySelector(".genre-filters");
 const errorMessage = document.getElementById("errorMessage");
 const searchStatus = document.getElementById("searchStatus");
 
+const movieModal = document.getElementById("movieModal");
+const modalCloseButton = document.getElementById("modalCloseButton");
+
+const modalTitle = document.getElementById("modalTitle");
+const modalPoster = document.getElementById("modalPoster");
+const modalHeroBg = document.getElementById("modalHeroBg");
+const modalRating = document.getElementById("modalRating");
+const modalRuntime = document.getElementById("modalRuntime");
+const modalReleaseDate = document.getElementById("modalReleaseDate");
+const modalGenres = document.getElementById("modalGenres");
+const modalOverview = document.getElementById("modalOverview");
+
 let lastSearchQuery = "";
 let searchController;
 
@@ -125,6 +137,9 @@ function renderMovies(movies) {
         const movieCard = document.createElement("article");
         movieCard.classList.add("movie-card");
         movieCard.setAttribute("tabindex", "0");
+        movieCard.addEventListener("click", () => {
+            openMovieModal(movie.id);
+        });
         movieCard.innerHTML = `
             <div class="card-poster-container">
                 <img
@@ -207,6 +222,66 @@ function setHeroBanner(movie) {
         url(https://image.tmdb.org/t/p/original${movie.backdrop_path})
     `;
 }
+// =====================================
+//          Open Movie Modal
+// =====================================
+async function openMovieModal(movieId) {
+    try {
+        document.body.style.overflow = "hidden";
+        const movie = await fetchFromTMDB(`/movie/${id}`);
+
+        populateMovieModal(movie);
+        movieModal.showModal();
+
+    } catch (error) {
+        console.error("Modal fetch error:", error);
+        errorMessage.textContent = "Failed to load movie details";
+    }
+}
+// =====================================
+//          Populate Movie Modal
+// =====================================
+function populateMovieModal(movie) {
+    modalTitle.textContent = movie.title;
+    modalPoster.src = movie.poster_path
+           ?  `${IMAGE_BASE_URL}${movie.poster_path}`
+           : "https://placehold.co/500x750/111827/9ca3af?text=Poster+Unavailable";
+      
+    modalPoster.alt = movie.title;
+
+    modalHeroBg.style.backgroundImage = `
+        linear-gradient(
+            to top,
+            rgba(15,23,42,0.9),
+            rgba(15,23,42,0.3)
+        ),
+        url(https://image.tmdb.org/t/p/original${movie.backdrop_path})
+    `;
+    modalRating.textContent = movie.vote_average.toFixed(1);
+      
+    modalRuntime.innerHTML = `
+        <i data-lucide="clock"></i>
+        ${movie.runtime || "--"} min
+    `;
+       
+    modalReleaseDate.innerHTML = `
+        <i data-lucide="calendar"></i>
+        ${movie.release_date || "N/A"}
+    `;
+
+    modalOverview.textContent = movie.overview || "No overview availabile";
+
+    modalGenres.innerHTML = "";
+    movie.genres.forEach((genre) => {
+        const genreBadge = document.createElement("span");
+        genreBadge.classList.add("genre-button");
+        genreBadge.textContent = genre.name;
+        modalGenres.appendChild(genreBadge);
+    });
+
+    lucide.createIcons();
+}
+
 // =====================================
 //    Search Input Debounce Function
 // =====================================

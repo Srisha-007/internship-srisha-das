@@ -120,7 +120,7 @@ body{
 .nav-link:hover, .nav-link.active {
     color: var(--accent-color);
 }
-.theme-toggle-btn {
+.theme-toggle-button {
     background: none;
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -130,12 +130,12 @@ body{
     display: inline-flex;
     transition: var(--transition-smooth);
 }
-.theme-toggle-btn:hover {
+.theme-toggle-button:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
 }
 .nav-link:focus-visible,
-.theme-toggle-btn:focus-visible {
+.theme-toggle-button:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }   
@@ -525,7 +525,7 @@ body{
     overflow: hidden;
     position: relative;
 }
-.modal-close-btn{
+.modal-close-button{
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -542,7 +542,7 @@ body{
     z-index:10;
     transition: var(--transition-smooth);
 }
-.modal-close-btn:hover{
+.modal-close-button:hover{
     background-color: var(--accent-color);
 }
 .modal-hero {
