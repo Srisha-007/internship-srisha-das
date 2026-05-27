@@ -140,6 +140,13 @@ function renderMovies(movies) {
         movieCard.addEventListener("click", () => {
             openMovieModal(movie.id);
         });
+        movieCard.addEventListener("keydown", (event) => {
+           if (event.key ==="Enter" || event.key === " ") {
+                event.preventDefault();
+               openMovieModal(movie.id);
+           }
+       });
+
         movieCard.innerHTML = `
             <div class="card-poster-container">
                 <img
@@ -228,7 +235,7 @@ function setHeroBanner(movie) {
 async function openMovieModal(movieId) {
     try {
         document.body.style.overflow = "hidden";
-        const movie = await fetchFromTMDB(`/movie/${id}`);
+        const movie = await fetchFromTMDB(`/movie/${movieId}`);
 
         populateMovieModal(movie);
         movieModal.showModal();
@@ -274,7 +281,7 @@ function populateMovieModal(movie) {
     modalGenres.innerHTML = "";
     movie.genres.forEach((genre) => {
         const genreBadge = document.createElement("span");
-        genreBadge.classList.add("genre-button");
+        genreBadge.classList.add("modal-genre-badge");
         genreBadge.textContent = genre.name;
         modalGenres.appendChild(genreBadge);
     });

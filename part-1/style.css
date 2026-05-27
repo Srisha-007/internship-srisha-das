@@ -518,6 +518,19 @@ body{
     background-color: var(--overlay-bg);
     backdrop-filter: blur(8px);
 }
+ .movie-dialog[open] {
+        animation: modalFadeIn 0.3s ease;
+     }
+     @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -48%);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%,-50%);
+        }
+     }
 .modal-content {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -599,6 +612,16 @@ body{
     flex-wrap: wrap;
     color:var(--text-primary);
     margin-bottom: 1.5rem;
+}
+/* Modal - Genre Badge*/
+.modal-genre-badge{
+    background-color: rgba(59, 130, 246, 0.15);
+    border: 1px solid var (--accent-color);
+    border-radius: 999px;
+    color: var(--accent-color);
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 /* Modal - Movie Overview Title */
 .modal-overview-title {
