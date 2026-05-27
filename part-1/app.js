@@ -377,7 +377,34 @@ async function handleSearch(event) {
         hideSearchSpinner();
     }
 }
+// =====================================
+//            Close Modal
+// =====================================
+function closeMovieModal() {
+    movieModal.close();
+    document.body.style.overflow = "auto";
+}
+// Close Button Interaction
+modalCloseButton.addEventListener("click", closeMovieModal);
 
+//ESC Key Interaction
+movieModal.addEventListener("cancel", () => {
+    document.body.style.overflow = "auto";
+});
+// Click Outside Modal Interaction
+movieModal.addEventListener("click", (event) => {
+    const dialogDimensions = movieModal.getBoundingClientRect();
+
+    const clickedOutside = 
+        event.clientX < dialogDimensions.left ||
+        event.clientX > dialogDimensions.right ||
+        event.clientY < dialogDimensions.top ||
+        event.clientY > dialogDimensions.bottom;
+    
+    if(clickedOutside) {
+        closeMovieModal();
+    }
+});
 
 // Initial fetch of popular movies when the page loads          
 fetchPopularMovies();
