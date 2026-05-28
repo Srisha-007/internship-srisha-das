@@ -1,6 +1,7 @@
 const BASE_URL="https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
+const themeToggle = document.getElementById("themeToggle");
 const heroDetailsButton = document.getElementById("heroDetailsButton");
 const sectionTitle = document.getElementById("sectionTitle");
 const moviesGrid = document.getElementById("moviesGrid");
@@ -27,6 +28,27 @@ let currentHeroMovieId = null;
 let lastSearchQuery = "";
 let searchController;
 let activeGenreId = null;
+
+// =====================================
+//          Theme Handling 
+// =====================================
+function applyTheme(theme){
+    document.documentElement.setAttribute(
+        "data-theme", theme
+    );
+    themeToggle.innerHTML = theme === "light"
+        ? `<i data-lucide="moon"></i>`
+        : `<i data-lucide="sun"></i>`;
+    localStorage.setItem("theme", theme);
+
+    lucide.createIcons();
+}
+function initializeTheme(){
+    const savedTheme = 
+        localStorage.getItem("theme") || "dark";
+    
+        applyTheme(savedTheme);
+}
 
 // =========================================================
 //    Show Loading State with Spinner and Skeleton Cards
@@ -428,7 +450,7 @@ clearSearchButton.addEventListener("click", () => {
     // Resect active genre button UI
     document.querySelectorAll(".genre-btn").forEach((button) => {
         button.classList.remove("active");
-    }).
+    })
     document.querySelector(".genre-btn")?.classList.add("active");
 
     sectionTitle.textContent = "Popular Movies";
@@ -497,6 +519,19 @@ async function handleSearch(event) {
         hideSearchSpinner();
     }
 }
+// =====================================
+//      Theme Toggle Button
+// =====================================
+themeToggle.addEventListener("click", () => {
+    const currentTheme = 
+        document.documentElement.getAttribute("data-theme");
+    
+    const newTheme = 
+        currentTheme === "light"
+            ? "dark"
+            : "light";              
+    applyTheme(newTheme);
+});
 
 // =====================================
 //      Hero Banner Details Button
@@ -540,4 +575,5 @@ movieModal.addEventListener("click", (event) => {
 fetchPopularMovies();
 fetchTrendingMovies();
 fetchGenres();
+initializeTheme();
 lucide.createIcons();

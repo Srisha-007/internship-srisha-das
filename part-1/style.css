@@ -45,7 +45,7 @@ html{
     --bg-navbar: rgba(248, 250, 252, 0.9);  
 
     --text-primary: #0f172a;        
-    --text-secondary: #64748b;       
+    --text-secondary: #a7bfe0;       
     
     --accent-color: #2563eb;           
     --accent-hover: #1d4ed8;
@@ -53,26 +53,6 @@ html{
     --border-color: #e2e8f0;     
     
     --overlay-bg: rgba(15, 23, 42, 0.4);
-}
-
-/*================================
-       Theme Toggle Button  
-=================================*/
-.theme-toggle{
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-card);
-    color: var(--accent-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.theme-toggle:hover {
-    transform: scale(1.05);
 }
 
 body{
@@ -139,8 +119,8 @@ body{
 .nav-link:hover, .nav-link.active {
     color: var(--accent-color);
 }
-.theme-toggle-button {
-    background: none;
+.theme-toggle {
+    background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
     padding: 0.5rem;
@@ -149,12 +129,13 @@ body{
     display: inline-flex;
     transition: var(--transition-smooth);
 }
-.theme-toggle-button:hover {
+.theme-toggle:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
+    transform: scale(1.05);
 }
 .nav-link:focus-visible,
-.theme-toggle-button:focus-visible {
+.theme-toggle:focus-visible {
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }   
@@ -203,6 +184,7 @@ body{
 }
 /* Main Movie Title */
 .hero-title {
+    color:white;
     font-size: 3rem;
     font-weight: 800;
     line-height: 1.2;
