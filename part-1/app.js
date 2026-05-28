@@ -1,6 +1,7 @@
 const BASE_URL="https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
+const heroDetailsButton = document.getElementById("heroDetailsButton");
 const sectionTitle = document.getElementById("sectionTitle");
 const moviesGrid = document.getElementById("moviesGrid");
 const clearSearchButton = document.getElementById("clearSearchButton");
@@ -22,6 +23,7 @@ const modalReleaseDate = document.getElementById("modalReleaseDate");
 const modalGenres = document.getElementById("modalGenres");
 const modalOverview = document.getElementById("modalOverview");
 
+let currentHeroMovieId = null;
 let lastSearchQuery = "";
 let searchController;
 let activeGenreId = null;
@@ -295,6 +297,7 @@ function formatDate(dateString) {
 //           Set Hero Banner 
 // ===================================
 function setHeroBanner(movie) {
+    currentHeroMovieId = movie.id;
     const heroTitle = document.getElementById("heroTitle");
     const heroMeta = document.getElementById("heroMeta");
     const heroDescription = document.getElementById("heroDescription");
@@ -487,6 +490,16 @@ async function handleSearch(event) {
         hideSearchSpinner();
     }
 }
+
+// =====================================
+//      Hero Banner Details Button
+// =====================================
+heroDetailsButton.addEventListener("click", () => {
+    if (currentHeroMovieId) {
+        openMovieModal(currentHeroMovieId);
+    }
+});
+
 // =====================================
 //            Close Modal
 // =====================================
