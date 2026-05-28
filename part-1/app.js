@@ -340,8 +340,8 @@ function setHeroBanner(movie) {
 
         linear-gradient(
             to right,
-            rgba(15,23,42,0.95) 40%,
-            rgba(15,23,42,0.6)
+            var(--hero-overlay-start) 40%,
+            var(--hero-overlay-end)
         ),
         url(https://image.tmdb.org/t/p/original${movie.backdrop_path})
     `;
