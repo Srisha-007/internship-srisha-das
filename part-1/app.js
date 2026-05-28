@@ -236,7 +236,7 @@ function renderGenres(genres) {
     allButton.textContent = "All";
 
     allButton.addEventListener("click", async () =>{
-        activeGenreid = null;
+        activeGenreId = null;
         searchInput.value = "";
         clearSearchButton.style.display = "none";
         searchStatus.textContent = "";
@@ -260,7 +260,7 @@ function renderGenres(genres) {
         genreButton.textContent = genre.name;
 
         genreButton.addEventListener("click", async () => {
-            activeGenreid = genre.id;
+            activeGenreId = genre.id;
             searchInput.value = "";
             clearSearchButton.style.display = "none";
             searchStatus.textContent = "";
@@ -360,7 +360,7 @@ function populateMovieModal(movie) {
             rgba(15,23,42,0.9),
             rgba(15,23,42,0.3)
         ),
-        url(${backdropUrl}})
+        url(${backdropUrl})
     `;
 
     modalRating.textContent = movie.vote_average.toFixed(1);  
@@ -424,6 +424,13 @@ clearSearchButton.addEventListener("click", () => {
     errorMessage.textContent = "";
     searchStatus.textContent = "";
     
+    activeGenreId = null;
+    // Resect active genre button UI
+    document.querySelectorAll(".genre-btn").forEach((button) => {
+        button.classList.remove("active");
+    }).
+    document.querySelector(".genre-btn")?.classList.add("active");
+
     sectionTitle.textContent = "Popular Movies";
     fetchPopularMovies();
     searchInput.focus();
