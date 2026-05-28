@@ -24,6 +24,7 @@ const modalOverview = document.getElementById("modalOverview");
 
 let lastSearchQuery = "";
 let searchController;
+let activeGenreId = null;
 
 // =========================================================
 //    Show Loading State with Spinner and Skeleton Cards
@@ -123,6 +124,23 @@ async function fetchTrendingMovies() {
     lucide.createIcons();
 }
 // =====================================
+//         Fetch Movies By Genre
+// =====================================
+async function fetchMoviesByGenre(genreId){
+    try{
+        renderSkeletonCards();
+        const data = await fetchFromTMDB(
+            `/discover/movie?with_genres=${genreId}`
+        );
+        errorMessage.textContent="";
+        renderMovies(data.results);
+    }
+    catch (error){
+        console.error("Genre filter error:", error)
+        errorMessage.textContent = error.message || "Failed to fetch movies for selected genre.";
+    }
+}
+// =====================================
 //      Fetch Genres from TMDB API
 // =====================================
 async function fetchGenres() {
@@ -209,18 +227,50 @@ function renderMovies(movies) {
 // ===================================
 function renderGenres(genres) {
     genreFilters.innerHTML = ""
-    // Create "All" button
+
+    // "All" button
     const allButton = document.createElement("button");
     allButton.classList.add("genre-btn", "active");
     allButton.textContent = "All";
 
+    allButton.addEventListener("click", async () =>{
+        activeGenreid = null;
+        searchInput.value = "";
+        clearSearchButton.style.display = "none";
+        searchStatus.textContent = "";
+
+        // Remove active class from all buttons
+        document.querySelectorAll(".genre-btn").forEach((button) => {
+            button.classList.remove("active");
+        });
+        allButton.classList.add("active");
+        sectionTitle.textContent = "Popular Movies";
+        await fetchPopularMovies();
+    });
+
     genreFilters.appendChild(allButton);
-        
+    
+    // Genre buttons
     // Loop through API genres array
     genres.forEach((genre) => {
         const genreButton = document.createElement("button");
         genreButton.classList.add("genre-btn");
         genreButton.textContent = genre.name;
+
+        genreButton.addEventListener("click", async () => {
+            activeGenreid = genre.id;
+            searchInput.value = "";
+            clearSearchButton.style.display = "none";
+            searchStatus.textContent = "";
+
+            // Remove active class from all buttons
+            document.querySelectorAll(".genre-btn").forEach((button) => {
+                button.classList.remove("active");
+            });
+            genreButton.classList.add("active");
+            sectionTitle.textContent = `${genre.name} Movies`;
+            await fetchMoviesByGenre(genre.id);
+        });
         genreFilters.appendChild(genreButton);
     });
 }
@@ -379,6 +429,13 @@ clearSearchButton.addEventListener("click", () => {
 async function handleSearch(event) {
     const query = event.target.value.trim();
     const currentQuery = query.toLowerCase();
+    
+    // Reset active genre filter during search
+    activeGenreId = null;
+    document.querySelectorAll(".genre-btn").forEach((button) => {
+        button.classList.remove("active");
+    });
+    document.querySelector(".genre-btn")?.classList.add("active");
     clearSearchButton.style.display = query ? "flex" : "none";
 
     // Prevent duplicate searches for the same query
