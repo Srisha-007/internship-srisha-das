@@ -173,19 +173,21 @@ body{
 .hero-content {
     max-width: 600px;
 }
+.hero-content > * + *{
+    margin: 1rem;
+}
 /* Trending Label */
 .hero-tag {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    margin:1rem;
+    margin: 1rem;
     background-color: var(--accent-color);
     color: #fff;
     font-size: 0.8rem;
     font-weight: 700;
     padding: 0.3rem 0.75rem;
     border-radius: 50px;
-    margin-bottom: 1rem;
     text-transform: uppercase;
 }
 /* Main Movie Title */
@@ -193,13 +195,11 @@ body{
     font-size: 3rem;
     font-weight: 800;
     line-height: 1.2;
-    margin: 1rem;
 }
 /* Movie Metadata (Release Year, Runtime, Rating) */
 .hero-meta {
     display: flex;
     gap: 1.5rem;
-    margin: 1rem;
     color: var(--text-secondary);
     align-items: center;
     flex-wrap: wrap;
@@ -218,7 +218,6 @@ body{
 .hero-description {
     font-size: 1.1rem;
     color: var(--text-secondary);
-    margin: 1rem;
     max-width: 550px;
     text-shadow: 0 1px 8px rgba(0,0,0,0.15);
 }
@@ -226,8 +225,7 @@ body{
 .hero-button {
     display: inline-flex;
     align-items: center;
-    gap:0.5rem;
-    margin:1rem;
+    gap: 0.5rem;
     background-color: var(--accent-color);
     color: #fff;
     padding: 0.75rem 1.5rem;
@@ -651,7 +649,7 @@ body{
 /* Modal - Genre Badge*/
 .modal-genre-badge{
     background-color: rgba(59, 130, 246, 0.15);
-    border: 1px solid var (--accent-color);
+    border: 1px solid var(--accent-color);
     border-radius: 999px;
     color: var(--accent-color);
     padding: 0.35rem 0.8rem;
