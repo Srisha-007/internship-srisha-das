@@ -14,7 +14,6 @@ const searchStatus = document.getElementById("searchStatus");
 
 const movieModal = document.getElementById("movieModal");
 const modalCloseButton = document.getElementById("modalCloseButton");
-
 const modalTitle = document.getElementById("modalTitle");
 const modalPoster = document.getElementById("modalPoster");
 const modalHeroBg = document.getElementById("modalHeroBg");
@@ -22,7 +21,7 @@ const modalRating = document.getElementById("modalRating");
 const modalRuntime = document.getElementById("modalRuntime");
 const modalReleaseDate = document.getElementById("modalReleaseDate");
 const modalGenres = document.getElementById("modalGenres");
-const modalCastList = document.getElementById("modalClassList");
+const modalCastList = document.getElementById("modalCastList");
 const modalOverview = document.getElementById("modalOverview");
 
 let currentHeroMovieId = null;
@@ -403,7 +402,7 @@ function populateMovieModal(movie, cast) {
         ${formatDate(movie.release_date)}
     `;
 
-    modalOverview.textContent = movie.overview || "No overview availabile";
+    modalOverview.textContent = movie.overview || "No overview available";
 
     modalGenres.innerHTML = "";
     movie.genres.forEach((genre) => {
@@ -421,7 +420,7 @@ function populateMovieModal(movie, cast) {
         castCard.innerHTML = `
             <img
                 class = "cast-image"
-                src=${
+                src="${
                     actor.profile_path
                     ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
                     : "https://placehold.co/100x100/1e293b/94a3b8?text=No+Image"
@@ -429,7 +428,8 @@ function populateMovieModal(movie, cast) {
                 alt = "${actor.name}"
             >
             <div class="cast-info">
-                <p class="cast-name"> ${actor.character || "Unknown"} </p>
+                <p class="cast-name"> ${actor.name} </p>
+                <p class="cast-character">${actor.character || "Unknown Role"}</p>
             </div>
         `;
 
@@ -475,7 +475,7 @@ clearSearchButton.addEventListener("click", () => {
     searchStatus.textContent = "";
     
     activeGenreId = null;
-    // Resect active genre button UI
+    // Reset active genre button UI
     document.querySelectorAll(".genre-btn").forEach((button) => {
         button.classList.remove("active");
     })

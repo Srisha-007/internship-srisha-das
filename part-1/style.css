@@ -5,7 +5,7 @@
     padding: 0;
 }
 /* Smooth Scrolling */
-html{
+html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
 }
@@ -61,7 +61,7 @@ html{
     --hero-overlay-end: rgba(248, 250, 252, 0.45);
 }
 
-body{
+body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     font-family: var(--font-family);
@@ -149,7 +149,7 @@ body{
 /*================================
        Hero / Banner Section  
 =================================*/
-.hero-section{
+.hero-section {
     position: relative;
     background: 
         linear-gradient(
@@ -173,8 +173,8 @@ body{
 .hero-content {
     max-width: 600px;
 }
-.hero-content > * + *{
-    margin: 1rem;
+.hero-content > * + * {
+    margin: 1rem; 
 }
 /* Trending Label */
 .hero-tag {
@@ -204,12 +204,12 @@ body{
     align-items: center;
     flex-wrap: wrap;
 }
-.hero-rating{
+.hero-rating {
     display: flex;
     align-items: center;
     gap: 0.35rem;
 }
-.hero-rating svg{
+.hero-rating svg {
     width: 16px;
     height: 16px;
     fill: currentColor;
@@ -277,7 +277,7 @@ body{
     color: var(--accent-color);
 }
 /* Seach Loading Spinner */
-.spinner-container{
+.spinner-container {
     position: absolute;
     right: 1.25rem;
     top: 50%;
@@ -285,7 +285,7 @@ body{
     display:none;
 
 }
-.spinner{
+.spinner {
     width: 20px;
     height: 20px;
     border: 2px solid var(--text-secondary);
@@ -365,7 +365,7 @@ body{
 /*================================
         Movie Grid Section  
 =================================*/
-.movies-section{
+.movies-section {
     margin-bottom: 3rem;
     margin: 1rem;
 }
@@ -383,7 +383,7 @@ body{
 /*================================
             Movie Card   
 =================================*/
-.movie-card{
+.movie-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -404,7 +404,7 @@ body{
     outline: 2px solid var(--accent-color);
     outline-offset: 3px;
 }
-.card-poster-container{
+.card-poster-container {
     position: relative;
     aspect-ratio: 2/3;
     overflow: hidden;
@@ -416,13 +416,13 @@ body{
     display: block;
     aspect-ratio: 2/3;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: var(--transition-smooth);
 }
 .movie-card:hover .card-poster {
     transform: scale(1.1);
 }
 /* Movie Rating Badge */
-.card-rating-badge{
+.card-rating-badge {
     position: absolute;
     top: 0.75rem;
     right: 0.5rem;
@@ -437,7 +437,7 @@ body{
     gap: 0.25rem;
     border-radius: var(--border-radius);
 }
-.card-rating-badge svg{
+.card-rating-badge svg {
     width: 14px;
     height: 14px;
     fill: currentColor;
@@ -497,11 +497,11 @@ body{
     margin-top: auto;
 }
 /* Shimmer Effect */
-.shimmer{
+.shimmer {
     position: relative;
     overflow: hidden;
 }
-.shimmer::after{
+.shimmer::after {
     content: "";
     position: absolute;
     top: 0;
@@ -523,7 +523,7 @@ body{
 /*=====================================
            Movie Detail Modal   
 ======================================*/
-.movie-dialog{
+.movie-dialog {
     border: none;
     background: none;
     width: calc(100% - 2rem);
@@ -540,19 +540,19 @@ body{
     background-color: var(--overlay-bg);
     backdrop-filter: blur(8px);
 }
- .movie-dialog[open] {
-        animation: modalFadeIn 0.3s ease;
-     }
-     @keyframes modalFadeIn {
-        from {
-            opacity: 0;
-            transform: translate(-50%, -48%);
-        }
-        to {
-            opacity: 1;
-            transform: translate(-50%,-50%);
-        }
-     }
+.movie-dialog[open] {
+    animation: modalFadeIn 0.3s ease;
+}
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%);
+    }
+    to {
+        opacity: 1;            
+        transform: translate(-50%,-50%);
+    }
+}
 .modal-content {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -560,7 +560,7 @@ body{
     overflow: hidden;
     position: relative;
 }
-.modal-close-button{
+.modal-close-button {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -577,7 +577,7 @@ body{
     z-index:10;
     transition: var(--transition-smooth);
 }
-.modal-close-button:hover{
+.modal-close-button:hover {
     background-color: var(--accent-color);
 }
 .modal-hero {
@@ -621,7 +621,7 @@ body{
     color:var(--accent-color);
 }
 /* Modal - Movie Metadata (Rating, Runtime, Release Date) */
-.modal-meta-row{
+.modal-meta-row {
     display: flex;
     gap: 1.25rem;
     margin-bottom: 1.25rem;
@@ -629,12 +629,12 @@ body{
     align-items: center;
     flex-wrap: wrap;
 }
-.modal-meta-row span{
+.modal-meta-row span {
     display:flex;
     align-items: center;
     gap:0.35rem;
 }
-.modal-meta-row svg{
+.modal-meta-row svg {
     width: 18px;
     height: 18px;
 }
@@ -647,7 +647,7 @@ body{
     margin-bottom: 1.5rem;
 }
 /* Modal - Genre Badge*/
-.modal-genre-badge{
+.modal-genre-badge {
     background-color: rgba(59, 130, 246, 0.15);
     border: 1px solid var(--accent-color);
     border-radius: 999px;
@@ -666,7 +666,7 @@ body{
     color: var(--text-secondary);
     margin-bottom: 0.75rem;
 }
-.modal-cast-list{
+.modal-cast-list {
     display: flex;
     gap: 1rem;  
     flex-wrap: wrap;
@@ -682,7 +682,7 @@ body{
     min-width: 180px;
     flex: 1;
 }
-.cast-image{
+.cast-image {
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -697,7 +697,10 @@ body{
     font-weight: 600;
     color: var(--text-primary);
 }
-
+.cast-character {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
 /* Modal - Movie Overview Title */
 .modal-overview-title {
     font-size: 1.25rem;
@@ -726,7 +729,7 @@ body{
     font-size: 1.4rem;
     color: var(--text-primary);
 }
-.empty-state p{
+.empty-state p {
     color: var(--text-secondary);
     max-width: 320px;
 }
@@ -771,7 +774,7 @@ body{
         margin-top: -70px;
         padding: 1.25rem;
     }
-    .modal-poster-wrapper{
+    .modal-poster-wrapper {
         width: 150px;
         margin: 0 auto;
     }
@@ -824,32 +827,32 @@ body{
     .movies-grid {
         grid-template-columns: 1fr;
     }
-     /* Movie Detail Modal */
-     .movie-dialog {
+    /* Movie Detail Modal */
+    .movie-dialog {
         width: calc(100% - 1rem);
-     }
-     .modal-hero {
-         height: 180px;
-     }
-     .modal-title{
+    }
+    .modal-hero {
+        height: 180px;
+    }
+    .modal-title {
         font-size: 1.5rem;
-     }
-     .modal-meta-row {
+    }
+    .modal-meta-row {
         flex-direction: column;
         gap: 0.5rem;
-     }
-     .modal-cast-list {
+    }
+    .modal-cast-list {
         flex-direction: column;
-     }
-     .cast-card {
+    }
+    .cast-card {
         width: 100%;
-     }
-     .modal-overview-title{
+    }
+    .modal-overview-title {
         font-size: 1rem;
-     }
-     .modal-overview-text{
+    }
+    .modal-overview-text {
         font-size: 0.95rem;
-     }  
+    }  
 }
 /* Light Theme */  
 [data-theme="light"] .movie-card {
@@ -858,7 +861,7 @@ body{
 [data-theme="light"] .movie-card:hover {
     box-shadow: 0 10px 20px rgba(15,23,42,0.12);
 }
-[data-theme="light"] .moodal-content {
+[data-theme="light"] .modal-content {
     box-shadow: 0 10px 20px rgba(15,23,42,0.18);
 }
 
