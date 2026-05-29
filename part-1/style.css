@@ -656,6 +656,48 @@ body{
     font-size: 0.85rem;
     font-weight: 600;
 }
+/* Modal Cast Section */
+.modal-cast-section {
+    margin-bottom: 1.5rem;
+}
+.modal-cast-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+.modal-cast-list{
+    display: flex;
+    gap: 1rem;  
+    flex-wrap: wrap;
+}
+.cast-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    min-width: 180px;
+    flex: 1;
+}
+.cast-image{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.card-info {
+    display: flex;
+    flex-direction: column;
+}
+.cast-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
 /* Modal - Movie Overview Title */
 .modal-overview-title {
     font-size: 1.25rem;
@@ -795,6 +837,12 @@ body{
      .modal-meta-row {
         flex-direction: column;
         gap: 0.5rem;
+     }
+     .modal-cast-list {
+        flex-direction: column;
+     }
+     .cast-card {
+        width: 100%;
      }
      .modal-overview-title{
         font-size: 1rem;

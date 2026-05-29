@@ -22,6 +22,7 @@ const modalRating = document.getElementById("modalRating");
 const modalRuntime = document.getElementById("modalRuntime");
 const modalReleaseDate = document.getElementById("modalReleaseDate");
 const modalGenres = document.getElementById("modalGenres");
+const modalCastList = document.getElementById("modalClassList");
 const modalOverview = document.getElementById("modalOverview");
 
 let currentHeroMovieId = null;
@@ -352,10 +353,15 @@ function setHeroBanner(movie) {
 async function openMovieModal(movieId) {
     try {
         document.body.style.overflow = "hidden";
-        const movie = await fetchFromTMDB(`/movie/${movieId}`);
+        const [movie, credits] = await Promise.all([
+            fetchFromTMDB(`/movie/${movieId}`),
+            fetchFromTMDB(`/movie/${movieId}/credits`)
+        ]);
 
-        populateMovieModal(movie);
+        populateMovieModal(movie, credits.cast);
+        
         movieModal.showModal();
+        modalCloseButton.focus();
 
     } catch (error) {
         console.error("Modal fetch error:", error);
@@ -365,7 +371,7 @@ async function openMovieModal(movieId) {
 // =====================================
 //          Populate Movie Modal
 // =====================================
-function populateMovieModal(movie) {
+function populateMovieModal(movie, cast) {
     modalTitle.textContent = movie.title;
     modalPoster.src = movie.poster_path
            ?  `${IMAGE_BASE_URL}${movie.poster_path}`
@@ -407,6 +413,28 @@ function populateMovieModal(movie) {
         modalGenres.appendChild(genreBadge);
     });
 
+    modalCastList.innerHTML = "";
+    const topCast = cast.slice(0,3);
+    topCast.forEach((actor) => {
+        const castCard = document.createElement("div");
+        castCard.classList.add("cast-card");
+        castCard.innerHTML = `
+            <img
+                class = "cast-image"
+                src=${
+                    actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                    : "https://placehold.co/100x100/1e293b/94a3b8?text=No+Image"
+                }"
+                alt = "${actor.name}"
+            >
+            <div class="cast-info">
+                <p class="cast-name"> ${actor.character || "Unknown"} </p>
+            </div>
+        `;
+
+        modalCastList.appendChild(castCard);
+    });
     lucide.createIcons();
 }
 
