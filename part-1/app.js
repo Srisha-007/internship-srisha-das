@@ -125,8 +125,7 @@ async function fetchPopularMovies() {
         renderMovies(data.results);
     }
     catch (error){
-        console.error("Error fetching movies:", error);
-        errorMessage.textContent = error.message;
+        errorMessage.textContent = error.message || "An error occured while fetching popular movies. Please try again.";
     }
 }
 // =========================================================
@@ -144,8 +143,7 @@ async function fetchTrendingMovies() {
         setHeroBanner(featuredMovie || data.results[0]);        
     }
     catch (error){
-        console.error("Error fetching trending movie:", error);
-        errorMessage.textContent = error.message;
+        errorMessage.textContent = error.message || "An error occurred while fetching trending movies. Please try again.";
     }
     lucide.createIcons();
 }
@@ -155,6 +153,7 @@ async function fetchTrendingMovies() {
 async function fetchMoviesByGenre(genreId){
     // Check Cache first
     if (genreCache[genreId]) {
+
         renderMovies(genreCache[genreId]);
         return;
     }
@@ -171,7 +170,6 @@ async function fetchMoviesByGenre(genreId){
         renderMovies(data.results);
     }
     catch (error){
-        console.error("Genre filter error:", error)
         errorMessage.textContent = error.message || "Failed to fetch movies for selected genre.";
     }
 }
@@ -181,9 +179,10 @@ async function fetchMoviesByGenre(genreId){
 async function fetchGenres() {
     try{
         const data = await fetchFromTMDB("/genre/movie/list");
+        errorMessage.textContent="";
         renderGenres(data.genres);
     } catch (error){
-        console.error("Genre fetch error:", error);
+        errorMessage.textContent = error.message || "Failed to fetch genre.";
     }
 }
 
@@ -370,11 +369,11 @@ async function openMovieModal(movieId) {
 
         populateMovieModal(movie, credits.cast);
         
+        errorMessage.textContent = "";
         movieModal.showModal();
         modalCloseButton.focus();
 
     } catch (error) {
-        console.error("Modal fetch error:", error);
         errorMessage.textContent = "Failed to load movie details";
     }
 }
@@ -551,7 +550,6 @@ async function handleSearch(event) {
         if (error.name === "AbortError") {
             return;
         }
-        console.error("Search error:", error);
         errorMessage.textContent = error.message || "An error occurred while searching. Please try again.";
         searchStatus.textContent = "";
     } finally {
