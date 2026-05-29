@@ -169,12 +169,13 @@ body {
 }
 .hero-overlay {
     width: 100%;
+    max-width: 600px;
 }
 .hero-content {
     max-width: 600px;
 }
 .hero-content > * + * {
-    margin: 1rem; 
+    margin-top: 1rem;
 }
 /* Trending Label */
 .hero-tag {
@@ -237,7 +238,7 @@ body {
 }
 .hero-button:hover {
     background-color: var(--accent-hover);
-    transform: translateY(2px);
+    transform: translateY(-2px);
 }
 /*================================
          Discover Section  
