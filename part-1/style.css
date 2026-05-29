@@ -173,6 +173,7 @@ body {
 }
 .hero-content {
     max-width: 600px;
+    padding: 0 1.25rem;
 }
 .hero-content > * + * {
     margin-top: 1rem;

@@ -9,6 +9,7 @@ const clearSearchButton = document.getElementById("clearSearchButton");
 const spinner = document.getElementById("searchSpinner");
 const searchInput = document.getElementById("searchInput");
 const genreFilters = document.querySelector(".genre-filters");
+const genreCache = {};
 const errorMessage = document.getElementById("errorMessage");
 const searchStatus = document.getElementById("searchStatus");
 
@@ -28,6 +29,7 @@ let currentHeroMovieId = null;
 let lastSearchQuery = "";
 let searchController;
 let activeGenreId = null;
+
 
 // =====================================
 //          Theme Handling 
@@ -151,11 +153,20 @@ async function fetchTrendingMovies() {
 //         Fetch Movies By Genre
 // =====================================
 async function fetchMoviesByGenre(genreId){
+    // Check Cache first
+    if (genreCache[genreId]) {
+        renderMovies(genreCache[genreId]);
+        return;
+    }
     try{
         renderSkeletonCards();
         const data = await fetchFromTMDB(
             `/discover/movie?with_genres=${genreId}`
         );
+
+        // Store results in cache
+        genreCache[genreId] = data.results;
+        
         errorMessage.textContent="";
         renderMovies(data.results);
     }
