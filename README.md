@@ -58,7 +58,7 @@ The project is being developed in two phases:
 1. **Clone the Public Repository:**
    ```bash
    git clone [https://github.com/Srisha-007/internship-srisha-das.git]
-   cd internship-your-srisha-das/part-1
+   cd internship-srisha-das/part-1
 2. **Acquire a Developer API Access Key**
    - Visit TMDB Profile Portal and create a free account.
    - Navigate to settings, request an API Key, and copy your unique token.
