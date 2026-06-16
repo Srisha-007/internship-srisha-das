@@ -4,7 +4,9 @@ import MovieCard from "../components/MovieCard/MovieCard";
 
 function HomePage() {
     const [movies, setMovies] = useState([]);
-    
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
     useEffect(() => {
         async function loadMovies() {
             try {
@@ -13,6 +15,10 @@ function HomePage() {
             }
             catch (error) {
                 console.error(error);
+                setError(error.message || "Failed to load movies. Please try again later.");
+            }
+            finally {
+                setLoading(false);
             }
         }
         loadMovies();
@@ -22,9 +28,14 @@ function HomePage() {
         <div>
             <h1>Popular Movies</h1>
 
-            {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-            ))}
+            {loading && <p>Loading movies...</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            
+            {!loading && !error && 
+                movies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                ))
+            }
         </div>
     );
 }
