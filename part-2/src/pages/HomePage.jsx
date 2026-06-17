@@ -1,20 +1,25 @@
 import { useMovies } from "../hooks/useMovies";
 import MovieCard from "../components/MovieCard/MovieCard";
+import styles from "./HomePage.module.css";
 
  function HomePage() {
     const { movies, loading, error } = useMovies();
 
     return (
-        <div>
-            <h1>Popular Movies</h1>
+        <div className={styles.page}>
+            <h1 className={styles.pageTitle}>
+                Popular Movies
+            </h1>
 
             {loading && <p>Loading movies...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className={styles.error}>{error}</p>}
 
             {!loading && !error && 
-                movies.map((movie) => (
-                    <MovieCard key={movie.id} movie={movie} />
-                ))
+                <div className={styles.moviesGrid}>
+                    {movies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                </div>
             }
         </div>
     );
