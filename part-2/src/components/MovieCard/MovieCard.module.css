@@ -50,7 +50,11 @@
     gap: 0.25rem;
     border-radius: var(--border-radius);
 }
-
+.starIcon {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
 .cardInfo {
     padding: 1rem;
     display: flex;

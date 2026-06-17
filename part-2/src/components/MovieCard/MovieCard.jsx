@@ -1,4 +1,5 @@
 import styles from "./MovieCard.module.css";
+import { Star } from "lucide-react";
 
 function MovieCard({movie}) {
     const posterUrl = movie.poster_path
@@ -14,6 +15,7 @@ function MovieCard({movie}) {
                     className={styles.poster}
                 />
                 <div className={styles.ratingBadge}>
+                    <Star className={styles.starIcon} />
                     {movie.vote_average?.toFixed(1)}
                 </div>
             </div>
