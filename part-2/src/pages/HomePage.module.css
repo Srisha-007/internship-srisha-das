@@ -1,0 +1,21 @@
+.page {
+    padding: 2rem;
+}
+
+.pageTitle {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.moviesGrid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.error {
+    color: #ef4444;
+    margin-bottom: 1rem;
+}

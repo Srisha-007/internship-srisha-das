@@ -1,30 +1,26 @@
-import {useEffect, useState} from "react";
-import { getPopularMovies } from "../services/tmdb";
+import { useMovies } from "../hooks/useMovies";
+import MovieCard from "../components/MovieCard/MovieCard";
+import styles from "./HomePage.module.css";
 
-function HomePage() {
-    const [movies, setMovies] = useState([]);
-    
-    useEffect(() => {
-        async function fetchMovies() {
-            try {
-                const data = await getPopularMovies();
-                setMovies(data.results);
-            }
-            catch (error) {
-                console.error(error);
-            }
-        }
-        fetchMovies();
-    }, []);
+ function HomePage() {
+    const { movies, loading, error } = useMovies();
 
     return (
-        <div>
-            <h1>Home Page</h1>
-            {movies.length >0 && (
-                <pre>
-                    {JSON.stringify(movies[0], null, 2)}
-                </pre>
-            )}
+        <div className={styles.page}>
+            <h1 className={styles.pageTitle}>
+                Popular Movies
+            </h1>
+
+            {loading && <p>Loading movies...</p>}
+            {error && <p className={styles.error}>{error}</p>}
+
+            {!loading && !error && 
+                <div className={styles.moviesGrid}>
+                    {movies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                </div>
+            }
         </div>
     );
 }
