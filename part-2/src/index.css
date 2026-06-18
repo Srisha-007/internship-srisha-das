@@ -61,3 +61,10 @@ button, input, textarea {
 #root {
   min-height: 100vh;
 }
+
+.container {
+    width: 90%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
