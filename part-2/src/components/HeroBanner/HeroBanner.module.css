@@ -61,6 +61,18 @@
   color: var(--text-secondary);
 }
 
+.heroRating {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.heroRating svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
 .heroDescription {
   font-size: 1.1rem;
   color: var(--text-secondary);
