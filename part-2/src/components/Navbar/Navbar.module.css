@@ -1,0 +1,71 @@
+.mainHeader {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg-navbar);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+    font-family: var(--font-family);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.35rem;
+}
+
+.logoIcon {
+    color: var(--accent-color);
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navLink {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+.navLink:hover {
+    color: var(--accent-color);
+}
+.active {
+    color: var(--accent-color);
+}
+.themeToggle {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    transition: var(--transition-smooth);
+}
+
+.themeToggle:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: scale(1.05);
+}
+.navLink:focus-visible,
+.themeToggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}  
