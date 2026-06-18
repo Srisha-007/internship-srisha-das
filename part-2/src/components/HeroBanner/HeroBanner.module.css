@@ -1,0 +1,92 @@
+.heroSection {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0;
+  margin-bottom: 2rem;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-image:
+    linear-gradient(
+      to right,
+      var(--hero-overlay-start) 40%,
+      var(--hero-overlay-end)
+    ),
+    url("../../assets/hero.png");
+}
+
+.heroOverlay {
+  width: 100%;
+  max-width: 600px;
+}
+
+.heroContent {
+  max-width: 600px;
+  padding: 0 1.25rem;
+}
+
+.heroContent > * + * {
+  margin-top: 1rem;
+}
+
+.heroTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  background-color: var(--accent-color);
+  color: white;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  padding: 0.3rem 0.75rem;
+  border-radius: 50px;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.heroMeta {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+}
+
+.heroDescription {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 550px;
+}
+
+.heroButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  background-color: var(--accent-color);
+  color: white;
+
+  border: none;
+  border-radius: var(--border-radius);
+
+  padding: 0.75rem 1.5rem;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: var(--transition-smooth);
+}
+
+.heroButton:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
