@@ -1,27 +1,33 @@
 import { useMovies } from "../hooks/useMovies";
+import { useTrendingMovie } from "../hooks/useTrendingMovie";
 import MovieCard from "../components/MovieCard/MovieCard";
+import HeroBanner from "../components/HeroBanner/HeroBanner";
 import styles from "./HomePage.module.css";
 
- function HomePage() {
+ function HomePage() {  
+    const { featuredMovie } = useTrendingMovie();
     const { movies, loading, error } = useMovies();
 
     return (
-        <div className={styles.page}>
-            <h1 className={styles.pageTitle}>
-                Popular Movies
-            </h1>
+        <>
+            <HeroBanner movie = {featuredMovie} />
+            <div className={styles.page}>
+                <h1 className={styles.pageTitle}>
+                    Popular Movies
+                </h1>
 
-            {loading && <p>Loading movies...</p>}
-            {error && <p className={styles.error}>{error}</p>}
+                {loading && <p>Loading movies...</p>}
+                {error && <p className={styles.error}>{error}</p>}
 
-            {!loading && !error && 
-                <div className={styles.moviesGrid}>
-                    {movies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                    ))}
-                </div>
-            }
-        </div>
+                {!loading && !error && 
+                    <div className={styles.moviesGrid}>
+                        {movies.map((movie) => (
+                            <MovieCard key={movie.id} movie={movie} />
+                        ))}
+                    </div>
+                }
+            </div>
+        </>
     );
 }
 
