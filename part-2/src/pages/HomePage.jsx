@@ -1,5 +1,6 @@
 import { useMovies } from "../hooks/useMovies";
 import { useTrendingMovie } from "../hooks/useTrendingMovie";
+import Navbar from "../components/Navbar/Navbar";
 import MovieCard from "../components/MovieCard/MovieCard";
 import HeroBanner from "../components/HeroBanner/HeroBanner";
 import styles from "./HomePage.module.css";
@@ -10,6 +11,7 @@ import styles from "./HomePage.module.css";
 
     return (
         <>
+            <Navbar />
             <HeroBanner movie = {featuredMovie} />
             <div className={styles.page}>
                 <h1 className={styles.pageTitle}>
