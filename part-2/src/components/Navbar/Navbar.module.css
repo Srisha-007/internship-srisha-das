@@ -28,6 +28,8 @@
 
 .logoIcon {
     color: var(--accent-color);
+    width: 30px;
+    height: 30px;
 }
 
 .navLinks {
@@ -54,6 +56,8 @@
     color: var(--text-primary);
     padding: 0.5rem;
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     display: inline-flex;
     transition: var(--transition-smooth);
