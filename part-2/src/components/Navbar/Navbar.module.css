@@ -69,3 +69,16 @@
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }  
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem 0;
+        gap: 1rem;
+    }
+
+    .navLinks {
+        gap: 1rem;
+    }
+}
