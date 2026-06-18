@@ -1,10 +1,14 @@
 import styles from "./HeroBanner.module.css";
-import { formatDate } from "../../utils/formatters";
+import { useState } from "react";
+import { formatDate, truncateText } from "../../utils/formatters";
 import { Star, Info } from "lucide-react";
 
 function HeroBanner({movie}) {
+    const [isExpanded, setIsExpanded] = useState(false);
+    
     if (!movie) return null;
-
+    
+    const shortOverview = truncateText(movie.overview, 180);
     const backgroundImage = `
         linear-gradient(
             to right,
@@ -17,9 +21,7 @@ function HeroBanner({movie}) {
     return (
         <section
             className={styles.heroSection} id="trending"
-            style={{
-                backgroundImage
-            }}
+            style={{ backgroundImage }}
         >
             <div className={styles.heroOverlay}>
                 <div className={styles.heroContent}>
@@ -44,13 +46,25 @@ function HeroBanner({movie}) {
                     </div>
 
                     <p className={styles.heroDescription}>
-                        {movie.overview}
+                        {isExpanded 
+                            ? movie.overview 
+                            : shortOverview
+                        }
+                        {movie.overview.length > 180 && (
+                            <>
+                                {!isExpanded && "..."}
+                                <button
+                                    type="button"
+                                    className={styles.seeMoreButton}
+                                    onClick={() => setIsExpanded(!isExpanded)}
+                                >
+                                    {isExpanded ? "Show Less" : "Show More"}
+                                </button>
+                            </>
+                        )}
                     </p>
 
-                    <button
-                        type="button"
-                        className={styles.heroButton}
-                    >
+                    <button type="button" className={styles.heroButton}>
                         <Info />
                         View Details
                     </button>

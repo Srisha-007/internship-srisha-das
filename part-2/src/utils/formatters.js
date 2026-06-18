@@ -30,8 +30,5 @@ export function truncateText( text, maxLength = 180) {
         return text;
     }
 
-    return (
-        text.slice(0, maxLength) +
-        "... See more"
-    );
+    return (text.slice(0, maxLength));
 }
