@@ -17,3 +17,21 @@ export function formatDate(dateString) {
         options
     );
 }
+
+// ===================================
+//         Truncate Long Text
+// ===================================
+export function truncateText( text, maxLength = 180) {
+    if (!text) {
+        return "";
+    }
+
+    if (text.length <= maxLength) {
+        return text;
+    }
+
+    return (
+        text.slice(0, maxLength) +
+        "... See more"
+    );
+}

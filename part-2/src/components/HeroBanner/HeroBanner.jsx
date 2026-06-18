@@ -1,4 +1,5 @@
 import styles from "./HeroBanner.module.css";
+import { formatDate } from "../../utils/formatters";
 import { Star, Info } from "lucide-react";
 
 function HeroBanner({movie}) {
@@ -31,7 +32,7 @@ function HeroBanner({movie}) {
                     </h1>
 
                     <div className={styles.heroMeta}>
-                        <span>{movie.release_date}</span>
+                        <span>{formatDate(movie.release_date)}</span>
 
                         <span className={styles.heroRating}>
                             <Star
