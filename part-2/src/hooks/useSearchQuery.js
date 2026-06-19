@@ -5,34 +5,24 @@ import { useDebounce } from "./useDebounce";
 
 export function useSearchQuery() {
     const [searchParams, setSearchParams] = useSearchParams();
-
     const query = searchParams.get("q") || "";
-
     const [inputValue, setInputValue] = useState(query);
-
-    const debouncedQuery = useDebounce(inputValue, 500);
-
-    useEffect(() => {
-        setInputValue(query);
-    }, [query]);
+    const debouncedValue = useDebounce(inputValue, 500);
 
     useEffect(() => {
-        if (!debouncedQuery.trim()) {
+        if (debouncedValue.trim()) {
+            setSearchParams({
+                q: debouncedValue,
+            });
+        } else {
             setSearchParams({});
-            return;
         }
-
-        setSearchParams({
-            q: debouncedQuery,
-        });
     }, [
-        debouncedQuery,
-        setSearchParams,
+        debouncedValue, setSearchParams,
     ]);
 
     function clearSearch() {
         setInputValue("");
-        setSearchParams({});
     }
 
     return {

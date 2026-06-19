@@ -20,7 +20,11 @@ function SearchBar({value, onChange, onClear, loading}) {
 
                 {value && (
                     <button
-                        onClick={onClear}
+                        onClick={() => {
+                            console.log("clear clicked");
+                            onClear();
+                        }}
+                            
                         className={styles.clearButton}
                     >
                         <X size={18} />

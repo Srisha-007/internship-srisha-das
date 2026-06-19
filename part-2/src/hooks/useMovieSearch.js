@@ -9,6 +9,8 @@ export function useMovieSearch(query) {
     useEffect(() => {
         if (!query.trim()) {
             setMovies([]);
+            setError("");
+            setLoading(false);
             return;
         }
 
@@ -45,7 +47,7 @@ export function useMovieSearch(query) {
         return () => {
             controller.abort();
         };
-        
+
     }, [query]);
 
   return {

@@ -41,7 +41,7 @@ import styles from "./HomePage.module.css";
                     onClear={clearSearch}
                     loading={searchLoading}
                 />
-                
+
                 {query && searchLoading && (
                     <p className={styles.searchStatus}>
                         Searching for "{query}"...
