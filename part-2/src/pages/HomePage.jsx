@@ -1,5 +1,6 @@
 import { useTrendingMovie } from "../hooks/useTrendingMovie";
 import { useSearchQuery } from "../hooks/useSearchQuery";
+import { useMovieSearch } from "../hooks/useMovieSearch";
 import { useMovies } from "../hooks/useMovies";
 
 import Navbar from "../components/Navbar/Navbar";
@@ -14,7 +15,14 @@ import styles from "./HomePage.module.css";
     const { featuredMovie } = useTrendingMovie();
     const { movies, loading, error } = useMovies();
     const { query, inputValue, setInputValue, clearSearch } = useSearchQuery();
-
+    const { movies: searchedMovies, loading: searchLoading, error: searchError } = useMovieSearch(query);
+    const displayedMovies = 
+        query 
+            ? searchedMovies 
+            : movies;
+    const isLoading = searchLoading || loading;
+    const pageError = error || searchError;
+    
     return (
         <>
             <Navbar />
@@ -24,12 +32,12 @@ import styles from "./HomePage.module.css";
                     Popular Movies
                 </h1>
 
-                {loading && <p>Loading movies...</p>}
-                {error && <p className={styles.error}>{error}</p>}
+                {isLoading && <p>Loading movies...</p>}
+                {pageError && <p className={styles.error}>{pageError}</p>}
 
-                {!loading && !error && 
+                {!isLoading && !pageError && 
                     <div className={styles.moviesGrid}>
-                        {movies.map((movie) => (
+                        {displayedMovies.map((movie) => (
                             <MovieCard key={movie.id} movie={movie} />
                         ))}
                     </div>
