@@ -22,7 +22,13 @@ import styles from "./HomePage.module.css";
             : movies;
     const isLoading = searchLoading || loading;
     const pageError = error || searchError;
-    
+    const searchStatus = 
+        query && !searchLoading
+            ? `${searchedMovies.length} results found`
+            : "";
+    const noResults = 
+        query && !searchLoading && searchedMovies.length === 0;
+
     return (
         <>
             <Navbar />
@@ -35,12 +41,30 @@ import styles from "./HomePage.module.css";
                     onClear={clearSearch}
                     loading={searchLoading}
                 />
+                
+                {query && searchLoading && (
+                    <p className={styles.searchStatus}>
+                        Searching for "{query}"...
+                    </p>
+                )}
+                {searchStatus && (
+                    <p className={styles.searchStatus}>
+                        {searchStatus}
+                    </p>
+                )}
+                
                 <h1 className={styles.pageTitle}>
                     {query 
                         ? `Search Results for "${query}"` 
                         : "Popular Movies"
                     }
                 </h1>
+
+                {noResults && (
+                    <p className={styles.searchStatus}>
+                        No movies found.
+                    </p>
+                )}
 
                 {isLoading && <p>Loading movies...</p>}
                 {pageError && <p className={styles.error}>{pageError}</p>}
