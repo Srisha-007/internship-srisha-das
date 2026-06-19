@@ -1,13 +1,21 @@
-import { useMovies } from "../hooks/useMovies";
+import { useEffect } from "react";
+
 import { useTrendingMovie } from "../hooks/useTrendingMovie";
+import { useSearchQuery } from "../hooks/useSearchQuery";
+import { useMovies } from "../hooks/useMovies";
+
 import Navbar from "../components/Navbar/Navbar";
-import MovieCard from "../components/MovieCard/MovieCard";
 import HeroBanner from "../components/HeroBanner/HeroBanner";
+import SearchBar from "../components/SearchBar/SearchBar";
+import MovieCard from "../components/MovieCard/MovieCard";
+
 import styles from "./HomePage.module.css";
 
  function HomePage() {  
+    
     const { featuredMovie } = useTrendingMovie();
     const { movies, loading, error } = useMovies();
+    const { query, inputValue, setInputValue, setSearchParams } = useSearchQuery();
 
     return (
         <>
