@@ -8,28 +8,44 @@ export function useMovieSearch(query) {
 
     useEffect(() => {
         if (!query.trim()) {
+            setMovies([]);
             return;
         }
 
+        const controller = new AbortController();
+        
         async function loadResults() {
             try {
                 setLoading(true);
                 setError("");
 
-                const data = await searchMovies(query);
+                const data = await searchMovies(query, controller);
 
                 setMovies(data.results);
             }
             catch (error) {
-                setError(error.message);
+                if (
+                    error.name === "AbortError"
+                ) {
+                    return;
+                }
+                setError(error.message || "An error occurred while searching for movies.");
+
             }
             finally {
-                setLoading(false);
+                if (
+                    !controller.signal.aborted  
+                ) {
+                    setLoading(false);
+                }
             }
         }
 
         loadResults();
-
+        return () => {
+            controller.abort();
+        };
+        
     }, [query]);
 
   return {
