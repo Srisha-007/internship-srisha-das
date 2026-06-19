@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { useTrendingMovie } from "../hooks/useTrendingMovie";
 import { useSearchQuery } from "../hooks/useSearchQuery";
 import { useMovies } from "../hooks/useMovies";
@@ -15,7 +13,7 @@ import styles from "./HomePage.module.css";
     
     const { featuredMovie } = useTrendingMovie();
     const { movies, loading, error } = useMovies();
-    const { query, inputValue, setInputValue, setSearchParams } = useSearchQuery();
+    const { query, inputValue, setInputValue, clearSearch } = useSearchQuery();
 
     return (
         <>
