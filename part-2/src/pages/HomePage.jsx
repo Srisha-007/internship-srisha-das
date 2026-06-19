@@ -27,9 +27,19 @@ import styles from "./HomePage.module.css";
         <>
             <Navbar />
             <HeroBanner movie = {featuredMovie} />
+
             <div className={styles.page}>
+                <SearchBar
+                    value={inputValue}
+                    onChange={setInputValue}
+                    onClear={clearSearch}
+                    loading={searchLoading}
+                />
                 <h1 className={styles.pageTitle}>
-                    Popular Movies
+                    {query 
+                        ? `Search Results for "${query}"` 
+                        : "Popular Movies"
+                    }
                 </h1>
 
                 {isLoading && <p>Loading movies...</p>}
