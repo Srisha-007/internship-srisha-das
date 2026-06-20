@@ -4,10 +4,13 @@ const BASE_URL = "https://api.themoviedb.org/3";
 // ============================================================
 //    Generic Fetch Function (from TMDB) with Error Handling
 // ============================================================
-async function getFromTMDB(endpoint) {
+async function getFromTMDB(endpoint, controller = null) {
     const separator = endpoint.includes("?") ? "&" : "?";
     const response = await fetch(
-        `${BASE_URL}${endpoint}${separator}api_key=${API_KEY}`
+        `${BASE_URL}${endpoint}${separator}api_key=${API_KEY}`, 
+        controller 
+            ? { signal: controller.signal } 
+            : {}
     );
 
     if (response.status === 429) {
@@ -50,6 +53,6 @@ export async function getMovieDetails(movieId) {
 // ============================================
 //                Search Movies
 // ============================================
-export async function searchMovies(query){
-    return getFromTMDB(`/search/movie?query=${encodeURIComponent(query)}`);
+export async function searchMovies(query, controller = null){
+    return getFromTMDB(`/search/movie?query=${encodeURIComponent(query)}`, controller);
 }

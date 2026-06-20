@@ -19,3 +19,8 @@
     color: #ef4444;
     margin-bottom: 1rem;
 }
+.searchStatus {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
