@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getMoviesByGenre } from "../services/tmdb";
 
+const genreCache = {};
+
 export function useGenreMovies(genreId) {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -11,6 +13,12 @@ export function useGenreMovies(genreId) {
             setMovies([]);
             return;
         }
+        if (genreCache[genreId]) {
+            setError("");
+            setLoading(false)
+            setMovies(genreCache[genreId]);
+            return;
+        }
 
         async function loadMovies() {
             try {
@@ -18,6 +26,7 @@ export function useGenreMovies(genreId) {
                 setError("");
 
                 const data = await getMoviesByGenre(genreId);
+                genreCache[genreId] = data.results;
                 setMovies(data.results);
 
             } catch (error) {
