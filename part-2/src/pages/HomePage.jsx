@@ -1,11 +1,16 @@
+import { useState } from "react";
+
 import { useTrendingMovie } from "../hooks/useTrendingMovie";
 import { useSearchQuery } from "../hooks/useSearchQuery";
 import { useMovieSearch } from "../hooks/useMovieSearch";
+import { useGenres } from "../hooks/useGenres";
+import { useGenreMovies } from "../hooks/useGenreMovies";
 import { useMovies } from "../hooks/useMovies";
 
 import Navbar from "../components/Navbar/Navbar";
 import HeroBanner from "../components/HeroBanner/HeroBanner";
 import SearchBar from "../components/SearchBar/SearchBar";
+import GenreFilter from "../components/GenreFilter/GenreFilter";
 import MovieCard from "../components/MovieCard/MovieCard";
 
 import styles from "./HomePage.module.css";
@@ -16,12 +21,18 @@ import styles from "./HomePage.module.css";
     const { movies, loading, error } = useMovies();
     const { query, inputValue, setInputValue, clearSearch } = useSearchQuery();
     const { movies: searchedMovies, loading: searchLoading, error: searchError } = useMovieSearch(query);
+    const [activeGenre, setActiveGenre] = useState(null);
+    const { genres, loading: genresLoading } = useGenres();
+    const { movies: genreMovies, loading: genreLoading, error: genreError } = useGenreMovies(activeGenre);
+
     const displayedMovies = 
         query 
             ? searchedMovies 
-            : movies;
-    const isLoading = searchLoading || loading;
-    const pageError = error || searchError;
+            : activeGenre
+                ? genreMovies
+                : movies;
+    const isLoading = searchLoading || genreLoading || loading;
+    const pageError = error || searchError || genreError;
     const searchStatus = 
         query && !searchLoading
             ? `${searchedMovies.length} results found`
@@ -29,6 +40,7 @@ import styles from "./HomePage.module.css";
     const noResults = 
         query && !searchLoading && searchedMovies.length === 0;
 
+    
     return (
         <>
             <Navbar />
@@ -41,7 +53,11 @@ import styles from "./HomePage.module.css";
                     onClear={clearSearch}
                     loading={searchLoading}
                 />
-
+                {!genresLoading && (
+                    <GenreFilter
+                        genres={genres} activeGenre={activeGenre} onGenreSelect={setActiveGenre}
+                    />
+                )}
                 {query && searchLoading && (
                     <p className={styles.searchStatus}>
                         Searching for "{query}"...
@@ -56,7 +72,9 @@ import styles from "./HomePage.module.css";
                 <h1 className={styles.pageTitle}>
                     {query 
                         ? `Search Results for "${query}"` 
-                        : "Popular Movies"
+                        : activeGenre
+                            ? "Movies by Genre"
+                            : "Popular Movies"
                     }
                 </h1>
 
