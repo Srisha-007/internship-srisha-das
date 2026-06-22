@@ -50,7 +50,7 @@ export function useMovieSearch(query) {
 
     }, [query]);
 
-  return {
-    movies, loading, error
-  };
+    return {
+        movies, loading, error,
+    };
 }
