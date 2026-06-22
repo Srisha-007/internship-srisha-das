@@ -16,10 +16,7 @@ export function useGenres() {
                 setGenres(data.genres);
 
             } catch (error) {
-                setError(
-                    error.message ||
-                    "Failed to load genres."
-                );
+                setError(error.message || "Failed to load genres.");
 
             } finally {
                 setLoading(false);
