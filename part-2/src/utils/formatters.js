@@ -35,7 +35,7 @@ export function truncateText(text, maxLength = 180) {
 // ===================================
 //  Fetch Section Title for movie grid
 // ===================================
-export function getSectionTitile(query, activeGenre, genres) {
+export function getSectionTitle(query, activeGenre, genres) {
     if (query) {
         return `Search Results for "${query}"`;
     }

@@ -6,7 +6,7 @@ import { useMovieSearch } from "../hooks/useMovieSearch";
 import { useGenres } from "../hooks/useGenres";
 import { useGenreMovies } from "../hooks/useGenreMovies";
 import { useMovies } from "../hooks/useMovies";
-import { getSectionTitle } from "../utils/getSectionTitle";
+import { getSectionTitle } from "../utils/formatters";
 
 import Navbar from "../components/Navbar/Navbar";
 import HeroBanner from "../components/HeroBanner/HeroBanner";
