@@ -6,6 +6,7 @@ import { useMovieSearch } from "../hooks/useMovieSearch";
 import { useGenres } from "../hooks/useGenres";
 import { useGenreMovies } from "../hooks/useGenreMovies";
 import { useMovies } from "../hooks/useMovies";
+import { getSectionTitle } from "../utils/getSectionTitle";
 
 import Navbar from "../components/Navbar/Navbar";
 import HeroBanner from "../components/HeroBanner/HeroBanner";
@@ -43,7 +44,7 @@ function HomePage() {
         setActiveGenre(null);
         setInputValue(value);
     }
-    
+
     return (
         <>
             <Navbar />
@@ -78,12 +79,7 @@ function HomePage() {
                 )}
                 
                 <h1 className={styles.pageTitle}>
-                    {query 
-                        ? `Search Results for "${query}"` 
-                        : activeGenre
-                            ? "Movies by Genre"
-                            : "Popular Movies"
-                    }
+                    {getSectionTitle(query, activeGenre, genres)}
                 </h1>
 
                 {noResults && (

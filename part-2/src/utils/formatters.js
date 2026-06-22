@@ -21,7 +21,7 @@ export function formatDate(dateString) {
 // ===================================
 //         Truncate Long Text
 // ===================================
-export function truncateText( text, maxLength = 180) {
+export function truncateText(text, maxLength = 180) {
     if (!text) {
         return "";
     }
@@ -31,4 +31,21 @@ export function truncateText( text, maxLength = 180) {
     }
 
     return (text.slice(0, maxLength));
+}
+// ===================================
+//  Fetch Section Title for movie grid
+// ===================================
+export function getSectionTitile(query, activeGenre, genres) {
+    if (query) {
+        return `Search Results for "${query}"`;
+    }
+    if (activeGenre) {
+        const genre = genres.find(
+            g => g.id === activeGenre
+        );
+        return genre
+            ? `${genre.name} Movies`
+            : "Movies";
+    }
+    return "Popular Movies";
 }
