@@ -15,8 +15,7 @@ import MovieCard from "../components/MovieCard/MovieCard";
 
 import styles from "./HomePage.module.css";
 
- function HomePage() {  
-    
+function HomePage() {      
     const { featuredMovie } = useTrendingMovie();
     const { movies, loading, error } = useMovies();
     const { query, inputValue, setInputValue, clearSearch } = useSearchQuery();
@@ -40,6 +39,10 @@ import styles from "./HomePage.module.css";
     const noResults = 
         query && !searchLoading && searchedMovies.length === 0;
 
+    function handleSearchChange(value) {
+        setActiveGenre(null);
+        setInputValue(value);
+    }
     
     return (
         <>
@@ -49,13 +52,18 @@ import styles from "./HomePage.module.css";
             <div className={styles.page}>
                 <SearchBar
                     value={inputValue}
-                    onChange={setInputValue}
+                    onChange={handleSearchChange}
                     onClear={clearSearch}
                     loading={searchLoading}
                 />
                 {!genresLoading && (
                     <GenreFilter
-                        genres={genres} activeGenre={activeGenre} onGenreSelect={setActiveGenre}
+                        genres={genres} 
+                        activeGenre={activeGenre} 
+                        onGenreSelect={(genreId) => {
+                            clearSearch();
+                            setActiveGenre(genreId);
+                        }}
                     />
                 )}
                 {query && searchLoading && (
