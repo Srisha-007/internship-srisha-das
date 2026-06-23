@@ -6,7 +6,7 @@
 .backButton {
     display: inline-flex;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
 
     margin: 2rem;
 
@@ -23,10 +23,8 @@
 
 .body {
     padding: 2rem;
-
     display: grid;
     grid-template-columns: 220px 1fr;
-
     gap: 2rem;
 }
 
@@ -41,4 +39,81 @@
 
 .info {
     color: var(--text-primary);
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.metaRow {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.metaRow span {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+}
+
+.genres {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.genreBadge {
+    background-color: rgba(59,130,246,.15);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 999px;
+    padding: .35rem .8rem;
+    font-size: .85rem;
+}
+.castSection {
+    margin-bottom: 2rem;
+}
+
+.castTitle {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.castList {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.castCard {
+    display: flex;
+    gap: .75rem;
+    flex: 1;
+    min-width: 200px;
+    padding: .5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-secondary);
+}
+
+.castImage {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.castName {
+    font-weight: 600;
+}
+
+.castCharacter {
+    font-size: .85rem;
+    color: var(--text-secondary);
 }
