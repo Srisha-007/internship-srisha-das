@@ -43,6 +43,6 @@ export function useGenreMovies(selectedGenres) {
     }, [selectedGenres]);
 
     return {
-        movies, loading, error
+        movies, loading, error,
     };
 }
