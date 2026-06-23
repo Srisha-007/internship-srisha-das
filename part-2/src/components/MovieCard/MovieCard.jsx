@@ -1,5 +1,6 @@
 import styles from "./MovieCard.module.css";
 import { Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function MovieCard({movie}) {
     const posterUrl = movie.poster_path
@@ -7,30 +8,32 @@ function MovieCard({movie}) {
         : "https://via.placeholder.com/500x750?text=No+Image";
         
     return (
-        <article className={styles.movieCard}>
-            <div className={styles.posterContainer}>
-                <img
-                    src={posterUrl}
-                    alt={movie.title}
-                    className={styles.poster}
-                />
-                <div className={styles.ratingBadge}>
-                    <Star className={styles.starIcon} />
-                    {movie.vote_average?.toFixed(1)}
+        <Link to={`/movie/${movie.id}`} className={styles.cardLink}>
+            <article className={styles.movieCard}>
+                <div className={styles.posterContainer}>
+                    <img
+                        src={posterUrl}
+                        alt={movie.title}
+                        className={styles.poster}
+                    />
+                    <div className={styles.ratingBadge}>
+                        <Star className={styles.starIcon} />
+                        {movie.vote_average?.toFixed(1)}
+                    </div>
                 </div>
-            </div>
             
-            <div className={styles.cardInfo}>
-                <h3 className={styles.cardTitle}>
-                    {movie.title}
-                </h3>
-                <div className={styles.cardMetadata}>
-                    <span>
-                        {movie.release_date?.split("-")[0]}
-                    </span>
+                <div className={styles.cardInfo}>
+                    <h3 className={styles.cardTitle}>
+                        {movie.title}
+                    </h3>
+                    <div className={styles.cardMetadata}>
+                        <span>
+                            {movie.release_date?.split("-")[0]}
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </article>
+            </article>
+        </Link>
     );
 }
 
