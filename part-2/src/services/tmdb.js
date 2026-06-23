@@ -42,6 +42,12 @@ export async function getTrendingMovies() {
 export async function getGenres() {
     return getFromTMDB("/genre/movie/list");
 }
+// ============================================
+//             Fetch Movies by Genres 
+// ============================================
+export async function getMoviesByGenre(genreId) {
+    return getFromTMDB(`/discover/movie?with_genres=${genreId}`);
+}
 
 // ============================================
 //      Fetch Movie Details using movieId

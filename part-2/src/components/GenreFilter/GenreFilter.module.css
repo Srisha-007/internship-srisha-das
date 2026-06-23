@@ -1,0 +1,47 @@
+.genreSection {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.5rem 0 1rem;
+    margin-bottom: 2rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent;
+}
+.genreSection::-webkit-scrollbar {
+    height: 8px;
+}
+.genreSection::-webkit-scrollbar-track {
+    background: transparent;
+}
+.genreSection::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 999px;
+}
+.genreSection::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color);
+}
+.genreButton {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: var(--transition-smooth);
+    flex-shrink:0;
+}
+
+.genreButton:hover {
+    border-color: var(--accent-hover);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}

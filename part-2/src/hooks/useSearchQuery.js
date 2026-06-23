@@ -23,6 +23,7 @@ export function useSearchQuery() {
 
     function clearSearch() {
         setInputValue("");
+        setSearchParams({});
     }
 
     return {
