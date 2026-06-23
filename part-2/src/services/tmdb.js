@@ -57,6 +57,13 @@ export async function getMovieDetails(movieId) {
 }
 
 // ============================================
+//      Fetch Movie Credits using movieId
+// ============================================
+export async function getMovieCredits(movieId) {
+    return getFromTMDB(`/movie/${movieId}/credits`);
+}
+
+// ============================================
 //                Search Movies
 // ============================================
 export async function searchMovies(query, controller = null){
