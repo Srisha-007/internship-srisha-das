@@ -1,16 +1,16 @@
 import styles from "./GenreFilter.module.css";
 
-function GenreFilter({ genres, activeGenre, onGenreSelect }) {
+function GenreFilter({ genres, selectedGenres, onGenreToggle }) {
     return (
         <section className={styles.genreSection}>
 
             <button
                 className={
-                    activeGenre === null
+                    selectedGenres.length === 0
                         ? `${styles.genreButton} ${styles.active}`
                         : styles.genreButton
                 }
-                onClick={() => onGenreSelect(null)}
+                onClick={() => onGenreToggle(null)}
             >
                 All
             </button>
@@ -19,12 +19,12 @@ function GenreFilter({ genres, activeGenre, onGenreSelect }) {
                 <button
                     key={genre.id}
                     className={
-                        activeGenre === genre.id
+                        selectedGenres.includes(genre.id)
                             ? `${styles.genreButton} ${styles.active}`
                             : styles.genreButton
                     }
                     onClick={() =>
-                        onGenreSelect(genre.id)
+                        onGenreToggle(genre.id)
                     }>
                     {genre.name}
                 </button>

@@ -21,14 +21,14 @@ function HomePage() {
     const { movies, loading, error } = useMovies();
     const { query, inputValue, setInputValue, clearSearch } = useSearchQuery();
     const { movies: searchedMovies, loading: searchLoading, error: searchError } = useMovieSearch(query);
-    const [activeGenre, setActiveGenre] = useState(null);
+    const [selectedGenres, setSelectedGenres] = useState([]);
     const { genres, loading: genresLoading } = useGenres();
-    const { movies: genreMovies, loading: genreLoading, error: genreError } = useGenreMovies(activeGenre);
+    const { movies: genreMovies, loading: genreLoading, error: genreError } = useGenreMovies(selectedGenres);
 
     const displayedMovies = 
         query 
             ? searchedMovies 
-            : activeGenre
+            : selectedGenres.length > 0
                 ? genreMovies
                 : movies;
     const isLoading = searchLoading || genreLoading || loading;
@@ -38,11 +38,25 @@ function HomePage() {
             ? `${searchedMovies.length} results found`
             : "";
     const noResults = 
-        query && !searchLoading && searchedMovies.length === 0;
+        !isLoading && displayedMovies.length === 0;
 
     function handleSearchChange(value) {
-        setActiveGenre(null);
+        setSelectedGenres([]);
         setInputValue(value);
+    }
+    function handleGenreToggle(genreId) {
+        clearSearch();
+
+        if (genreId ===null) {
+            setSelectedGenres([]);
+            return;
+        }
+        setSelectedGenres((prev) => {
+            if (prev.includes(genreId)) {
+                return prev.filter(id => id !== genreId);
+            }
+            return [...prev, genreId];
+        });
     }
 
     return (
@@ -54,17 +68,17 @@ function HomePage() {
                 <SearchBar
                     value={inputValue}
                     onChange={handleSearchChange}
-                    onClear={clearSearch}
+                    onClear={() => {
+                        clearSearch();
+                        setSelectedGenres([]);
+                    }}
                     loading={searchLoading}
                 />
                 {!genresLoading && (
                     <GenreFilter
                         genres={genres} 
-                        activeGenre={activeGenre} 
-                        onGenreSelect={(genreId) => {
-                            clearSearch();
-                            setActiveGenre(genreId);
-                        }}
+                        selectedGenres={selectedGenres} 
+                        onGenreToggle={handleGenreToggle}
                     />
                 )}
                 {query && searchLoading && (
@@ -79,7 +93,7 @@ function HomePage() {
                 )}
                 
                 <h1 className={styles.pageTitle}>
-                    {getSectionTitle(query, activeGenre, genres)}
+                    {getSectionTitle(query, selectedGenres, genres)}
                 </h1>
 
                 {noResults && (

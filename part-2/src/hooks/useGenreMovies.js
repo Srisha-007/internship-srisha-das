@@ -3,20 +3,22 @@ import { getMoviesByGenre } from "../services/tmdb";
 
 const genreCache = {};
 
-export function useGenreMovies(genreId) {
+export function useGenreMovies(selectedGenres) {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        if (!genreId) {
+        if (selectedGenres.length === 0) {
             setMovies([]);
             return;
         }
-        if (genreCache[genreId]) {
+        const cacheKey = selectedGenres.slice().sort().join(",");
+
+        if (genreCache[cacheKey]) {
             setError("");
             setLoading(false)
-            setMovies(genreCache[genreId]);
+            setMovies(genreCache[cacheKey]);
             return;
         }
 
@@ -25,8 +27,8 @@ export function useGenreMovies(genreId) {
                 setLoading(true);
                 setError("");
 
-                const data = await getMoviesByGenre(genreId);
-                genreCache[genreId] = data.results;
+                const data = await getMoviesByGenre(cacheKey);
+                genreCache[cacheKey] = data.results;
                 setMovies(data.results);
 
             } catch (error) {
@@ -38,9 +40,9 @@ export function useGenreMovies(genreId) {
         }
 
         loadMovies();
-    }, [genreId]);
+    }, [selectedGenres]);
 
     return {
-        movies, loading, error,
+        movies, loading, error
     };
 }
