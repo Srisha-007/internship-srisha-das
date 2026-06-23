@@ -1,0 +1,44 @@
+.page {
+    min-height: 100vh;
+    padding-bottom: 3rem;
+}
+
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    margin: 2rem;
+
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.hero {
+    height: 260px;
+
+    background-size: cover;
+    background-position: center;
+}
+
+.body {
+    padding: 2rem;
+
+    display: grid;
+    grid-template-columns: 220px 1fr;
+
+    gap: 2rem;
+}
+
+.posterWrapper {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.poster {
+    width: 100%;
+}
+
+.info {
+    color: var(--text-primary);
+}
