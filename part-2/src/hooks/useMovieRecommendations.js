@@ -10,7 +10,7 @@ export function useMovieRecommendations(movieId) {
             try {
                 setLoading(true);
                 const data = await getMovieRecommendations(movieId);
-                setMovies(data.results.slice(0, 6));
+                setMovies(data.results.slice(0, 10));
             } 
             finally {
                 setLoading(false);

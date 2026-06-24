@@ -12,7 +12,7 @@ function MovieDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { movie, cast, loading, error} = useMovieDetails(id);
-    const { movies: recommendations } = useMovieRecommendations(id);
+    const { movies: recommendations, loading: recommendationsLoading, error: recommendationsError } = useMovieRecommendations(id);
 
     if (loading) {
         return <p>Loading movie details...</p>;
@@ -42,7 +42,11 @@ function MovieDetailPage() {
                             rgba(15,23,42,0.9),
                             rgba(15,23,42,0.3)
                         ),
-                        url(https://image.tmdb.org/t/p/original${movie.backdrop_path})
+                        url(${
+                            movie.backdrop_path
+                                ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+                                : "https://via.placeholder.com/1200x750?text=No+Image"
+                            })
                     `
                 }}
             />
@@ -197,12 +201,22 @@ function MovieDetailPage() {
                     {recommendations.length > 0 && (
                         <section className={styles.recommendations}>
                             <h2>More Like This</h2>
+                            
+                            {recommendationsLoading && (
+                                <p>Loading recommendations...</p>
+                            )}
 
-                            <div className={styles.recommendationGrid}>
-                                {recommendations.map((movie) => (
-                                    <MovieCard key={movie.id} movie={movie}/>
-                                ))}
-                            </div>
+                            {recommendationsError && (
+                                <p>{recommendationsError}</p>
+                            )}
+
+                            {!recommendationsLoading && recommendations.length > 0 && (
+                                <div className={styles.recommendationGrid}>
+                                    {recommendations.map((movie) => (
+                                        <MovieCard key={movie.id} movie={movie}/>
+                                    ))}
+                                </div>
+                            )}
                         </section>
                     )}
                 </div>
