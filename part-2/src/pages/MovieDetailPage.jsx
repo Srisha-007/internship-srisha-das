@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { Star, Clock, Calendar, ArrowLeft } from "lucide-react";
 
 import { useMovieDetails } from "../hooks/useMovieDetails";
@@ -13,7 +13,7 @@ function MovieDetailPage() {
     const navigate = useNavigate();
     const { movie, cast, loading, error} = useMovieDetails(id);
     const { movies: recommendations, loading: recommendationsLoading, error: recommendationsError } = useMovieRecommendations(id);
-
+    const location = useLocation();
     if (loading) {
         return <p>Loading movie details...</p>;
     }
@@ -28,7 +28,10 @@ function MovieDetailPage() {
 
     return (
         <div className={styles.page}>
-            <Link to="/" className={styles.backButton}>
+            <Link 
+                to={location.state?.from ||"/"}
+                className={styles.backButton}
+            >
                 <ArrowLeft size={18} />
                 Back to Home
             </Link>

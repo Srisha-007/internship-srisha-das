@@ -1,14 +1,22 @@
 import styles from "./MovieCard.module.css";
 import { Star } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function MovieCard({movie}) {
     const posterUrl = movie.poster_path
         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
         : "https://via.placeholder.com/500x750?text=No+Image";
-        
+    
+    const location = useLocation();    
+    
     return (
-        <Link to={`/movie/${movie.id}`} className={styles.cardLink}>
+        <Link 
+            to={`/movie/${movie.id}`} 
+            state={{
+                from: location
+            }}
+            className={styles.cardLink}
+        >
             <article className={styles.movieCard}>
                 <div className={styles.posterContainer}>
                     <img
