@@ -17,6 +17,21 @@ export function formatDate(dateString) {
         options
     );
 }
+// ===================================
+//          Format Currency
+// ===================================
+export function formatCurrency(amount) {
+    if (!amount || amount === 0) {
+        return "Not Available";
+    }
+    return new Intl.NumberFormat(
+        "en-US", {
+            style:"currency",
+            currency:"USD",
+            maximumFractionDigits:0,
+        }
+    ).format(amount);
+}
 
 // ===================================
 //         Truncate Long Text

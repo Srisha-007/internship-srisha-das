@@ -3,7 +3,7 @@ import { Star, Clock, Calendar, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { useMovieDetails } from "../hooks/useMovieDetails";
-import { formatDate } from "../utils/formatters";
+import { formatDate, formatCurrency } from "../utils/formatters";
 
 import styles from "./MovieDetailPage.module.css";
 
@@ -137,6 +137,56 @@ function MovieDetailPage() {
                         {movie.overview}
                     </p>
 
+                    <section className={styles.additionalInfo}>
+                        <h3 className={styles.sectionHeading}>
+                            Additional Information
+                        </h3>
+                    
+                        {movie.tagline && (
+                            <>
+                                <h4 className={styles.taglineTitle}>
+                                    Tagline
+                                </h4>
+
+                                <blockquote className={styles.tagline}>
+                                    "{movie.tagline}"
+                                </blockquote>
+                            </>
+                        )}
+                        
+                        <div className={styles.infoGrid}>
+                            <div>
+                                <strong>Original Title</strong>
+                                <p>{movie.original_title}</p>
+                            </div>
+
+                            <div>
+                                <strong>Status</strong>
+                                <p>{movie.status}</p>
+                            </div>
+
+                            <div>
+                                <strong>Language</strong>
+                                <p>{movie.original_language.toUpperCase()}</p>
+                            </div>
+
+                            <div>
+                                <strong>Popularity</strong>
+                                <p>{Math.round(movie.popularity)}</p>
+                            </div>
+
+                            <div>
+                                <strong>Budget</strong>
+                                <p>{formatCurrency(movie.budget)}</p>
+                            </div>
+
+                            <div>
+                                <strong>Revenue</strong>
+                                <p>{formatCurrency(movie.revenue)}</p>
+                            </div>
+
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
