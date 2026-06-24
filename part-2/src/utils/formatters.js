@@ -17,6 +17,21 @@ export function formatDate(dateString) {
         options
     );
 }
+// ===================================
+//          Format Currency
+// ===================================
+export function formatCurrency(amount) {
+    if (!amount || amount === 0) {
+        return "Not Available";
+    }
+    return new Intl.NumberFormat(
+        "en-US", {
+            style:"currency",
+            currency:"USD",
+            maximumFractionDigits:0,
+        }
+    ).format(amount);
+}
 
 // ===================================
 //         Truncate Long Text
@@ -35,17 +50,20 @@ export function truncateText(text, maxLength = 180) {
 // ===================================
 //  Fetch Section Title for movie grid
 // ===================================
-export function getSectionTitle(query, activeGenre, genres) {
+export function getSectionTitle(query, selectedGenres, genres, personId, personName) {
     if (query) {
         return `Search Results for "${query}"`;
     }
-    if (activeGenre) {
-        const genre = genres.find(
-            g => g.id === activeGenre
-        );
-        return genre
-            ? `${genre.name} Movies`
-            : "Movies";
+    if (personId) {
+        return `Movies Featuring ${personName}`;
     }
+    if (selectedGenres.length > 0) {
+        const genreNames = genres.filter((genre) => 
+            selectedGenres.includes(genre.id))
+            .map((genre) => genre.name);
+
+        return `${genreNames.join(" + ")} Movies`;
+    }
+    
     return "Popular Movies";
 }

@@ -1,0 +1,177 @@
+.page {
+    min-height: 100vh;
+    padding-bottom: 3rem;
+}
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+.hero {
+    height: 260px;
+    background-size: cover;
+    background-position: center;
+}
+.body {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+}
+.posterWrapper {
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    aspect-ratio: 2/3;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+.poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.info {
+    color: var(--text-primary);
+}
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color:var(--accent-color);
+}
+.metaRow {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    align-items: center; 
+}
+.metaRow span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.genres {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.genreBadge {
+    background-color: rgba(59, 130, 246, 0.15);
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.castSection {
+    margin-bottom: 2rem;
+}
+.castTitle {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+.castList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 300px));
+    gap: 1rem;
+}
+.castCard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+.castCard:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+.castCard:focus-visible {
+    outline: 2px solid var(--accent-color);
+}
+.castImage {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.castName {
+    font-weight: 600;
+}
+.castCharacter {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.overviewTitle {
+    font-size: 1.25rem;
+    margin-bottom: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+.overview {
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+.additionalInfo {
+    margin-top: 3rem;
+}
+.sectionHeading {
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(180px,180px));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.infoGrid div {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+.tagline {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+    color: var(--accent-color);
+}
+.recommendations {
+    margin-top: 4rem;
+}
+.recommendationGrid {
+    display: grid;
+    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fill,minmax(200px, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+}
+
+@media (max-width: 768px) {
+    .body {
+        grid-template-columns: 1fr;
+    }
+    .posterWrapper {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+    .title {
+        font-size: 1.75rem;
+    }
+}

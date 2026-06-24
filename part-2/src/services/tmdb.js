@@ -57,8 +57,29 @@ export async function getMovieDetails(movieId) {
 }
 
 // ============================================
+//      Fetch Movie Credits using movieId
+// ============================================
+export async function getMovieCredits(movieId) {
+    return getFromTMDB(`/movie/${movieId}/credits`);
+}
+
+// ============================================
 //                Search Movies
 // ============================================
 export async function searchMovies(query, controller = null){
     return getFromTMDB(`/search/movie?query=${encodeURIComponent(query)}`, controller);
+}
+
+// ============================================
+//      Get Similar Movie Recommendations
+// ============================================
+export async function getMovieRecommendations(movieId) {
+    return getFromTMDB(`/movie/${movieId}/recommendations`);
+}
+
+// ============================================
+//            Get Movies By Person
+// ============================================
+export async function getMoviesByPerson(personId) {
+    return getFromTMDB(`/person/${personId}/movie_credits`);
 }

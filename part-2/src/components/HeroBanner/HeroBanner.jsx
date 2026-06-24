@@ -1,10 +1,12 @@
 import styles from "./HeroBanner.module.css";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { formatDate, truncateText } from "../../utils/formatters";
 import { Star, Info } from "lucide-react";
 
 function HeroBanner({movie}) {
     const [isExpanded, setIsExpanded] = useState(false);
+    const location = useLocation();
     
     if (!movie) return null;
     
@@ -64,10 +66,14 @@ function HeroBanner({movie}) {
                         )}
                     </p>
 
-                    <button type="button" className={styles.heroButton}>
+                    <Link 
+                        to={`/movie/${movie.id}`}
+                        state={{from: location}} 
+                        className={styles.heroButton}
+                    >
                         <Info />
                         View Details
-                    </button>
+                    </Link>
                 </div>
             </div>
         </section>
