@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 
 import { useMovieDetails } from "../hooks/useMovieDetails";
 import { formatDate, formatCurrency } from "../utils/formatters";
+import { useMovieRecommendations } from "../hooks/useMovieRecommendations";
+import MovieCard from "../components/MovieCard/MovieCard";
 
 import styles from "./MovieDetailPage.module.css";
 
 function MovieDetailPage() {
     const { id } = useParams();
     const { movie, cast, loading, error} = useMovieDetails(id);
+    const { movies: recommendations } = useMovieRecommendations(id);
 
     if (loading) {
         return <p>Loading movie details...</p>;
@@ -153,7 +156,7 @@ function MovieDetailPage() {
                                 </blockquote>
                             </>
                         )}
-                        
+
                         <div className={styles.infoGrid}>
                             <div>
                                 <strong>Original Title</strong>
@@ -185,6 +188,16 @@ function MovieDetailPage() {
                                 <p>{formatCurrency(movie.revenue)}</p>
                             </div>
 
+                        </div>
+                    </section>
+                    
+                    <section className={styles.recommendations}>
+                        <h2>More Like This</h2>
+
+                        <div className={styles.recommendationGrid}>
+                            {recommendations.map(movie => (
+                                <MovieCard key={movie.id} movie={movie}/>
+                            ))}
                         </div>
                     </section>
                 </div>

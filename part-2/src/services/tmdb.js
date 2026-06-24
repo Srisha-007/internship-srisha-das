@@ -69,3 +69,10 @@ export async function getMovieCredits(movieId) {
 export async function searchMovies(query, controller = null){
     return getFromTMDB(`/search/movie?query=${encodeURIComponent(query)}`, controller);
 }
+
+// ============================================
+//      Get Similar Movie Recommendations
+// ============================================
+export async function getMovieRecommendations(movieId) {
+    return getFromTMDB(`/movie/${movieId}/recommendations`);
+}

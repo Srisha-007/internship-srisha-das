@@ -79,17 +79,15 @@
     margin-bottom: 1rem;
 }
 .castList {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 300px));
     gap: 1rem;
-    flex-wrap: wrap;
 }
 .castCard {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    flex: 1;
-    min-width: 200px;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     background-color: var(--bg-secondary);
@@ -128,7 +126,7 @@
 }
 .infoGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    grid-template-columns: repeat(auto-fill,minmax(180px,180px));
     gap: 1rem;
     margin-bottom: 2rem;
 }
@@ -143,6 +141,15 @@
     margin-bottom: 2rem;
     font-style: italic;
     color: var(--accent-color);
+}
+.recommendations {
+    margin-top: 4rem;
+}
+.recommendationGrid {
+    display: grid;
+    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fill,minmax(180px,180px));
+    gap: 1rem;
 }
 
 @media (max-width: 768px) {
