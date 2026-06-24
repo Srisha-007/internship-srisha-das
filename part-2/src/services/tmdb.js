@@ -76,3 +76,10 @@ export async function searchMovies(query, controller = null){
 export async function getMovieRecommendations(movieId) {
     return getFromTMDB(`/movie/${movieId}/recommendations`);
 }
+
+// ============================================
+//            Get Movies By Person
+// ============================================
+export async function getMoviesByPerson(personId) {
+    return getFromTMDB(`/person/${personId}/movie_credits`);
+}

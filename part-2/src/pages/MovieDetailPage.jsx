@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Star, Clock, Calendar, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
 
 import { useMovieDetails } from "../hooks/useMovieDetails";
 import { formatDate, formatCurrency } from "../utils/formatters";
@@ -11,6 +10,7 @@ import styles from "./MovieDetailPage.module.css";
 
 function MovieDetailPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { movie, cast, loading, error} = useMovieDetails(id);
     const { movies: recommendations } = useMovieRecommendations(id);
 
@@ -104,9 +104,12 @@ function MovieDetailPage() {
 
                         <div className={styles.castList}>
                             {cast.map((actor) => (
-                                <div
+                                <button
                                     key={actor.id}
                                     className={styles.castCard}
+                                    onClick={() => 
+                                        navigate(`/?person=${actor.id}&personName=${encodeURIComponent(actor.name)}#movies`)
+                                    }
                                 >
                                     <img
                                         className={styles.castImage}
@@ -127,7 +130,7 @@ function MovieDetailPage() {
                                             {actor.character}
                                         </p>
                                     </div>
-                                </div>
+                                </button>
                             ))}
                         </div>
                     </div>
@@ -191,15 +194,17 @@ function MovieDetailPage() {
                         </div>
                     </section>
                     
-                    <section className={styles.recommendations}>
-                        <h2>More Like This</h2>
+                    {recommendations.length > 0 && (
+                        <section className={styles.recommendations}>
+                            <h2>More Like This</h2>
 
-                        <div className={styles.recommendationGrid}>
-                            {recommendations.map(movie => (
-                                <MovieCard key={movie.id} movie={movie}/>
-                            ))}
-                        </div>
-                    </section>
+                            <div className={styles.recommendationGrid}>
+                                {recommendations.map((movie) => (
+                                    <MovieCard key={movie.id} movie={movie}/>
+                                ))}
+                            </div>
+                        </section>
+                    )}
                 </div>
             </div>
         </div>

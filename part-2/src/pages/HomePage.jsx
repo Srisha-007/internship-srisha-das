@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useTrendingMovie } from "../hooks/useTrendingMovie";
 import { useSearchQuery } from "../hooks/useSearchQuery";
@@ -6,6 +6,7 @@ import { useMovieSearch } from "../hooks/useMovieSearch";
 import { useGenres } from "../hooks/useGenres";
 import { useGenreMovies } from "../hooks/useGenreMovies";
 import { useMovies } from "../hooks/useMovies";
+import { usePersonMovies } from "../hooks/usePersonMovies";
 import { getSectionTitle } from "../utils/formatters";
 
 import Navbar from "../components/Navbar/Navbar";
@@ -19,20 +20,22 @@ import styles from "./HomePage.module.css";
 function HomePage() {      
     const { featuredMovie } = useTrendingMovie();
     const { movies, loading, error } = useMovies();
-    const { query, inputValue, setInputValue, clearSearch } = useSearchQuery();
+    const { query, personId, personName, inputValue, setInputValue, clearSearch } = useSearchQuery();
     const { movies: searchedMovies, loading: searchLoading, error: searchError } = useMovieSearch(query);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const { genres, loading: genresLoading } = useGenres();
     const { movies: genreMovies, loading: genreLoading, error: genreError } = useGenreMovies(selectedGenres);
-
+    const { movies: personMovies, loading: personLoading, error: personError } = usePersonMovies(personId);
     const displayedMovies = 
         query 
             ? searchedMovies 
-            : selectedGenres.length > 0
-                ? genreMovies
-                : movies;
-    const isLoading = searchLoading || genreLoading || loading;
-    const pageError = error || searchError || genreError;
+            : personId
+                ? personMovies
+                : selectedGenres.length > 0
+                    ? genreMovies
+                    : movies;
+    const isLoading = searchLoading || genreLoading || personLoading || loading;
+    const pageError = error || searchError || genreError || personError;
     const searchStatus = 
         query && !searchLoading
             ? `${searchedMovies.length} results found`
@@ -40,6 +43,19 @@ function HomePage() {
     const noResults = 
         !isLoading && displayedMovies.length === 0;
 
+    useEffect(() => {
+        if (personId && displayedMovies.length > 0) {
+            const section = document.getElementById("movies");
+
+            if (section) {
+                section.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+        }
+    }, [personId, displayedMovies]);
+        
     function handleSearchChange(value) {
         setSelectedGenres([]);
         setInputValue(value);
@@ -92,8 +108,8 @@ function HomePage() {
                     </p>
                 )}
                 
-                <h1 className={styles.pageTitle}>
-                    {getSectionTitle(query, selectedGenres, genres)}
+                <h1 id="movies" className={styles.pageTitle}>
+                    {getSectionTitle(query, selectedGenres, genres, personId, personName)}
                 </h1>
 
                 {noResults && (
