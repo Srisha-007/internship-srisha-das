@@ -1,6 +1,7 @@
 import styles from "./MovieCard.module.css";
-import { Star } from "lucide-react";
+import { Star, Heart } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useFavorites } from "../../hooks/useFavorites";
 
 function MovieCard({movie}) {
     const posterUrl = movie.poster_path
@@ -8,7 +9,9 @@ function MovieCard({movie}) {
         : "https://via.placeholder.com/500x750?text=No+Image";
     
     const location = useLocation();    
-    
+    const { toggleFavorite, isFavorite } = useFavorites();
+    const favorite = isFavorite(movie.id);
+
     return (
         <Link 
             to={`/movie/${movie.id}`} 
@@ -40,6 +43,20 @@ function MovieCard({movie}) {
                         </span>
                     </div>
                 </div>
+                <button
+                    className={styles.favoriteButton}
+                    onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        toggleFavorite(movie);
+                    }}
+                >
+                    <Heart className={styles.heartIcon}
+                        fill={favorite ? "currentColor" : "none"}
+                    />
+                </button>
+
             </article>
         </Link>
     );
