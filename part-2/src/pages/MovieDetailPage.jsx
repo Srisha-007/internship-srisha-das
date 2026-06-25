@@ -1,10 +1,12 @@
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
-import { Star, Clock, Calendar, ArrowLeft } from "lucide-react";
+import { Star, Clock, Calendar, ArrowLeft, Heart } from "lucide-react";
 
 import { useMovieDetails } from "../hooks/useMovieDetails";
+import { useFavorites } from "../hooks/useFavorites";
 import { formatDate, formatCurrency } from "../utils/formatters";
 import { useMovieRecommendations } from "../hooks/useMovieRecommendations";
 import MovieCard from "../components/MovieCard/MovieCard";
+
 
 import styles from "./MovieDetailPage.module.css";
 
@@ -14,6 +16,11 @@ function MovieDetailPage() {
     const { movie, cast, loading, error} = useMovieDetails(id);
     const { movies: recommendations, loading: recommendationsLoading, error: recommendationsError } = useMovieRecommendations(id);
     const location = useLocation();
+    const { toggleFavorite, isFavorite } = useFavorites();
+    const favorite = movie
+        ? isFavorite(movie.id)
+        : false;
+    
     if (loading) {
         return <p>Loading movie details...</p>;
     }
@@ -73,6 +80,19 @@ function MovieDetailPage() {
                     <h1 className={styles.title}>
                         {movie.title}
                     </h1>
+
+                    <button
+                        className={styles.favoriteButton}
+                        onClick={() => toggleFavorite(movie)}
+                    >
+                        <Heart
+                            size={20}
+                            fill={favorite ? "currentColor" : "none"}
+                        />
+                        {favorite
+                            ? "Remove from Favorites"
+                            : "Add to Favorites"}
+                    </button>
 
                     <div className={styles.metaRow}>
 

@@ -24,6 +24,10 @@ export function FavoritesProvider({ children }) {
     }
 
     function isFavorite(movieId) {
+        if (!movieId) {
+            return false;
+        }
+
         return favorites.some(movie => movie.id === movieId);
     }
 
