@@ -1,11 +1,9 @@
 .discoverSection {
     margin-bottom: 2rem;
 }
-
 .searchContainer {
     position: relative;
 }
-
 .searchIcon {
     position: absolute;
     left: 1rem;
@@ -13,57 +11,40 @@
     transform: translateY(-50%);
     color: var(--text-secondary);
 }
-
 .searchInput {
     width: 100%;
     padding: 0.75rem 3rem;
-
     background-color: var(--bg-secondary);
-
     border: 2px solid var(--border-color);
     border-radius: var(--border-radius);
-
     color: var(--text-primary);
 }
-
 .searchInput:focus {
     outline: none;
     border-color: var(--accent-color);
 }
-
 .clearButton {
     position: absolute;
-
     right: 3rem;
     top: 50%;
-
     transform: translateY(-50%);
-
     border: none;
     background: none;
-
     cursor: pointer;
     color: var(--text-secondary);
 }
-
 .spinnerContainer {
     position: absolute;
-
     right: 1rem;
     top: 50%;
-
     transform: translateY(-50%);
 }
-
 .spinner {
     width: 18px;
     height: 18px;
-
     border: 2px solid var(--text-secondary);
     border-top-color: var(--accent-color);
-
     border-radius: 50%;
-
     animation: spin 1s linear infinite;
 }
 

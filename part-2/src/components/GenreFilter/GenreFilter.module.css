@@ -36,7 +36,7 @@
 
 .genreButton:hover {
     border-color: var(--accent-hover);
-    color: white;
+    color: var(--text-primary);
     transform: translateY(-3px);
 }
 
