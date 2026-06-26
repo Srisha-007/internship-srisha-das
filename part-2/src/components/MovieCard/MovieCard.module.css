@@ -93,7 +93,7 @@
     height: 40px;
     border: none;
     border-radius: 50%;
-    background: rgba(0,0,0,0.7);
+    background: var(--bg-secondary);
     color: #ef4444;
     display: flex;
     align-items: center;
