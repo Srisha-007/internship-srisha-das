@@ -1,6 +1,7 @@
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { Star, Clock, Calendar, ArrowLeft, Heart } from "lucide-react";
 
+import MovieDetailsSkeleton from "../components/MovieDetailsSkeleton/MovieDetailsSkeleton";
 import { useMovieDetails } from "../hooks/useMovieDetails";
 import { useFavorites } from "../hooks/useFavorites";
 import { formatDate, formatCurrency } from "../utils/formatters";
@@ -22,7 +23,7 @@ function MovieDetailPage() {
         : false;
     
     if (loading) {
-        return <p>Loading movie details...</p>;
+        return <MovieDetailsSkeleton />;
     }
 
     if (error) {
