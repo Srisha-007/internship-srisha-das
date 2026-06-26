@@ -1,5 +1,5 @@
-import { HeartCrack } from "lucide-react";
-
+import { HeartCrack, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useFavorites } from "../hooks/useFavorites";
 import MovieCard from "../components/MovieCard/MovieCard";
 
@@ -10,7 +10,14 @@ function FavoritesPage() {
 
     return (
         <div className={styles.page}>
-
+            <Link
+                to="/"
+                className={styles.backButton}
+            >
+                <ArrowLeft size={18} />
+                Back to Home
+            </Link>
+            
             <h1 className={styles.title}>
                 My Favorites
             </h1>

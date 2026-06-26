@@ -40,7 +40,7 @@ function MovieDetailPage() {
                 className={styles.backButton}
             >
                 <ArrowLeft size={18} />
-                Back to Home
+                Back
             </Link>
 
             <div
