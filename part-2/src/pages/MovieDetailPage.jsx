@@ -76,23 +76,28 @@ function MovieDetailPage() {
                 </div>
 
                 <div className={styles.info}>
-
-                    <h1 className={styles.title}>
-                        {movie.title}
-                    </h1>
-
-                    <button
-                        className={styles.favoriteButton}
-                        onClick={() => toggleFavorite(movie)}
-                    >
-                        <Heart
-                            size={20}
-                            fill={favorite ? "currentColor" : "none"}
-                        />
-                        {favorite
-                            ? "Remove from Favorites"
-                            : "Add to Favorites"}
-                    </button>
+                    <div className={styles.titleRow}>
+                        <h1 className={styles.title}>
+                            {movie.title}
+                        </h1>
+                        
+                        <button
+                            className={styles.favoriteButton}
+                            onClick={() => toggleFavorite(movie)}
+                            aria-label="Toggle Favorite"
+                        >
+                            <Heart
+                                size={24}
+                                fill={favorite ? "currentColor" : "none"}
+                            />
+                            {favorite
+                               ? "Remove from Favorites"
+                               : "Add to Favorites"
+                           }
+                        </button>
+                    </div>
+                   
+                    
 
                     <div className={styles.metaRow}>
 
