@@ -1,0 +1,64 @@
+.skeletonCard {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.skeletonPoster {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    background-color: var(--skeleton-bg);
+}
+
+.skeletonInfo {
+    padding: 1rem;
+}
+
+.skeletonTitle {
+    width: 80%;
+    height: 20px;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    background-color: var(--skeleton-bg);
+}
+
+.skeletonMeta {
+    width: 50%;
+    height: 14px;
+    border-radius: 4px;
+    background-color: var(--skeleton-bg);
+}
+
+.skeletonPoster,
+.skeletonTitle,
+.skeletonMeta {
+    position: relative;
+    overflow: hidden;
+}
+
+.skeletonPoster::after,
+.skeletonTitle::after,
+.skeletonMeta::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.12),
+        transparent
+    );
+
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        left: 150%;
+    }
+}
