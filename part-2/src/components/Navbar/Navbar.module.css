@@ -50,20 +50,21 @@
 .active {
     color: var(--accent-color);
 }
-.themeToggle {
+.themeButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0.5rem;
+    border-radius: 50%;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    padding: 0.5rem;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
     cursor: pointer;
-    display: inline-flex;
     transition: var(--transition-smooth);
 }
-
-.themeToggle:hover {
+.themeButton:hover {
     border-color: var(--accent-color);
     color: var(--accent-color);
     transform: scale(1.05);

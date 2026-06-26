@@ -1,12 +1,13 @@
 import styles from "./Navbar.module.css";
-import { Sun, Film } from "lucide-react";
+import { Sun, Film, Moon } from "lucide-react";
 import { useFavorites } from "../../hooks/useFavorites";
+import { useTheme } from "../../hooks/useTheme";
 import { Link } from "react-router-dom";
 
 function Navbar() {
     const activeSection = "trending";
     const { favorites } = useFavorites();
-
+    const { theme, toggleTheme } = useTheme();
     return (
         <header className={styles.mainHeader}>
             <div className={`container ${styles.navbar}`}>
@@ -47,11 +48,15 @@ function Navbar() {
                         Favorites ({favorites.length})
                     </Link>
                     
-                    <button type="button"
-                            className={styles.themeToggle}
+                    <button 
+                            className={styles.themeButton}
                             aria-label="Toggle Theme"
+                            onClick={toggleTheme}
                     >
-                        <Sun /> 
+                        {theme === "dark"
+                            ? <Sun size={20} />
+                            : <Moon size={20} />
+                        }
                     </button>
                 </nav>
             </div>

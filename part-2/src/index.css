@@ -16,7 +16,7 @@
   --overlay-bg: rgba(15, 23, 42, 0.8);
         
   --hero-overlay-start: rgba(15, 23, 42, 0.92);    
-  --hero-overlay-end: rgba(15, 23, 42, 0.55);
+  --hero-overlay-end: rgba(15, 23, 42, 0.05);
 
   /* Typography */
   --font-family: 'Inter', sans-serif;
@@ -29,6 +29,26 @@
   --transition-smooth: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   
 }
+[data-theme="light"] {
+    --bg-primary: #f1f5f9;       
+    --bg-secondary: #ffffff;     
+    --bg-card: #ffffff;
+    --bg-navbar: rgba(255, 255, 255, 0.9);  
+
+    --text-primary: #0f172a;        
+    --text-secondary: #475569;   
+    
+    --accent-color: #2563eb;           
+    --accent-hover: #1d4ed8;
+    
+    --border-color: #cbd5e1;     
+    
+    --overlay-bg: rgba(15, 23, 42, 0.35);
+
+    --hero-overlay-start: rgba(248, 250, 252, 0.92);
+    --hero-overlay-end: rgba(248, 250, 252, 0.05);
+}
+
 /* Global Reset */
 *, *::before, *::after {
     box-sizing: border-box;
