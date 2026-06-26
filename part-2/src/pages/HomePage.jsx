@@ -14,6 +14,7 @@ import HeroBanner from "../components/HeroBanner/HeroBanner";
 import SearchBar from "../components/SearchBar/SearchBar";
 import GenreFilter from "../components/GenreFilter/GenreFilter";
 import MovieCard from "../components/MovieCard/MovieCard";
+import SkeletonCard from "../components/SkeletonCard/SkeletonCard";
 
 import styles from "./HomePage.module.css";
 
@@ -118,7 +119,13 @@ function HomePage() {
                     </p>
                 )}
 
-                {isLoading && <p>Loading movies...</p>}
+                {isLoading && !pageError && (
+                    <div className={styles.moviesGrid}>
+                        {Array.from({ length: 8 }).map((_, index) => (
+                            <SkeletonCard key={index} />
+                        ))}
+                    </div>
+                )}
                 {pageError && <p className={styles.error}>{pageError}</p>}
 
                 {!isLoading && !pageError && 
