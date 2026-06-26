@@ -1,0 +1,35 @@
+.page {
+    padding: 2rem;
+}
+.title {
+    margin-bottom: 2rem;
+}
+.moviesGrid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem;
+}
+.emptyState {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 600;
+    transition: var(--transition-smooth);
+}
+.backButton:hover {
+    color: var(--accent-color);
+}
