@@ -1,15 +1,20 @@
 import styles from "./HeroBanner.module.css";
 import { useState } from "react";
+import { useMovieTrailer } from "../../hooks/useMovieTrailer";
+import TrailerModal from "../TrailerModal/TrailerModal";
 import { Link, useLocation } from "react-router-dom";
 import { formatDate, truncateText } from "../../utils/formatters";
-import { Star, Info } from "lucide-react";
+import { Star, Info, Play } from "lucide-react";
 
 function HeroBanner({movie}) {
     const [isExpanded, setIsExpanded] = useState(false);
+    const [showTrailer, setShowTrailer] = useState(false);
     const location = useLocation();
-    
+
+    const { trailerKey, loading: trailerLoading, fetchTrailer } = useMovieTrailer();
+
     if (!movie) return null;
-    
+
     const shortOverview = truncateText(movie.overview, 180);
     const backgroundImage = `
         linear-gradient(
@@ -65,15 +70,37 @@ function HeroBanner({movie}) {
                             </>
                         )}
                     </p>
-
-                    <Link 
-                        to={`/movie/${movie.id}`}
-                        state={{from: location}} 
-                        className={styles.heroButton}
-                    >
-                        <Info />
-                        View Details
-                    </Link>
+                    
+                    <div className={styles.heroActions}>
+                        <button
+                            aria-label="Watch Trailer"
+                            className={styles.heroButton}
+                            onClick={async () => {
+                                setShowTrailer(true);
+                                await fetchTrailer(movie.id);
+                            }}
+                        >
+                            <Play />
+                            Watch Trailer
+                        </button>    
+                    
+                        {showTrailer && (
+                            <TrailerModal
+                                trailerKey={trailerKey}
+                                loading={trailerLoading}
+                                onClose={() => setShowTrailer(false)}
+                            />
+                        )}
+                        
+                        <Link 
+                            to={`/movie/${movie.id}`}
+                            state={{from: location}} 
+                            className={styles.heroButton}
+                        >
+                            <Info />
+                            View Details
+                        </Link>
+                    </div>
                 </div>
             </div>
         </section>
