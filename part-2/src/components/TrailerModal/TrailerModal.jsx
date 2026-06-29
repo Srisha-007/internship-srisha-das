@@ -1,24 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import styles from "./TrailerModal.module.css";
 
 function TrailerModal({ trailerKey, loading, onClose }) {
     const [iframeLoading, setIframeLoading] = useState(true);
-    if (!trailerKey) {
-        return (
-            <div className={styles.overlay}>
-                <div className={styles.modal}>
-                    <button
-                        className={styles.closeButton}
-                        onClick={onClose}
-                    >
-                        <X />
-                    </button>
-                    <p>No trailer available.</p>
-                </div>
-            </div>
-        );
-    }
+
+    useEffect(() => {
+        function handleEscape(event) {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        }
+        window.addEventListener("keydown", handleEscape);
+        document.body.style.overview = "hidden";
+        return () => {
+            window.removeEventListener("keydown", handleEscape);
+            document.body.style.overflow = "auto";
+        };
+    }, [onClose]);
 
     return (
         <div
