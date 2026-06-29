@@ -10,6 +10,7 @@ function SearchBar({value, onChange, onClear, loading}) {
 
                 <input
                     type="text"
+                    aria-label="Search movies"
                     placeholder="Search movies..."
                     value={value}
                     onChange={(e) =>
@@ -20,6 +21,7 @@ function SearchBar({value, onChange, onClear, loading}) {
 
                 {value && (
                     <button
+                        aria-label="Clear search"
                         onClick={() => {
                             console.log("clear clicked");
                             onClear();

@@ -13,6 +13,7 @@ function FavoritesPage() {
             <Link
                 to="/"
                 className={styles.backButton}
+                aria-label="Back button"
             >
                 <ArrowLeft size={18} />
                 Back to Home
@@ -27,10 +28,8 @@ function FavoritesPage() {
                     <HeartCrack size={72} />
 
                     <h2>No favorites yet</h2>
-
                     <p>
-                        Start adding movies by
-                        clicking the heart icon.
+                        Start adding movies by clicking the heart icon.
                     </p>
                 </div>
 

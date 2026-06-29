@@ -8,7 +8,6 @@ import { formatDate, formatCurrency } from "../utils/formatters";
 import { useMovieRecommendations } from "../hooks/useMovieRecommendations";
 import MovieCard from "../components/MovieCard/MovieCard";
 
-
 import styles from "./MovieDetailPage.module.css";
 
 function MovieDetailPage() {
@@ -37,6 +36,7 @@ function MovieDetailPage() {
     return (
         <div className={styles.page}>
             <Link 
+                aria-label="Back button"
                 to={location.state?.from ||"/"}
                 className={styles.backButton}
             >

@@ -45,6 +45,7 @@ function MovieCard({movie}) {
                 </div>
                 <button
                     className={styles.favoriteButton}
+                    aria-label="Favorites Button"
                     onClick={(event) => {
                         event.preventDefault();
                         event.stopPropagation();
