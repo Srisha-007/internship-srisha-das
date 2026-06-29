@@ -1,6 +1,9 @@
 import styles from "./MovieCard.module.css";
-import { Star, Heart } from "lucide-react";
+import { useState } from "react";
+import { Star, Heart, Play } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import TrailerModal from "../TrailerModal/TrailerModal";
+import { useMovieTrailer } from "../../hooks/useMovieTrailer";
 import { useFavorites } from "../../hooks/useFavorites";
 
 function MovieCard({movie}) {
@@ -8,6 +11,8 @@ function MovieCard({movie}) {
         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
         : "https://via.placeholder.com/500x750?text=No+Image";
     
+    const [showTrailer, setShowTrailer] = useState(false);
+    const { trailerKey } = useMovieTrailer(movie.id);
     const location = useLocation();    
     const { toggleFavorite, isFavorite } = useFavorites();
     const favorite = isFavorite(movie.id);
@@ -43,6 +48,26 @@ function MovieCard({movie}) {
                         </span>
                     </div>
                 </div>
+
+                <button
+                    className={styles.trailerButton}
+                    aria-label="Watch Trailer"
+                    onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        setShowTrailer(true);
+                    }}
+                >
+                    <Play />
+                </button>
+
+                {showTrailer && trailerKey && (
+                    <TrailerModal
+                        trailerKey={trailerKey}
+                        onClose={() => setShowTrailer(false)}
+                    />
+                )}
+
                 <button
                     className={styles.favoriteButton}
                     aria-label="Favorites Button"
