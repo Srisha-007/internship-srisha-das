@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import { useTrendingMovie } from "../hooks/useTrendingMovie";
 import { useSearchQuery } from "../hooks/useSearchQuery";
 import { useMovieSearch } from "../hooks/useMovieSearch";
@@ -20,12 +21,12 @@ import styles from "./HomePage.module.css";
 
 function HomePage() {      
     const { featuredMovie } = useTrendingMovie();
-    const { movies, loading, error } = useMovies();
+    const { movies, loading, error, loadMore } = useMovies();
     const { query, personId, personName, inputValue, setInputValue, clearSearch } = useSearchQuery();
-    const { movies: searchedMovies, loading: searchLoading, error: searchError } = useMovieSearch(query);
+    const { movies: searchedMovies, loading: searchLoading, error: searchError, loadMore: loadMoreSearch } = useMovieSearch(query);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const { genres, loading: genresLoading } = useGenres();
-    const { movies: genreMovies, loading: genreLoading, error: genreError } = useGenreMovies(selectedGenres);
+    const { movies: genreMovies, loading: genreLoading, error: genreError, loadMore: loadMoreGenre } = useGenreMovies(selectedGenres);
     const { movies: personMovies, loading: personLoading, error: personError } = usePersonMovies(personId);
     const displayedMovies = 
         query 
@@ -43,6 +44,18 @@ function HomePage() {
             : "";
     const noResults = 
         !isLoading && displayedMovies.length === 0;
+
+    const loadMoreRef = useInfiniteScroll(() => {
+        if (query && !searchLoading) {
+            loadMoreSearch()
+        }
+        else if (selectedGenres.length > 0 && !genreLoading) {
+            loadMoreGenre();
+        }
+        else if (!loading && !query && selectedGenres.length === 0 && !personId) {
+            loadMore();
+        }
+    });    
 
     useEffect(() => {
         if (personId && displayedMovies.length > 0) {
@@ -118,23 +131,36 @@ function HomePage() {
                         No movies found.
                     </p>
                 )}
-
-                {isLoading && !pageError && (
+                
+                {pageError && <p className={styles.error}>{pageError}</p>}
+                
+                {isLoading && !pageError && displayedMovies.length === 0 && (
                     <div className={styles.moviesGrid}>
                         {Array.from({ length: 8 }).map((_, index) => (
                             <SkeletonCard key={index} />
                         ))}
                     </div>
                 )}
-                {pageError && <p className={styles.error}>{pageError}</p>}
 
-                {!isLoading && !pageError && 
-                    <div className={styles.moviesGrid}>
-                        {displayedMovies.map((movie) => (
-                            <MovieCard key={movie.id} movie={movie} />
-                        ))}
-                    </div>
-                }
+                <div className={styles.moviesGrid}>
+                    {displayedMovies.map((movie) => (
+                        <MovieCard key={movie.id} movie={movie}/>
+                    ))}
+
+                    {/* Loading more movies during infinite scroll */}
+                    {isLoading && displayedMovies.length > 0 && !query && selectedGenres.length === 0 && !personId &&
+                        Array.from({ length: 4 }).map((_, index) => (
+                            <SkeletonCard key={`loading-${index}`} />
+                        ))
+                    }
+                </div>
+
+                {(query || selectedGenres.length > 0 || (!query && selectedGenres.length === 0 && !personId)) && !personId && (
+                    <div
+                        ref={loadMoreRef}
+                        className={styles.loadTrigger}
+                    />
+                )}
             </div>
         </>
     );

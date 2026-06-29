@@ -25,8 +25,8 @@ async function getFromTMDB(endpoint, controller = null) {
 // ============================================
 //      Fetch Popular Movies from TMDB API
 // ============================================
-export async function getPopularMovies() {
-    return getFromTMDB("/movie/popular");
+export async function getPopularMovies(page = 1) {
+    return getFromTMDB(`/movie/popular?page=${page}`);
 }
 
 // ============================================
@@ -45,8 +45,11 @@ export async function getGenres() {
 // ============================================
 //             Fetch Movies by Genres 
 // ============================================
-export async function getMoviesByGenre(genreId) {
-    return getFromTMDB(`/discover/movie?with_genres=${genreId}`);
+export async function getMoviesByGenre(genreIds, page = 1) {
+    const genreQuery = Array.isArray(genreIds)
+        ? genreIds.join(",")
+        : genreIds;
+    return getFromTMDB(`/discover/movie?with_genres=${genreQuery}&page=${page}`);
 }
 
 // ============================================
@@ -66,8 +69,8 @@ export async function getMovieCredits(movieId) {
 // ============================================
 //                Search Movies
 // ============================================
-export async function searchMovies(query, controller = null){
-    return getFromTMDB(`/search/movie?query=${encodeURIComponent(query)}`, controller);
+export async function searchMovies(query, page = 1, controller = null){
+    return getFromTMDB(`/search/movie?query=${encodeURIComponent(query)}&page=${page}`, controller);
 }
 
 // ============================================

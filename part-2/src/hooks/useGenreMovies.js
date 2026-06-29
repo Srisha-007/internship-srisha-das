@@ -5,20 +5,20 @@ const genreCache = {};
 
 export function useGenreMovies(selectedGenres) {
     const [movies, setMovies] = useState([]);
+    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    
+    const cacheKey = selectedGenres.slice().sort().join(",");
+
+    useEffect(() => {
+        setMovies([]);
+        setPage(1);
+    }, [cacheKey]);
 
     useEffect(() => {
         if (selectedGenres.length === 0) {
             setMovies([]);
-            return;
-        }
-        const cacheKey = selectedGenres.slice().sort().join(",");
-
-        if (genreCache[cacheKey]) {
-            setError("");
-            setLoading(false)
-            setMovies(genreCache[cacheKey]);
             return;
         }
 
@@ -27,9 +27,35 @@ export function useGenreMovies(selectedGenres) {
                 setLoading(true);
                 setError("");
 
-                const data = await getMoviesByGenre(cacheKey);
-                genreCache[cacheKey] = data.results;
-                setMovies(data.results);
+                const pageCacheKey = `${cacheKey}-page-${page}`;
+
+                let results;
+                
+                if (genreCache[pageCacheKey]) {
+                    results = genreCache[pageCacheKey];
+                } else {
+                    const data = await getMoviesByGenre(
+                        cacheKey, page
+                    );
+                    results = data.results;
+                    genreCache[pageCacheKey] = results;
+                }
+                
+                setMovies(prev => {
+                    const combined = [
+                        ...prev,
+                        ...results
+                    ];
+
+                    return Array.from(
+                        new Map(
+                            combined.map(movie => [
+                                movie.id,
+                                movie
+                            ])
+                        ).values()
+                    );
+                });
 
             } catch (error) {
                 setError(error.message || "Failed to load movies.");
@@ -38,11 +64,15 @@ export function useGenreMovies(selectedGenres) {
                 setLoading(false);
             }
         }
-
         loadMovies();
-    }, [selectedGenres]);
+    }, [cacheKey, page, selectedGenres]);
 
+    function loadMore() {
+        if (!loading) {
+            setPage(prev => prev + 1);
+        }
+    }
     return {
-        movies, loading, error,
+        movies, loading, error, loadMore
     };
 }
