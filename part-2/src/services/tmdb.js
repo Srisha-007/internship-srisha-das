@@ -46,7 +46,10 @@ export async function getGenres() {
 //             Fetch Movies by Genres 
 // ============================================
 export async function getMoviesByGenre(genreIds, page = 1) {
-    return getFromTMDB(`/discover/movie?with_genres=${genreIds.join(",")}&page=${page}`);
+    const genreQuery = Array.isArray(genreIds)
+        ? genreIds.join(",")
+        : genreIds;
+    return getFromTMDB(`/discover/movie?with_genres=${genreQuery}&page=${page}`);
 }
 
 // ============================================
