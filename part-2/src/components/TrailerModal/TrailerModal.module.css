@@ -1,0 +1,28 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to top, var(--bg-secondary) 15%, transparent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal {
+    width: min(900px, 90vw);
+    position: relative;
+}
+.video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+    border-radius: 12px;
+}
+.closeButton {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
