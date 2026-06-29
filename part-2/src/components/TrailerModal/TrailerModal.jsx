@@ -6,13 +6,17 @@ function TrailerModal({ trailerKey, loading, onClose }) {
     const [iframeLoading, setIframeLoading] = useState(true);
 
     useEffect(() => {
+        setIframeLoading(true);
+    }, [trailerKey, loading]);
+
+    useEffect(() => {
         function handleEscape(event) {
             if (event.key === "Escape") {
                 onClose();
             }
         }
         window.addEventListener("keydown", handleEscape);
-        document.body.style.overview = "hidden";
+        document.body.style.overflow = "hidden";
         return () => {
             window.removeEventListener("keydown", handleEscape);
             document.body.style.overflow = "auto";
@@ -31,6 +35,7 @@ function TrailerModal({ trailerKey, loading, onClose }) {
                 <button
                     className={styles.closeButton}
                     onClick={onClose}
+                    aria-label="Close trailer modal"
                 >
                     <X />
                 </button>

@@ -11,7 +11,7 @@ function HeroBanner({movie}) {
     const [showTrailer, setShowTrailer] = useState(false);
     const location = useLocation();
 
-    const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie?.id);
+    const { trailerKey, loading: trailerLoading, fetchTrailer } = useMovieTrailer();
 
     if (!movie) return null;
 
@@ -75,14 +75,13 @@ function HeroBanner({movie}) {
                         <button
                             aria-label="Watch Trailer"
                             className={styles.heroButton}
-                            onClick={() => setShowTrailer(true)}
-                            disabled={!trailerKey}
+                            onClick={async () => {
+                                setShowTrailer(true);
+                                await fetchTrailer(movie.id);
+                            }}
                         >
                             <Play />
-                            {trailerKey
-                                ? "Watch Trailer"
-                                : "Trailer Unavailable"
-                            }
+                            Watch Trailer
                         </button>    
                     
                         {showTrailer && (

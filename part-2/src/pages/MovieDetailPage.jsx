@@ -20,7 +20,7 @@ function MovieDetailPage() {
     const { movies: recommendations, loading: recommendationsLoading, error: recommendationsError } = useMovieRecommendations(id);
     const location = useLocation();
     const [showTrailer, setShowTrailer] = useState(false);
-    const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie?.id);
+    const { trailerKey, loading: trailerLoading, fetchTrailer } = useMovieTrailer();
     const { toggleFavorite, isFavorite } = useFavorites();
     const favorite = movie
         ? isFavorite(movie.id)
@@ -105,18 +105,17 @@ function MovieDetailPage() {
 
                             <button
                                 className={styles.trailerButton}
-                                onClick={() => setShowTrailer(true)}
-                                disabled={!trailerKey}
+                                onClick={async () => {
+                                    setShowTrailer(true);
+                                    await fetchTrailer(movie.id);
+                                }}
                             >
                                 <Play size={20}/>
-                                {trailerKey
-                                    ? "Watch Trailer"
-                                    : "Trailer Unavailable"
-                                }
+                                Watch Trailer
                             </button>
                         </div>
 
-                    {showTrailer && trailerKey && (
+                    {showTrailer && (
                         <TrailerModal
                             trailerKey={trailerKey}
                             loading={trailerLoading}

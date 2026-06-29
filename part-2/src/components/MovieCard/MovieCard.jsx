@@ -12,80 +12,80 @@ function MovieCard({movie}) {
         : "https://via.placeholder.com/500x750?text=No+Image";
     
     const [showTrailer, setShowTrailer] = useState(false);
-    const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie.id);
+    const { trailerKey, loading: trailerLoading, fetchTrailer } = useMovieTrailer();
     const location = useLocation();    
     const { toggleFavorite, isFavorite } = useFavorites();
     const favorite = isFavorite(movie.id);
-
+    console.log(movie.title, trailerKey, trailerLoading);
     return (
-        <Link 
-            to={`/movie/${movie.id}`} 
-            state={{
-                from: location
-            }}
-            className={styles.cardLink}
-        >
-            <article className={styles.movieCard}>
-                <div className={styles.posterContainer}>
-                    <img
-                        src={posterUrl}
-                        alt={movie.title}
+        <>
+            <Link 
+                to={`/movie/${movie.id}`} 
+                state={{ from: location }}
+                className={styles.cardLink}
+            >
+                <article className={styles.movieCard}>
+                    <div className={styles.posterContainer}>
+                        <img
+                            src={posterUrl}
+                            alt={movie.title}
                         className={styles.poster}
-                    />
-                    <div className={styles.ratingBadge}>
-                        <Star className={styles.starIcon} />
-                        {movie.vote_average?.toFixed(1)}
+                        />
+                        <div className={styles.ratingBadge}>
+                            <Star className={styles.starIcon} />
+                            {movie.vote_average?.toFixed(1)}
+                        </div>
                     </div>
-                </div>
             
-                <div className={styles.cardInfo}>
-                    <h3 className={styles.cardTitle}>
-                        {movie.title}
-                    </h3>
-                    <div className={styles.cardMetadata}>
-                        <span>
-                            {movie.release_date?.split("-")[0]}
-                        </span>
+                    <div className={styles.cardInfo}>
+                        <h3 className={styles.cardTitle}>
+                            {movie.title}
+                        </h3>
+                        <div className={styles.cardMetadata}>
+                            <span>
+                                {movie.release_date?.split("-")[0]}
+                            </span>
+                        </div>
                     </div>
-                </div>
 
-                <button
-                    className={styles.trailerButton}
-                    aria-label="Watch Trailer"
-                    onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        setShowTrailer(true);
-                    }}
-                >
-                    <Play />
-                </button>
+                    <button
+                        className={styles.trailerButton}
+                        aria-label="Watch Trailer"
+                        onClick={async (event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
 
-                {showTrailer && trailerKey && (
-                    <TrailerModal
-                        trailerKey={trailerKey}
-                        loading={trailerLoading}
-                        onClose={() => setShowTrailer(false)}
-                    />
-                )}
+                            setShowTrailer(true);
+                            await fetchTrailer(movie.id);
+                        }}
+                    >
+                        <Play />
+                    </button>
 
-                <button
-                    className={styles.favoriteButton}
-                    aria-label="Favorites Button"
-                    onClick={(event) => {
-                        event.preventDefault();
-                        event.stopPropagation();
+                    <button
+                        className={styles.favoriteButton}
+                        aria-label="Favorites Button"
+                        onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
 
-                        toggleFavorite(movie);
-                    }}
-                >
-                    <Heart className={styles.heartIcon}
-                        fill={favorite ? "currentColor" : "none"}
-                    />
-                </button>
-
-            </article>
-        </Link>
+                            toggleFavorite(movie);
+                        }}
+                    >
+                        <Heart className={styles.heartIcon}
+                            fill={favorite ? "currentColor" : "none"}
+                        />
+                    </button>
+                </article>
+            </Link>
+            {showTrailer && (
+                <TrailerModal
+                    trailerKey={trailerKey}                    
+                    loading={trailerLoading}
+                    onClose={() => setShowTrailer(false)}
+                />                
+            )}
+        </>
     );
 }
 

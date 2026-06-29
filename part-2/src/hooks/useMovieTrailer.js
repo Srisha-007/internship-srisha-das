@@ -1,44 +1,41 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getMovieVideos } from "../services/tmdb";
 
 export function useMovieTrailer(movieId) {
     const [trailerKey, setTrailerKey] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
-    useEffect(() => {
-        if (!movieId) {
+    
+    async function fetchTrailer() {
+        if (!movieId) return;    
+        
+        try {
+            setLoading(true);
+            setError("");
             setTrailerKey("");
-            return;
-        } 
 
-        async function loadTrailer() {
-            try {
-                setLoading(true);
-                setError("");
-
-                const data = await getMovieVideos(movieId);
-
-                const trailer = data.results.find(
-                    (video) =>
-                        video.site === "YouTube" &&
-                        video.type === "Trailer"
-                );
-
-                setTrailerKey(trailer?.key || "");
+            const data = await getMovieVideos(movieId);                
+            const trailer = data.results.find(
+                (video) =>
+                    video.site === "YouTube" &&
+                    video.type === "Trailer"
+            );
+            
+            if (!trailer) {
+                setError("No trailer available.");
+                setTrailerKey("");
+                return;
             }
-            catch (error) {
-                setError(error.message || "Failed to load trailer.");
-            }
-            finally {
-                setLoading(false);
-            }
+            setTrailerKey(trailer.key);
         }
-
-        loadTrailer();
-    }, [movieId]);
-
+        catch (error) {
+            setError(error.message || "Failed to load trailer.");
+        }
+        finally {                
+            setLoading(false);
+        }
+    }
     return {
-        trailerKey, loading, error
+        trailerKey, loading, error, fetchTrailer
     };
 }
