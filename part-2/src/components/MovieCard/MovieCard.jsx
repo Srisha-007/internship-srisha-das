@@ -16,7 +16,6 @@ function MovieCard({movie}) {
     const location = useLocation();    
     const { toggleFavorite, isFavorite } = useFavorites();
     const favorite = isFavorite(movie.id);
-    console.log(movie.title, trailerKey, trailerLoading);
     return (
         <>
             <Link 
@@ -56,7 +55,9 @@ function MovieCard({movie}) {
                             event.stopPropagation();
 
                             setShowTrailer(true);
-                            await fetchTrailer(movie.id);
+                            setTimeout(() => {
+                                fetchTrailer(movie.id);
+                            }, 0); 
                         }}
                     >
                         <Play />

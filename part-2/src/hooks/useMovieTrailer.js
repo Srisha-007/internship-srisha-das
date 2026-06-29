@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { getMovieVideos } from "../services/tmdb";
 
-export function useMovieTrailer(movieId) {
+export function useMovieTrailer() {
     const [trailerKey, setTrailerKey] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     
-    async function fetchTrailer() {
+    async function fetchTrailer(movieId) {
         if (!movieId) return;    
         
         try {
@@ -23,7 +23,6 @@ export function useMovieTrailer(movieId) {
             
             if (!trailer) {
                 setError("No trailer available.");
-                setTrailerKey("");
                 return;
             }
             setTrailerKey(trailer.key);

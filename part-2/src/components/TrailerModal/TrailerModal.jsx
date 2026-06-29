@@ -22,7 +22,7 @@ function TrailerModal({ trailerKey, loading, onClose }) {
             document.body.style.overflow = "auto";
         };
     }, [onClose]);
-
+    
     return (
         <div
             className={styles.overlay}
