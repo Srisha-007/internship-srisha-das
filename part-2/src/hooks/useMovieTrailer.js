@@ -7,7 +7,10 @@ export function useMovieTrailer(movieId) {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        if (!movieId) return;
+        if (!movieId) {
+            setTrailerKey("");
+            return;
+        } 
 
         async function loadTrailer() {
             try {

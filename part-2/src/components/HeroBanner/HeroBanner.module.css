@@ -108,3 +108,9 @@
   background-color: var(--accent-hover);
   transform: translateY(-2px);
 }
+.heroActions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
