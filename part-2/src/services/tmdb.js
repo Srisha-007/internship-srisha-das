@@ -86,3 +86,9 @@ export async function getMovieRecommendations(movieId) {
 export async function getMoviesByPerson(personId) {
     return getFromTMDB(`/person/${personId}/movie_credits`);
 }
+// ============================================
+//               Get Movie Videos
+// ============================================
+export async function getMovieVideos(movieId) {
+    return getFromTMDB(`/movie/${movieId}/videos`);
+}
