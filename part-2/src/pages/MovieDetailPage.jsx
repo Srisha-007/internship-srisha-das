@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
-import { Star, Clock, Calendar, ArrowLeft, Heart } from "lucide-react";
+import { Star, Clock, Calendar, ArrowLeft, Heart, Play } from "lucide-react";
 
 import MovieDetailsSkeleton from "../components/MovieDetailsSkeleton/MovieDetailsSkeleton";
 import { useMovieDetails } from "../hooks/useMovieDetails";
@@ -7,6 +8,8 @@ import { useFavorites } from "../hooks/useFavorites";
 import { formatDate, formatCurrency } from "../utils/formatters";
 import { useMovieRecommendations } from "../hooks/useMovieRecommendations";
 import MovieCard from "../components/MovieCard/MovieCard";
+import TrailerModal from "../components/TrailerModal/TrailerModal";
+import { useMovieTrailer } from "../hooks/useMovieTrailer";
 
 import styles from "./MovieDetailPage.module.css";
 
@@ -16,6 +19,8 @@ function MovieDetailPage() {
     const { movie, cast, loading, error} = useMovieDetails(id);
     const { movies: recommendations, loading: recommendationsLoading, error: recommendationsError } = useMovieRecommendations(id);
     const location = useLocation();
+    const [showTrailer, setShowTrailer] = useState(false);
+    const { trailerKey } = useMovieTrailer(movie?.id);
     const { toggleFavorite, isFavorite } = useFavorites();
     const favorite = movie
         ? isFavorite(movie.id)
@@ -81,25 +86,44 @@ function MovieDetailPage() {
                         <h1 className={styles.title}>
                             {movie.title}
                         </h1>
-                        
-                        <button
-                            className={styles.favoriteButton}
-                            onClick={() => toggleFavorite(movie)}
-                            aria-label="Toggle Favorite"
-                        >
-                            <Heart
-                                size={24}
-                                fill={favorite ? "currentColor" : "none"}
-                            />
-                            {favorite
-                               ? "Remove from Favorites"
-                               : "Add to Favorites"
-                           }
-                        </button>
+                    
+                        <div classname={styles.actionButtons}>
+                            <button
+                                className={styles.favoriteButton}
+                                onClick={() => toggleFavorite(movie)}
+                                aria-label="Toggle Favorite"
+                            >
+                                <Heart
+                                    size={20}
+                                    fill={favorite ? "currentColor" : "none"}
+                                />
+                                {favorite
+                                    ? "Remove from Favorites"
+                                : "Add to Favorites"
+                                }
+                            </button>
+
+                            <button
+                                className={styles.trailerButton}
+                                onClick={() => setShowTrailer(true)}
+                                disabled={!trailerKey}
+                            >
+                                <Play size={20}/>
+                                {trailerKey
+                                    ? "Watch Trailer"
+                                    : "Trailer Unavailable"
+                                }
+                            </button>
+                        </div>
+
+                    {showTrailer && trailerKey && (
+                        <TrailerModal
+                            trailerKey={trailerKey}
+                            onClose={() => setShowTrailer(false)}
+                        />
+                    )}
                     </div>
                    
-                    
-
                     <div className={styles.metaRow}>
 
                         <span>
