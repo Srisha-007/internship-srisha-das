@@ -11,7 +11,7 @@ function HeroBanner({movie}) {
     const [showTrailer, setShowTrailer] = useState(false);
     const location = useLocation();
 
-    const { trailerKey } = useMovieTrailer(movie?.id);
+    const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie?.id);
 
     if (!movie) return null;
 
@@ -88,6 +88,7 @@ function HeroBanner({movie}) {
                         {showTrailer && (
                             <TrailerModal
                                 trailerKey={trailerKey}
+                                loading={trailerLoading}
                                 onClose={() => setShowTrailer(false)}
                             />
                         )}

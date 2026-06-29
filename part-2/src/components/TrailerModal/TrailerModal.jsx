@@ -1,9 +1,24 @@
+import { useState } from "react";
 import { X } from "lucide-react";
 import styles from "./TrailerModal.module.css";
 
-function TrailerModal({ trailerKey, onClose }) {
-
-    if (!trailerKey) return null;
+function TrailerModal({ trailerKey, loading, onClose }) {
+    const [iframeLoading, setIframeLoading] = useState(true);
+    if (!trailerKey) {
+        return (
+            <div className={styles.overlay}>
+                <div className={styles.modal}>
+                    <button
+                        className={styles.closeButton}
+                        onClick={onClose}
+                    >
+                        <X />
+                    </button>
+                    <p>No trailer available.</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div
@@ -12,23 +27,57 @@ function TrailerModal({ trailerKey, onClose }) {
         >
             <div
                 className={styles.modal}
-                onClick={(event) =>
-                    event.stopPropagation()
-                }
+                onClick={(event) => event.stopPropagation()}
             >
                 <button
                     className={styles.closeButton}
                     onClick={onClose}
                 >
-                    <X size={22}/>
+                    <X />
                 </button>
 
-                <iframe
-                    className={styles.video}
-                    src={`https://www.youtube.com/embed/${trailerKey}`}
-                    title="Movie Trailer"
-                    allowFullScreen
-                />
+                {/* TMDB API loading */}
+                {loading && (
+                    <div className={styles.spinnerContainer}>
+                        <div className={styles.spinner}></div>
+                        <p>Fetching trailer...</p>
+                    </div>
+                )}
+
+                {/* No trailer found */}
+                {!loading && !trailerKey && (
+                    <div className={styles.messageContainer}>
+                        <p>No trailer available.</p>
+                    </div>
+                )}
+
+                {/* YouTube iframe loading */}
+                {!loading && trailerKey && (
+                    <>
+                        {iframeLoading && (
+                            <div className={styles.spinnerContainer}>
+                                <div className={styles.spinner}></div>
+                                <p>Loading trailer...</p>
+                            </div>
+                        )}
+
+                        <iframe
+                            className={styles.iframe}
+                            src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                            title="Movie Trailer"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            onLoad={() =>
+                                setIframeLoading(false)
+                            }
+                            style={{
+                                display: iframeLoading
+                                    ? "none"
+                                    : "block"
+                            }}
+                        />
+                    </>
+                )}
             </div>
         </div>
     );

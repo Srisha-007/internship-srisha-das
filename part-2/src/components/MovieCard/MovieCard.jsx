@@ -12,7 +12,7 @@ function MovieCard({movie}) {
         : "https://via.placeholder.com/500x750?text=No+Image";
     
     const [showTrailer, setShowTrailer] = useState(false);
-    const { trailerKey } = useMovieTrailer(movie.id);
+    const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie.id);
     const location = useLocation();    
     const { toggleFavorite, isFavorite } = useFavorites();
     const favorite = isFavorite(movie.id);
@@ -64,6 +64,7 @@ function MovieCard({movie}) {
                 {showTrailer && trailerKey && (
                     <TrailerModal
                         trailerKey={trailerKey}
+                        loading={trailerLoading}
                         onClose={() => setShowTrailer(false)}
                     />
                 )}

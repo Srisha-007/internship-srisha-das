@@ -20,7 +20,7 @@ function MovieDetailPage() {
     const { movies: recommendations, loading: recommendationsLoading, error: recommendationsError } = useMovieRecommendations(id);
     const location = useLocation();
     const [showTrailer, setShowTrailer] = useState(false);
-    const { trailerKey } = useMovieTrailer(movie?.id);
+    const { trailerKey, loading: trailerLoading } = useMovieTrailer(movie?.id);
     const { toggleFavorite, isFavorite } = useFavorites();
     const favorite = movie
         ? isFavorite(movie.id)
@@ -119,6 +119,7 @@ function MovieDetailPage() {
                     {showTrailer && trailerKey && (
                         <TrailerModal
                             trailerKey={trailerKey}
+                            loading={trailerLoading}
                             onClose={() => setShowTrailer(false)}
                         />
                     )}
