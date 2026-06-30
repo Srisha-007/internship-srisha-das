@@ -17,12 +17,10 @@ function MovieRating({ movieId }) {
     console.log("Guest Session:", guestSessionId);
 
     useEffect(() => {
-        const existingRating = getRating(movieId);
-
-        if (existingRating) {
-            setRating(existingRating);
+        if (savedRating) {
+            setRating(savedRating);
         }
-    }, [movieId, getRating]);
+    }, [savedRating]);
 
     async function handleSubmit() {
         if (!rating) return;
