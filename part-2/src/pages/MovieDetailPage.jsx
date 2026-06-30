@@ -26,7 +26,7 @@ function MovieDetailPage() {
     const favorite = movie
         ? isFavorite(movie.id)
         : false;
-    
+
     if (loading) {
         return <MovieDetailsSkeleton />;
     }
@@ -88,7 +88,7 @@ function MovieDetailPage() {
                             {movie.title}
                         </h1>
                     
-                        <div classname={styles.actionButtons}>
+                        <div className={styles.actionButtons}>
                             <button
                                 className={styles.favoriteButton}
                                 onClick={() => toggleFavorite(movie)}

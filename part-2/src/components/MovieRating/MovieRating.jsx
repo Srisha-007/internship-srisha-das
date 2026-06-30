@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 
 import { addMovieRating } from "../../services/tmdb";
 import { useGuestSession } from "../../hooks/useGuestSession";
-
+import { useRatings } from "../context/RatingsContext";
 import styles from "./MovieRating.module.css";
 
 function MovieRating({ movieId }) {
     const [rating, setRating] = useState(0);
+    const { rateMovie, getRating } = useRatings();
+    const savedRating = getRating(movieId);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
     const guestSessionId = useGuestSession();
+
+    useEffect(() => {
+        const existingRating = getRating(movieId);
+
+        if (existingRating) {
+            setRating(existingRating);
+        }
+    }, [movieId, getRating]);
 
     async function handleSubmit() {
         if (!rating) return;
@@ -25,8 +35,9 @@ function MovieRating({ movieId }) {
                 rating,
                 guestSessionId
             );
-
-            setMessage("Rating submitted successfully!");
+            
+            rateMovie(movieId, rating);
+            setMessage("Rating saved successfully!");
         }
         catch (error) {
             setMessage(error.message);
@@ -38,7 +49,12 @@ function MovieRating({ movieId }) {
 
     return (
         <div className={styles.container}>
-            <h3>Your Rating</h3>
+            <h3>
+                {savedRating
+                    ? "Update Your Rating"
+                    : "Rate this Movie"
+                }
+            </h3>
 
             <div className={styles.stars}>
                 {[1,2,3,4,5,6,7,8,9,10].map((value) => (
@@ -61,6 +77,12 @@ function MovieRating({ movieId }) {
             <p>
                 Selected: {rating}/10
             </p>
+            
+            {savedRating && (
+                <p className={styles.savedRating}>
+                    ⭐ Your Rating: {savedRating}/10
+                </p>
+            )}
 
             <button
                 onClick={handleSubmit}
