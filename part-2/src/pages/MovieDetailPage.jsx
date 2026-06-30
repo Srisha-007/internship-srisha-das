@@ -10,6 +10,7 @@ import { useMovieRecommendations } from "../hooks/useMovieRecommendations";
 import MovieCard from "../components/MovieCard/MovieCard";
 import TrailerModal from "../components/TrailerModal/TrailerModal";
 import { useMovieTrailer } from "../hooks/useMovieTrailer";
+import MovieRating from "../components/MovieRating/MovieRating";
 
 import styles from "./MovieDetailPage.module.css";
 
@@ -199,6 +200,8 @@ function MovieDetailPage() {
                     <p className={styles.overview}>
                         {movie.overview}
                     </p>
+
+                    <MovieRating movieId={movie.id} />
 
                     <section className={styles.additionalInfo}>
                         <h3 className={styles.sectionHeading}>
