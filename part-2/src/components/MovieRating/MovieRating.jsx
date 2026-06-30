@@ -14,7 +14,6 @@ function MovieRating({ movieId }) {
     const [message, setMessage] = useState("");
 
     const guestSessionId = useGuestSession();
-    console.log("Guest Session:", guestSessionId);
 
     useEffect(() => {
         if (savedRating) {
@@ -39,7 +38,6 @@ function MovieRating({ movieId }) {
             setMessage("Rating saved successfully!");
         }
         catch (error) {
-            console.error(error);
             setMessage(error.message);
         }
         finally {
