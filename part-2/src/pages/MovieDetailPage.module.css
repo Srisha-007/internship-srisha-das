@@ -75,7 +75,6 @@
     color: white;
 }                       
 .trailerButton {
-    margin-top: 0.5rem;
     border: 1px solid var(--accent-color);
     background-color: transparent;
     color: var(--accent-color);

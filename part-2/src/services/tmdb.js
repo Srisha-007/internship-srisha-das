@@ -107,11 +107,10 @@ export async function createGuestSession() {
 // ============================================
 export async function addMovieRating(movieId, rating, guestSessionId) {
     const response = await fetch(
-        `${BASE_URL}/movie/${movieId}/rating?guest_session_id=${guestSessionId}`,
+        `${BASE_URL}/movie/${movieId}/rating?api_key=${API_KEY}&guest_session_id=${guestSessionId}`,
         {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_TOKEN}`,
                 "Content-Type": "application/json;charset=utf-8",
             },
             body: JSON.stringify({
@@ -120,9 +119,12 @@ export async function addMovieRating(movieId, rating, guestSessionId) {
         }
     );
 
+    const data = await response.json();
+    console.log(data);
+
     if (!response.ok) {
         throw new Error("Failed to submit rating.");
     }
 
-    return response.json();
+    return data;
 }

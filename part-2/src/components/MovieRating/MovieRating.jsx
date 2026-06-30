@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 
 import { addMovieRating } from "../../services/tmdb";
 import { useGuestSession } from "../../hooks/useGuestSession";
-import { useRatings } from "../context/RatingsContext";
+import { useRatings } from "../../context/RatingsContext";
 import styles from "./MovieRating.module.css";
 
 function MovieRating({ movieId }) {
@@ -14,6 +14,7 @@ function MovieRating({ movieId }) {
     const [message, setMessage] = useState("");
 
     const guestSessionId = useGuestSession();
+    console.log("Guest Session:", guestSessionId);
 
     useEffect(() => {
         const existingRating = getRating(movieId);
@@ -40,6 +41,7 @@ function MovieRating({ movieId }) {
             setMessage("Rating saved successfully!");
         }
         catch (error) {
+            console.error(error);
             setMessage(error.message);
         }
         finally {
@@ -86,12 +88,14 @@ function MovieRating({ movieId }) {
 
             <button
                 onClick={handleSubmit}
-                disabled={loading}
+                disabled={loading || !guestSessionId}
                 className={styles.submitButton}
             >
                 {loading
                     ? "Submitting..."
-                    : "Submit Rating"}
+                    : !guestSessionId
+                        ? "Preparing Session..."
+                        : "Submit Rating"}
             </button>
 
             {message && (
