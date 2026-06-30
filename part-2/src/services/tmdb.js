@@ -42,6 +42,7 @@ export async function getTrendingMovies() {
 export async function getGenres() {
     return getFromTMDB("/genre/movie/list");
 }
+
 // ============================================
 //             Fetch Movies by Genres 
 // ============================================
@@ -86,9 +87,42 @@ export async function getMovieRecommendations(movieId) {
 export async function getMoviesByPerson(personId) {
     return getFromTMDB(`/person/${personId}/movie_credits`);
 }
+
 // ============================================
 //               Get Movie Videos
 // ============================================
 export async function getMovieVideos(movieId) {
     return getFromTMDB(`/movie/${movieId}/videos`);
+}
+
+// ============================================
+//            Create a Guest Session
+// ============================================
+export async function createGuestSession() {
+    return getFromTMDB("/authentication/guest_session/new");
+}
+
+// ============================================
+//              Add Movie Ratings
+// ============================================
+export async function addMovieRating(movieId, rating, guestSessionId) {
+    const response = await fetch(
+        `${BASE_URL}/movie/${movieId}/rating?guest_session_id=${guestSessionId}`,
+        {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_TOKEN}`,
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({
+                value: rating
+            })
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to submit rating.");
+    }
+
+    return response.json();
 }
