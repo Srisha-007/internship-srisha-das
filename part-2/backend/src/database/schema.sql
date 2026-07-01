@@ -1,0 +1,33 @@
+DROP TABLE IF EXISTS ratings;
+DROP TABLE IF EXISTS favorites;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE favorites (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    movie_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    UNIQUE(user_id, movie_id)
+);
+
+CREATE TABLE ratings (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    movie_id INTEGER NOT NULL,
+    story INTEGER CHECK(story BETWEEN 1 AND 10),
+    acting INTEGER CHECK(acting BETWEEN 1 AND 10),
+    direction INTEGER CHECK(direction BETWEEN 1 AND 10),
+    visuals INTEGER CHECK(visuals BETWEEN 1 AND 10),
+    music INTEGER CHECK(music BETWEEN 1 AND 10),
+    overall NUMERIC(3,1),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, movie_id)
+);
