@@ -6,7 +6,7 @@ import MovieCard from "../components/MovieCard/MovieCard";
 import styles from "./FavoritesPage.module.css";
 
 function FavoritesPage() {
-    const { favorites } = useFavorites();
+    const { favorites, loading } = useFavorites();
 
     return (
         <div className={styles.page}>
@@ -23,7 +23,11 @@ function FavoritesPage() {
                 My Favorites
             </h1>
 
-            {favorites.length === 0 ? (
+            {loading && (
+                <p>Loading favorites...</p>
+            )}
+
+            {!loading && favorites.length === 0 ? (
                 <div className={styles.emptyState}>
                     <HeartCrack size={72} />
 

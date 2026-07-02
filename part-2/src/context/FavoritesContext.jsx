@@ -17,14 +17,14 @@ export function FavoritesProvider({ children }) {
                 const favoriteIds =
                     await getFavorites(USER_ID);
 
-                const favoriteMovies =
+                const movies =
                     await Promise.all(
                         favoriteIds.map((movieId) =>
                             getMovieDetails(movieId)
                         )
                     );
 
-                setFavorites(favoriteMovies);
+                setFavorites(movies);
             }
             catch (error) {
                 console.error(error);
