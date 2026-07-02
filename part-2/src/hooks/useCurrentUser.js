@@ -10,6 +10,8 @@ export function useCurrentUser() {
         async function loadUser() {
             const storedUser =
                 localStorage.getItem("currentUser");
+            
+            console.log("Stored user:", storedUser);
 
             if (storedUser) {
                 setUser(JSON.parse(storedUser));
@@ -20,6 +22,11 @@ export function useCurrentUser() {
                 const response = await fetch(
                     `${BASE_URL}/users`
                 );
+
+                if (!response.ok) {
+                    console.error("Failed to fetch users:", response.status);
+                    return;
+                }
 
                 const users = await response.json();
 

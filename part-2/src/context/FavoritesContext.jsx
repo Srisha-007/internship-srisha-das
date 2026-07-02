@@ -1,21 +1,27 @@
 import { createContext, useEffect, useState } from "react";
 import { getFavorites, addFavorite, removeFavorite } from "../services/backend";
 import { getMovieDetails } from "../services/tmdb";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export const FavoritesContext = createContext();
-
-const USER_ID = 1;
 
 export function FavoritesProvider({ children }) {
 
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
+    const currentUser = useCurrentUser();
+    console.log("Current User:", currentUser);
 
     useEffect(() => {
         async function loadFavorites() {
+            if (!currentUser) {
+                setLoading(false);
+                return;
+            }
             try {
+                setLoading(true);
                 const favoriteIds =
-                    await getFavorites(USER_ID);
+                    await getFavorites(currentUser.id);
 
                 const movies =
                     await Promise.all(
@@ -35,7 +41,7 @@ export function FavoritesProvider({ children }) {
         }
 
         loadFavorites();
-    }, []);
+    }, [currentUser]);
 
     async function toggleFavorite(movie) {
         const exists =
@@ -46,7 +52,7 @@ export function FavoritesProvider({ children }) {
         try {
             if (exists) {
                 await removeFavorite(
-                    USER_ID,
+                    currentUser.id,
                     movie.id
                 );
 
@@ -58,7 +64,7 @@ export function FavoritesProvider({ children }) {
 
             } else {
                 await addFavorite(
-                    USER_ID,
+                    currentUser.id,
                     movie.id
                 );
 
