@@ -53,3 +53,19 @@ export async function getUser(req, res) {
         });
     }
 }
+export async function getAllUsers(req, res) {
+    try {
+        const result = await pool.query(`
+            SELECT * FROM users
+            ORDER BY id ASC;
+        `);
+
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: "Failed to fetch users"
+        });
+    }
+}
