@@ -14,9 +14,11 @@ export async function getFavorites(req, res) {
             [userId]
         );
 
-        res.json(result.rows);
-    }
-    catch (error) {
+        res.json(
+            result.rows.map(row => row.movie_id)
+        );
+
+    } catch (error) {
         console.error(error);
 
         res.status(500).json({
