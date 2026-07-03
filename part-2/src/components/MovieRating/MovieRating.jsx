@@ -6,7 +6,13 @@ import { useCurrentUser } from "../../hooks/useCurrentUser";
 import styles from "./MovieRating.module.css";
 
 function MovieRating({ movieId }) {
-    const [rating, setRating] = useState(0);
+    const [ratings, setRatings] = useState({
+        story: 5,
+        acting: 5,
+        direction: 5,
+        visuals: 5,
+        music: 5,
+    });
     const currentUser = useCurrentUser();
     const [savedRating, setSavedRating] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -21,6 +27,13 @@ function MovieRating({ movieId }) {
 
                 if (existing) {
                     setSavedRating(existing);
+                    setRatings({
+                        story: existing.story,
+                        acting: existing.acting,
+                        direction: existing.direction,
+                        visuals: existing.visuals,
+                        music: existing.music,
+                    });
                 }
             }
             catch (error) {
@@ -31,7 +44,7 @@ function MovieRating({ movieId }) {
     }, [movieId, currentUser]);
 
     async function handleSubmit() {
-        if (!rating) return;
+        if (!currentUser) return;
 
         try {
             setLoading(true);
@@ -40,11 +53,11 @@ function MovieRating({ movieId }) {
             const saved = await saveRating({
                 userId: currentUser.id,
                 movieId,
-                story: rating,
-                acting: rating,
-                direction: rating,
-                visuals: rating,
-                music: rating
+                story: ratings.story,
+                acting: ratings.acting,
+                direction: ratings.direction,
+                visuals: ratings.visuals,
+                music: ratings.music
             });
 
             setSavedRating(saved);
@@ -67,28 +80,44 @@ function MovieRating({ movieId }) {
                 }
             </h3>
 
-            <div className={styles.stars}>
-                {[1,2,3,4,5,6,7,8,9,10].map((value) => (
-                    <button
-                        key={value}
-                        className={styles.starButton}
-                        onClick={() => setRating(value)}
-                    >
-                        <Star
-                            fill={
-                                rating >= value
-                                    ? "currentColor"
-                                    : "none"
-                            }
-                        />
-                    </button>
-                ))}
-            </div>
+            {Object.entries(ratings).map(([category, value]) => (
+                <div key={category} className={styles.category}>
+                    <h4>
+                        {category.charAt(0).toUpperCase() +
+                            category.slice(1)}
+                    </h4>
 
-            <p>
-                Selected: {rating}/10
-            </p>
-            
+                    <div className={styles.stars}>
+                        {[1,2,3,4,5,6,7,8,9,10].map((score) => (
+                            <button
+                                key={score}
+                                className={styles.starButton}
+                                onClick={() =>
+                                    setRatings(prev => ({
+                                        ...prev,
+                                        [category]: score
+                                    }))
+                                }
+                            >
+
+                                <Star
+                                    fill={
+                                        value >= score
+                                            ? "currentColor"
+                                            : "none"
+                                    }
+                                />
+                            </button>
+
+                        ))}
+                    </div>
+
+                    <p>
+                        {value}/10
+                    </p>
+                </div>
+            ))}
+
             {savedRating && (
                 <p className={styles.savedRating}>
                     ⭐ Your Overall Rating: {savedRating.overall}/10

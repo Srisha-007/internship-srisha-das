@@ -29,9 +29,16 @@
 .message {
     margin-top: 1rem;
 }
-.savedRating {
-    margin-top: 1rem;
+.category {
+    margin-bottom: 2rem;
+}
+.category h4 {
+    margin-bottom: 0.5rem;
     font-size: 1rem;
+}
+.savedRating {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--accent-color);
 }
