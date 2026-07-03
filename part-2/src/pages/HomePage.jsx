@@ -23,7 +23,7 @@ function HomePage() {
     const { featuredMovie } = useTrendingMovie();
     const { movies, loading, error, loadMore } = useMovies();
     const { query, personId, personName, inputValue, setInputValue, clearSearch } = useSearchQuery();
-    const { movies: searchedMovies, loading: searchLoading, error: searchError, loadMore: loadMoreSearch } = useMovieSearch(query);
+    const { movies: searchedMovies, loading: searchLoading, error: searchError, loadMore: loadMoreSearch, hasMore: hasMoreSearch } = useMovieSearch(query);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const { genres, loading: genresLoading } = useGenres();
     const { movies: genreMovies, loading: genreLoading, error: genreError, loadMore: loadMoreGenre } = useGenreMovies(selectedGenres);
@@ -39,14 +39,14 @@ function HomePage() {
     const isLoading = searchLoading || genreLoading || personLoading || loading;
     const pageError = error || searchError || genreError || personError;
     const searchStatus = 
-        query && !searchLoading
+        query && !searchLoading && searchedMovies.length > 0
             ? `${searchedMovies.length} results found`
             : "";
     const noResults = 
         !isLoading && displayedMovies.length === 0;
 
     const loadMoreRef = useInfiniteScroll(() => {
-        if (query && !searchLoading) {
+        if (query && !searchLoading && hasMoreSearch) {
             loadMoreSearch()
         }
         else if (selectedGenres.length > 0 && !genreLoading) {
@@ -127,9 +127,29 @@ function HomePage() {
                 </h1>
 
                 {noResults && (
-                    <p className={styles.searchStatus}>
-                        No movies found.
-                    </p>
+                    <div className={styles.emptyState}>
+                        <h2>No movies found</h2>
+
+                        {query && (
+                            <p>
+                                We couldn't find any movies matching
+                                <strong> "{query}"</strong>.
+                            </p>
+                        )}
+                        <p>
+                            Try checking the spelling or searching for another movie.
+                        </p>
+
+                        <button
+                            className={styles.clearSearchButton}
+                            onClick={() => {    
+                                clearSearch();
+                                setSelectedGenres([]);
+                            }}
+                        >
+                            Browse Popular Movies
+                        </button>
+                    </div>
                 )}
                 
                 {pageError && <p className={styles.error}>{pageError}</p>}

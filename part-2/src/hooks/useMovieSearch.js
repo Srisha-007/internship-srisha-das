@@ -4,12 +4,14 @@ import { searchMovies } from "../services/tmdb";
 export function useMovieSearch(query) {
     const [movies, setMovies] = useState([]);
     const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
         setMovies([]);
         setPage(1);
+        setTotalPages(0);
     }, [query]);
 
     useEffect(() => {
@@ -17,6 +19,7 @@ export function useMovieSearch(query) {
             setMovies([]);
             setError("");
             setLoading(false);
+            setTotalPages(0);
             return;
         }
 
@@ -29,6 +32,8 @@ export function useMovieSearch(query) {
 
                 const data = await searchMovies(query, page, controller);
 
+                setTotalPages(data.total_pages);
+                
                 setMovies(prev => {
                     const combined = [
                         ...prev,
@@ -63,12 +68,14 @@ export function useMovieSearch(query) {
 
     }, [query, page]);
 
+    const hasMore = page < totalPages;
+
     function loadMore() {
-        if (!loading) {
+        if (!loading && hasMore) {
             setPage(prev => prev + 1);
         }
     }
     return {
-        movies, loading, error, loadMore
+        movies, loading, error, loadMore, hasMore
     };
 }
