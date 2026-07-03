@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./context/FavoritesContext";
-import { RatingsProvider } from "./context/RatingsContext";
 
 import HomePage from "./pages/HomePage";
 import MovieDetailPage from "./pages/MovieDetailPage";
@@ -10,9 +9,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 function App() {
   return (
     <FavoritesProvider>
-      <RatingsProvider>
-        <ScrollToTop />
-
+      <ScrollToTop />
         <Routes>
           <Route 
             path="/" 
@@ -29,7 +26,6 @@ function App() {
             element={<FavoritesPage />}
           />
         </Routes>
-      </RatingsProvider>
     </FavoritesProvider>
   );
 }

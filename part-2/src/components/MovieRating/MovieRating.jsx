@@ -1,25 +1,34 @@
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 
-import { addMovieRating } from "../../services/tmdb";
-import { useGuestSession } from "../../hooks/useGuestSession";
-import { useRatings } from "../../context/RatingsContext";
+import { saveRating, getRating } from "../../services/backend";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 import styles from "./MovieRating.module.css";
 
 function MovieRating({ movieId }) {
     const [rating, setRating] = useState(0);
-    const { rateMovie, getRating } = useRatings();
-    const savedRating = getRating(movieId);
+    const currentUser = useCurrentUser();
+    const [savedRating, setSavedRating] = useState(null);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    const guestSessionId = useGuestSession();
-
     useEffect(() => {
-        if (savedRating) {
-            setRating(savedRating);
+        async function loadRating() {
+            if (!currentUser) return;
+
+            try {
+                const existing = await getRating(currentUser.id, movieId);
+
+                if (existing) {
+                    setSavedRating(existing);
+                }
+            }
+            catch (error) {
+                console.error(error);
+            }
         }
-    }, [savedRating]);
+        loadRating();
+    }, [movieId, currentUser]);
 
     async function handleSubmit() {
         if (!rating) return;
@@ -28,13 +37,17 @@ function MovieRating({ movieId }) {
             setLoading(true);
             setMessage("");
 
-            await addMovieRating(
+            const saved = await saveRating({
+                userId: currentUser.id,
                 movieId,
-                rating,
-                guestSessionId
-            );
-            
-            rateMovie(movieId, rating);
+                story: rating,
+                acting: rating,
+                direction: rating,
+                visuals: rating,
+                music: rating
+            });
+
+            setSavedRating(saved);
             setMessage("Rating saved successfully!");
         }
         catch (error) {
@@ -78,19 +91,19 @@ function MovieRating({ movieId }) {
             
             {savedRating && (
                 <p className={styles.savedRating}>
-                    ⭐ Your Rating: {savedRating}/10
+                    ⭐ Your Overall Rating: {savedRating.overall}/10
                 </p>
             )}
 
             <button
                 onClick={handleSubmit}
-                disabled={loading || !guestSessionId}
+                disabled={loading || !currentUser}
                 className={styles.submitButton}
             >
                 {loading
                     ? "Submitting..."
-                    : !guestSessionId
-                        ? "Preparing Session..."
+                    : !currentUser
+                        ? "Loading User..."
                         : "Submit Rating"}
             </button>
 
