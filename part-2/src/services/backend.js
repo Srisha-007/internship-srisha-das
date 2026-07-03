@@ -50,3 +50,36 @@ export async function removeFavorite(userId, movieId) {
 
     return response.json();
 }
+
+export async function saveRating(data) {
+    const response = await fetch(
+        `${BASE_URL}/ratings`,
+        {
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(data)
+        }
+    );
+
+    if(!response.ok){
+        throw new Error("Failed to save rating");
+    }
+
+    return response.json();
+}
+
+export async function getRating(userId, movieId) {
+    const response = await fetch(
+        `${BASE_URL}/ratings/${userId}/${movieId}`
+    );
+
+    if(!response.ok){
+        throw new Error("Failed to fetch rating");
+    }
+
+    return response.json();
+}
