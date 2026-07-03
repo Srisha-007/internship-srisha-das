@@ -36,8 +36,8 @@ function MovieRating({ movieId }) {
                     });
                 }
             }
-            catch (error) {
-                console.error(error);
+            catch {
+                setMessage("Failed to load previous rating.");
             }
         }
         loadRating();

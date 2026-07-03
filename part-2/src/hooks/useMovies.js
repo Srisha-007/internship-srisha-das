@@ -28,7 +28,6 @@ export function useMovies() {
                 });
             }
             catch (error) {
-                console.error(error);
                 setError(error.message || "Failed to load movies. Please try again later.");
             }
             finally {
