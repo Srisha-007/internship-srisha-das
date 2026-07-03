@@ -1,12 +1,15 @@
 import pool from "../config/db.js";
 import { calculateOverallRating } from "../utils/ratingCalculator.js";
+import { roundForTMDB } from "../utils/ratingCalculator.js";
+import { submitTMDBRating } from "../services/tmdbService.js";
 
 export async function saveRating(req, res) {
     try {
         const { userId, movieId, story, acting, direction, visuals, music } = req.body;
 
         const overall = calculateOverallRating({ story, acting, direction, visuals, music });
-
+        const tmdbRating = roundForTMDB(overall);
+        await submitTMDBRating(movieId, tmdbRating);
         const result = await pool.query(
             `
             INSERT INTO ratings(
