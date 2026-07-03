@@ -1,40 +1,66 @@
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 
-import { addMovieRating } from "../../services/tmdb";
-import { useGuestSession } from "../../hooks/useGuestSession";
-import { useRatings } from "../../context/RatingsContext";
+import { saveRating, getRating } from "../../services/backend";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 import styles from "./MovieRating.module.css";
 
 function MovieRating({ movieId }) {
-    const [rating, setRating] = useState(0);
-    const { rateMovie, getRating } = useRatings();
-    const savedRating = getRating(movieId);
+    const [ratings, setRatings] = useState({
+        story: 5,
+        acting: 5,
+        direction: 5,
+        visuals: 5,
+        music: 5,
+    });
+    const currentUser = useCurrentUser();
+    const [savedRating, setSavedRating] = useState(null);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
 
-    const guestSessionId = useGuestSession();
-
     useEffect(() => {
-        if (savedRating) {
-            setRating(savedRating);
+        async function loadRating() {
+            if (!currentUser) return;
+
+            try {
+                const existing = await getRating(currentUser.id, movieId);
+
+                if (existing) {
+                    setSavedRating(existing);
+                    setRatings({
+                        story: existing.story,
+                        acting: existing.acting,
+                        direction: existing.direction,
+                        visuals: existing.visuals,
+                        music: existing.music,
+                    });
+                }
+            }
+            catch {
+                setMessage("Failed to load previous rating.");
+            }
         }
-    }, [savedRating]);
+        loadRating();
+    }, [movieId, currentUser]);
 
     async function handleSubmit() {
-        if (!rating) return;
+        if (!currentUser) return;
 
         try {
             setLoading(true);
             setMessage("");
 
-            await addMovieRating(
+            const saved = await saveRating({
+                userId: currentUser.id,
                 movieId,
-                rating,
-                guestSessionId
-            );
-            
-            rateMovie(movieId, rating);
+                story: ratings.story,
+                acting: ratings.acting,
+                direction: ratings.direction,
+                visuals: ratings.visuals,
+                music: ratings.music
+            });
+
+            setSavedRating(saved);
             setMessage("Rating saved successfully!");
         }
         catch (error) {
@@ -54,43 +80,65 @@ function MovieRating({ movieId }) {
                 }
             </h3>
 
-            <div className={styles.stars}>
-                {[1,2,3,4,5,6,7,8,9,10].map((value) => (
-                    <button
-                        key={value}
-                        className={styles.starButton}
-                        onClick={() => setRating(value)}
-                    >
-                        <Star
-                            fill={
-                                rating >= value
-                                    ? "currentColor"
-                                    : "none"
-                            }
-                        />
-                    </button>
-                ))}
-            </div>
+            {Object.entries(ratings).map(([category, value]) => (
+                <div key={category} className={styles.category}>
+                    <h4>
+                        {category.charAt(0).toUpperCase() +
+                            category.slice(1)}
+                    </h4>
 
-            <p>
-                Selected: {rating}/10
-            </p>
-            
+                    <div className={styles.stars}>
+                        {[1,2,3,4,5,6,7,8,9,10].map((score) => (
+                            <button
+                                key={score}
+                                className={styles.starButton}
+                                onClick={() =>
+                                    setRatings(prev => ({
+                                        ...prev,
+                                        [category]: score
+                                    }))
+                                }
+                            >
+
+                                <Star
+                                    fill={
+                                        value >= score
+                                            ? "currentColor"
+                                            : "none"
+                                    }
+                                />
+                            </button>
+
+                        ))}
+                    </div>
+
+                    <p>
+                        {value}/10
+                    </p>
+                </div>
+            ))}
+
             {savedRating && (
-                <p className={styles.savedRating}>
-                    ⭐ Your Rating: {savedRating}/10
-                </p>
+                <div className={styles.savedRating}>
+                    <p>
+                        ⭐ Your Overall Rating: {savedRating.overall}/10
+                    </p>
+                    <small>
+                        Last updated:{" "}
+                        {new Date(savedRating.updated_at).toLocaleString()}
+                    </small>
+                </div>
             )}
 
             <button
                 onClick={handleSubmit}
-                disabled={loading || !guestSessionId}
+                disabled={loading || !currentUser}
                 className={styles.submitButton}
             >
                 {loading
                     ? "Submitting..."
-                    : !guestSessionId
-                        ? "Preparing Session..."
+                    : !currentUser
+                        ? "Loading User..."
                         : "Submit Rating"}
             </button>
 

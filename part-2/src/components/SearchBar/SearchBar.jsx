@@ -23,7 +23,6 @@ function SearchBar({value, onChange, onClear, loading}) {
                     <button
                         aria-label="Clear search"
                         onClick={() => {
-                            console.log("clear clicked");
                             onClear();
                         }}
                             

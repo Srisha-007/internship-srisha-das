@@ -10,7 +10,6 @@ export function FavoritesProvider({ children }) {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(true);
     const currentUser = useCurrentUser();
-    console.log("Current User:", currentUser);
 
     useEffect(() => {
         async function loadFavorites() {
@@ -33,7 +32,7 @@ export function FavoritesProvider({ children }) {
                 setFavorites(movies);
             }
             catch (error) {
-                console.error(error);
+                setFavorites([]);
             }
             finally {
                 setLoading(false);
@@ -77,7 +76,7 @@ export function FavoritesProvider({ children }) {
 
         }
         catch (error) {
-            console.error(error);
+            return;
         }
     }
 

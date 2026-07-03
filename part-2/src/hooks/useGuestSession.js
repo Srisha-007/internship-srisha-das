@@ -27,7 +27,7 @@ export function useGuestSession() {
                 );
             }
             catch (error) {
-                console.error(error);
+                return;
             }
         }
 
