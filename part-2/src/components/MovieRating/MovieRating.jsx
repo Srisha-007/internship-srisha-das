@@ -119,9 +119,15 @@ function MovieRating({ movieId }) {
             ))}
 
             {savedRating && (
-                <p className={styles.savedRating}>
-                    ⭐ Your Overall Rating: {savedRating.overall}/10
-                </p>
+                <div className={styles.savedRating}>
+                    <p>
+                        ⭐ Your Overall Rating: {savedRating.overall}/10
+                    </p>
+                    <small>
+                        Last updated:{" "}
+                        {new Date(savedRating.updated_at).toLocaleString()}
+                    </small>
+                </div>
             )}
 
             <button
